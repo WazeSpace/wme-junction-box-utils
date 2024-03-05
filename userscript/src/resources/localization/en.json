@@ -1,0 +1,28 @@
+{
+  "jb_utils": {
+    "user": {
+      "prefs": {
+        "card_helper_text": "Update userscript settings",
+        "roundabout": {
+          "clone_geometry_toggle": {
+            "label": "Clone roundabout geometry",
+            "help_label": "Select this if you want new junction boxes to have the geometry of the roundabout they are applied to"
+          },
+          "instruction_normalization": {
+            "applied_instruction_badge_type": {
+              "label": "Applied instruction badge display type",
+              "graphical": {
+                "label": "Graphical",
+                "description": "An icon visualizing the selected instruction will be displayed"
+              },
+              "textual": {
+                "label": "Textual",
+                "description": "A single letter will be displayed, determining the applied instruction"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

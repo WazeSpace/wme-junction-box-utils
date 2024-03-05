@@ -1,0 +1,44 @@
+{
+  "name": "@wazespace/wme-junction-box-utils",
+  "fullDisplayName": "WME Junction Box Utils",
+  "displayName": "Junction Box Utils",
+  "version": "1.0.0",
+  "description": "Formerly known as \"Roundabout JB\". An enhancement add-on for the WME with a wide variety of capabilities for controlling and managing Junction Boxes.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "useWazeSpace": false,
+  "keywords": [],
+  "author": "r0den",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.23.3",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.2",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "babel-loader": "^9.1.3",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.5",
+    "terser-webpack-plugin": "^5.3.9",
+    "ts-loader": "^9.5.0",
+    "typescript": "^5.2.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-userscript": "^3.2.2"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@wazespace/wme-react-components": "^1.1.1",
+    "clsx": "^2.1.0",
+    "nanoid": "^3.3.7",
+    "react-router-dom": "^6.18.0",
+    "usehooks-ts": "^2.10.0"
+  }
+}

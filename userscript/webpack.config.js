@@ -1,0 +1,81 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+const packageInfo = require('./package.json');
+const path = require('path');
+const { DefinePlugin, NormalModuleReplacementPlugin } = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
+const WebpackUserscriptPlugin = require('webpack-userscript').default;
+const { nanoid } = require('nanoid');
+
+function getPurePackageName() {
+  const { name } = packageInfo;
+  if (typeof name !== 'string') return '';
+  if (name.startsWith('@')) {
+    return name.substring(name.indexOf('/') + 1);
+  }
+
+  return name;
+}
+
+module.exports = (env) => {
+  const isDev = env.NODE_ENV === 'development';
+
+  return {
+    mode: isDev ? 'development' : 'production',
+    entry: path.resolve(__dirname, 'src/index.ts'),
+    output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: `${getPurePackageName()}.user.js`,
+    },
+    plugins: [
+      new NormalModuleReplacementPlugin(/^react$/, path.join(__dirname, './react-module-wrapper.js')),
+      new NormalModuleReplacementPlugin(/^react-dom$/, path.join(__dirname, './react-dom-module-wrapper.js')),
+      new DefinePlugin({
+        'process.env.VERSION': JSON.stringify(packageInfo.version),
+        'process.env.SCRIPT_ID': JSON.stringify(nanoid()),
+        'process.env.SCRIPT_FULL_NAME': JSON.stringify(packageInfo.fullDisplayName),
+        'process.env.SCRIPT_NAME': JSON.stringify(packageInfo.displayName),
+      }),
+      new WebpackUserscriptPlugin({
+        headers: {
+          name: packageInfo.fullDisplayName || getPurePackageName(),
+          match: ['https://*.beta.waze.com/*editor*', 'https://beta.waze.com/*editor*'],
+          grant: ['GM_setValue', 'GM_getValue', 'GM_deleteValue', 'GM_xmlhttpRequest'],
+          connect: [packageInfo.useWazeSpace && 'us.waze.space'].filter(Boolean),
+          require: [packageInfo.useWazeSpace && 'https://wazespace.github.io/userscripts-lib/index.js'].filter(Boolean),
+        },
+        metajs: true,
+        proxyScript: {
+          baseURL: 'file://' + path.resolve(__dirname, 'dist') + '/',
+          filename: '[basename].proxy.user.js',
+          enable: () => isDev,
+        },
+      }),
+    ],
+    optimization: {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            mangle: false,
+          },
+        }),
+      ],
+    },
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: 'babel-loader',
+          exclude: /node_modules/,
+        },
+      ],
+    },
+    resolve: {
+      extensions: ['.js', '.ts', '.tsx'],
+      alias: {
+        '@': path.resolve(__dirname, 'src'),
+      },
+    },
+    target: 'web',
+  };
+};
