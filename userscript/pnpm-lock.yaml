@@ -12,8 +12,8 @@ dependencies:
     specifier: ^11.11.0
     version: 11.11.0(@emotion/react@11.11.4)(@types/react@17.0.76)(react@18.2.0)
   '@wazespace/wme-react-components':
-    specifier: ^1.1.1
-    version: 1.1.1
+    specifier: ^1.2.1
+    version: 1.2.1
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
@@ -24,7 +24,7 @@ dependencies:
     specifier: ^6.18.0
     version: 6.22.2(react-dom@18.2.0)(react@18.2.0)
   usehooks-ts:
-    specifier: ^2.10.0
+    specifier: ^2.16.0
     version: 2.16.0(react@18.2.0)
 
 devDependencies:
@@ -913,8 +913,8 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
 
-  /@wazespace/wme-react-components@1.1.1:
-    resolution: {integrity: sha512-OsZC2nzXJpoBU7K+I5Si8P/nBwMs75nc6+qtgdxvazWc7WTVu1bttPnT4CIyP0ZbivQJQuuoMm52uUDSgZbztg==}
+  /@wazespace/wme-react-components@1.2.1:
+    resolution: {integrity: sha512-bVNsqJSxG9TdlKADPuB+Jy8uWeybMn27KfDGH8axgPJQEfo7fm0N4YTATQVeq9adAm5DSPF+ups8y5BGyUJZig==}
     dependencies:
       clsx: 2.1.0
     dev: false
