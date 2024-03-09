@@ -19,7 +19,7 @@ const PreferencesContentPanel = styled('div')({
 });
 
 interface PreferencesProps {
-  onClosed: EventHandler<SyntheticEvent<CustomEvent>>;
+  onClosed?(event: CustomEvent): void;
 }
 export function PreferencesList(props: PreferencesProps) {
   const t = useTranslate();
