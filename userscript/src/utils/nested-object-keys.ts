@@ -1,4 +1,8 @@
-type IsObject<T> = T extends object ? (T extends string | number | boolean | symbol ? false : true) : false;
+type IsObject<T> = T extends object
+  ? T extends string | number | boolean | symbol
+    ? false
+    : true
+  : false;
 
 type DefaultFlattenKeysTypes = string | number | boolean;
 export type FlattenKeys<
@@ -15,7 +19,10 @@ export type FlattenKeys<
     }[keyof T]
   : '';
 
-export type GetNestedType<T, Key extends string> = Key extends `${infer K}.${infer Rest}`
+export type GetNestedType<
+  T,
+  Key extends string,
+> = Key extends `${infer K}.${infer Rest}`
   ? K extends keyof T
     ? GetNestedType<T[K], Rest>
     : never

@@ -6,6 +6,13 @@ import { translations } from './resources/localization';
 export function App() {
   useInjectTranslations(translations);
 
-  return <>{createPortal(<Preferences />, document.querySelector('#sidepanel-prefs.tab-pane .settings'))}</>;
+  return (
+    <>
+      {createPortal(
+        <Preferences />,
+        document.querySelector('#sidepanel-prefs.tab-pane .settings'),
+      )}
+    </>
+  );
 }
 App.displayName = `userscript(JunctionBoxUtils-${process.env.SCRIPT_ID})`;

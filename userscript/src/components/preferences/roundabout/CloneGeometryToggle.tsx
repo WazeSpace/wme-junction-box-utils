@@ -8,7 +8,10 @@ export function CloneGeometryToggle() {
 
   return (
     <div className="form-group">
-      <WzCheckbox checked={isEnabled} onChange={(e) => setEnabled((e.target as HTMLInputElement).checked)}>
+      <WzCheckbox
+        checked={isEnabled}
+        onChange={(e) => setEnabled((e.target as HTMLInputElement).checked)}
+      >
         {t('jb_utils.user.prefs.roundabout.clone_geometry_toggle.label')}
       </WzCheckbox>
     </div>

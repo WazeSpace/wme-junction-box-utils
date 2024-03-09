@@ -1,6 +1,10 @@
 import { Preferences } from '@/preferences';
 import styled from '@emotion/styled';
-import { WzCheckableChip, WzChipSelect, WzLabel } from '@wazespace/wme-react-components';
+import {
+  WzCheckableChip,
+  WzChipSelect,
+  WzLabel,
+} from '@wazespace/wme-react-components';
 import { usePreference, useTranslate } from '@/hooks';
 import { WzChipSelectProps } from '@wazespace/wme-react-components/build/wme-intrinsic-elements-props';
 import { useState } from 'react';
@@ -20,7 +24,9 @@ export function AppliedInstructionBadgeTypePreference() {
     'roundabout.instruction_normalization.applied_instruction_badge_type',
   );
 
-  const handleBadgeTypeChange: WzChipSelectProps['onChipSelected'] = (event) => {
+  const handleBadgeTypeChange: WzChipSelectProps['onChipSelected'] = (
+    event,
+  ) => {
     if (!event.detail.value) {
       event.preventDefault();
       return;
@@ -33,11 +39,22 @@ export function AppliedInstructionBadgeTypePreference() {
   return (
     <div className="form-group">
       <WzLabel>
-        {t('jb_utils.user.prefs.roundabout.instruction_normalization.applied_instruction_badge_type.label')}
+        {t(
+          'jb_utils.user.prefs.roundabout.instruction_normalization.applied_instruction_badge_type.label',
+        )}
       </WzLabel>
-      <SpaciousWzChipSelect value={selectedBadgeType} onChipSelected={handleBadgeTypeChange}>
-        <BadgeTypeCheckableChip checked={selectedBadgeType === 'graphical'} value="graphical" />
-        <BadgeTypeCheckableChip checked={selectedBadgeType === 'textual'} value="textual" />
+      <SpaciousWzChipSelect
+        value={selectedBadgeType}
+        onChipSelected={handleBadgeTypeChange}
+      >
+        <BadgeTypeCheckableChip
+          checked={selectedBadgeType === 'graphical'}
+          value="graphical"
+        />
+        <BadgeTypeCheckableChip
+          checked={selectedBadgeType === 'textual'}
+          value="textual"
+        />
       </SpaciousWzChipSelect>
     </div>
   );

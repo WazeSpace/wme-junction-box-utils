@@ -2,13 +2,23 @@ import { WzCard } from '@wazespace/wme-react-components';
 import clsx from 'clsx';
 import { ComponentProps, CSSProperties, ReactNode } from 'react';
 
-interface ListItemCardProps extends Omit<ComponentProps<typeof WzCard>, 'elevationOnHover' | 'className'> {
+interface ListItemCardProps
+  extends Omit<
+    ComponentProps<typeof WzCard>,
+    'elevationOnHover' | 'className'
+  > {
   leftIcon: string;
   rightIcon?: string;
   rightIconStyle?: CSSProperties;
   children: ReactNode;
 }
-export function ListItemCard({ leftIcon, rightIcon, rightIconStyle, children, ...rest }: ListItemCardProps) {
+export function ListItemCard({
+  leftIcon,
+  rightIcon,
+  rightIconStyle,
+  children,
+  ...rest
+}: ListItemCardProps) {
   return (
     <WzCard elevationOnHover={4} className="list-item-card" {...rest}>
       <div className="list-item-card-layout">

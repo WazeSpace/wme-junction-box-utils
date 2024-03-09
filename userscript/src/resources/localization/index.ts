@@ -5,7 +5,9 @@ export const translations = { en };
 const availableLocales = new Set(Object.keys(translations));
 const defaultLocale: keyof typeof translations = 'en';
 
-function getDialectsFromSpecificToUnspecific(locale: string): readonly string[] {
+function getDialectsFromSpecificToUnspecific(
+  locale: string,
+): readonly string[] {
   const variants = new Set<string>();
   while (locale) {
     variants.add(locale);

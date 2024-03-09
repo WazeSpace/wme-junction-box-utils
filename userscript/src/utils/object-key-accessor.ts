@@ -2,10 +2,10 @@ import { FlattenKeys, GetNestedType } from '@/utils/nested-object-keys';
 
 const KEY_DELIMITER = '.';
 
-export function getObjectItemByNestedKey<T extends object, K extends FlattenKeys<T>>(
-  obj: T,
-  key: K,
-): GetNestedType<T, K> {
+export function getObjectItemByNestedKey<
+  T extends object,
+  K extends FlattenKeys<T>,
+>(obj: T, key: K): GetNestedType<T, K> {
   const keyComponents = key.split(KEY_DELIMITER);
 
   return keyComponents.reduce((nestedObj, keyComponent) => {
@@ -17,7 +17,11 @@ export function getObjectItemByNestedKey<T extends object, K extends FlattenKeys
   }, obj);
 }
 
-export function setObjectItemByNestedKey<T extends object>(obj: T, key: string, value: any): T {
+export function setObjectItemByNestedKey<T extends object>(
+  obj: T,
+  key: string,
+  value: any,
+): T {
   const keyComponents = key.split(KEY_DELIMITER);
 
   // Clone the object so keep the original object immutable

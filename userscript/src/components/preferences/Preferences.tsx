@@ -8,7 +8,9 @@ export function Preferences() {
   return (
     <>
       <PreferencesEntryCard onClick={setShowPreferences.bind(null, true)} />
-      {showPreferences && <PreferencesList onClosed={setShowPreferences.bind(null, false)} />}
+      {showPreferences && (
+        <PreferencesList onClosed={setShowPreferences.bind(null, false)} />
+      )}
     </>
   );
 }

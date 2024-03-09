@@ -15,7 +15,9 @@ function addNonExistingTranslationKeys(
 
   for (const translationsKey in additionalTranslations) {
     if (destination.hasOwnProperty(translationsKey)) {
-      Logger.warn(`WazeMapEditor already has the translation key "${translationsKey}", skipping...`);
+      Logger.warn(
+        `WazeMapEditor already has the translation key "${translationsKey}", skipping...`,
+      );
       continue;
     }
 
@@ -26,13 +28,19 @@ function addNonExistingTranslationKeys(
   return Array.from(appendedTranslationKeys);
 }
 
-function removeTranslationsByKeys(translationsObject: WazeMapEditorTranslations, translationKeys: readonly string[]) {
+function removeTranslationsByKeys(
+  translationsObject: WazeMapEditorTranslations,
+  translationKeys: readonly string[],
+) {
   for (const translationKey of translationKeys) {
-    if (translationsObject.hasOwnProperty(translationKey)) delete translationsObject[translationKey];
+    if (translationsObject.hasOwnProperty(translationKey))
+      delete translationsObject[translationKey];
   }
 }
 
-export function useInjectTranslations(translationsToInject: WazeMapEditorTranslations) {
+export function useInjectTranslations(
+  translationsToInject: WazeMapEditorTranslations,
+) {
   const localeToInject = useMemo(() => {
     const { I18n } = getWazeMapEditorWindow();
     return getBestSuitableLocale(I18n.locale);
@@ -40,7 +48,9 @@ export function useInjectTranslations(translationsToInject: WazeMapEditorTransla
 
   useSyncEffect(() => {
     const { I18n } = getWazeMapEditorWindow();
-    const wmeTranslations = I18n.translations[I18n.locale] as WazeMapEditorTranslations;
+    const wmeTranslations = I18n.translations[
+      I18n.locale
+    ] as WazeMapEditorTranslations;
 
     const appendedTranslationKeys = addNonExistingTranslationKeys(
       wmeTranslations,

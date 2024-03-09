@@ -1,6 +1,9 @@
 import { EffectCallback, DependencyList, useRef } from 'react';
 
-function compareDependencies(a: DependencyList | null | undefined, b: DependencyList | null | undefined) {
+function compareDependencies(
+  a: DependencyList | null | undefined,
+  b: DependencyList | null | undefined,
+) {
   if (!a || !b) return false;
   if (a.length !== b.length) return false;
   for (let i = 0; i < a.length; i++) {

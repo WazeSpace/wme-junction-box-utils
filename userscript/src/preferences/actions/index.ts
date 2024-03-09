@@ -1,4 +1,8 @@
-import { SetPreferenceAction, setPreferenceActionReducer, createSetPreferenceAction } from './set-preference';
+import {
+  SetPreferenceAction,
+  setPreferenceActionReducer,
+  createSetPreferenceAction,
+} from './set-preference';
 
 export type PreferencesAction = SetPreferenceAction;
 

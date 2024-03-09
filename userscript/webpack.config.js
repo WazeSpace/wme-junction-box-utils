@@ -27,21 +27,43 @@ module.exports = (env) => {
       filename: `${getPurePackageName()}.user.js`,
     },
     plugins: [
-      new NormalModuleReplacementPlugin(/^react$/, path.join(__dirname, './react-module-wrapper.js')),
-      new NormalModuleReplacementPlugin(/^react-dom$/, path.join(__dirname, './react-dom-module-wrapper.js')),
+      new NormalModuleReplacementPlugin(
+        /^react$/,
+        path.join(__dirname, './react-module-wrapper.js'),
+      ),
+      new NormalModuleReplacementPlugin(
+        /^react-dom$/,
+        path.join(__dirname, './react-dom-module-wrapper.js'),
+      ),
       new DefinePlugin({
         'process.env.VERSION': JSON.stringify(packageInfo.version),
         'process.env.SCRIPT_ID': JSON.stringify(nanoid()),
-        'process.env.SCRIPT_FULL_NAME': JSON.stringify(packageInfo.fullDisplayName),
+        'process.env.SCRIPT_FULL_NAME': JSON.stringify(
+          packageInfo.fullDisplayName,
+        ),
         'process.env.SCRIPT_NAME': JSON.stringify(packageInfo.displayName),
       }),
       new WebpackUserscriptPlugin({
         headers: {
           name: packageInfo.fullDisplayName || getPurePackageName(),
-          match: ['https://*.waze.com/*editor*', 'https://waze.com/*editor*', 'https://*.wazestg.com/*editor*'],
-          grant: ['GM_setValue', 'GM_getValue', 'GM_deleteValue', 'GM_xmlhttpRequest'],
-          connect: [packageInfo.useWazeSpace && 'us.waze.space'].filter(Boolean),
-          require: [packageInfo.useWazeSpace && 'https://wazespace.github.io/userscripts-lib/index.js'].filter(Boolean),
+          match: [
+            'https://*.waze.com/*editor*',
+            'https://waze.com/*editor*',
+            'https://*.wazestg.com/*editor*',
+          ],
+          grant: [
+            'GM_setValue',
+            'GM_getValue',
+            'GM_deleteValue',
+            'GM_xmlhttpRequest',
+          ],
+          connect: [packageInfo.useWazeSpace && 'us.waze.space'].filter(
+            Boolean,
+          ),
+          require: [
+            packageInfo.useWazeSpace &&
+              'https://wazespace.github.io/userscripts-lib/index.js',
+          ].filter(Boolean),
         },
         metajs: true,
         proxyScript: {

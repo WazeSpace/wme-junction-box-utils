@@ -70,7 +70,11 @@ export class Object {
   isDeleted(): boolean;
   isGeometryEditable(): boolean;
   isInScope(): boolean;
-  isInUse(useData?: { keepUnsaved?: boolean; keepPersistent?: boolean; keepSelected?: boolean }): boolean;
+  isInUse(useData?: {
+    keepUnsaved?: boolean;
+    keepPersistent?: boolean;
+    keepSelected?: boolean;
+  }): boolean;
   isInserted(): boolean;
   isNew(): boolean;
   isOutOfScope(): boolean;
