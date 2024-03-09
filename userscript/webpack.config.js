@@ -38,7 +38,7 @@ module.exports = (env) => {
       new WebpackUserscriptPlugin({
         headers: {
           name: packageInfo.fullDisplayName || getPurePackageName(),
-          match: ['https://*.beta.waze.com/*editor*', 'https://beta.waze.com/*editor*'],
+          match: ['https://*.waze.com/*editor*', 'https://waze.com/*editor*', 'https://*.wazestg.com/*editor*'],
           grant: ['GM_setValue', 'GM_getValue', 'GM_deleteValue', 'GM_xmlhttpRequest'],
           connect: [packageInfo.useWazeSpace && 'us.waze.space'].filter(Boolean),
           require: [packageInfo.useWazeSpace && 'https://wazespace.github.io/userscripts-lib/index.js'].filter(Boolean),
