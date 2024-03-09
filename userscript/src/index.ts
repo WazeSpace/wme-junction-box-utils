@@ -1,4 +1,4 @@
-import { getWazeMapEditorWindow } from './@waze/window';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import bootstrap from './main';
 
 function waitForEvent<N extends Node>(node: N, eventName: string, skip = false) {

@@ -1,5 +1,6 @@
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { useMemo } from 'react';
-import { getWazeMapEditorWindow, WazeMapEditorWindow } from '@/@waze/window';
+import { WazeMapEditorWindow } from '@/@waze/window';
 import { Logger } from '@/logger';
 import { getBestSuitableLocale } from '@/resources/localization';
 import { useSyncEffect } from './useSyncEffect';

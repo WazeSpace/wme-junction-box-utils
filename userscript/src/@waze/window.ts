@@ -50,8 +50,3 @@ export type WazeMapEditorWindow = Window & {
   React: typeof import('react');
   ReactDOM: typeof import('react-dom');
 };
-
-export function getWazeMapEditorWindow(): WazeMapEditorWindow {
-  if ('unsafeWindow' in window) return window.unsafeWindow as WazeMapEditorWindow;
-  return window as any;
-}

@@ -1,4 +1,4 @@
-import { getWazeMapEditorWindow } from '@/@waze/window';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
 export function useTranslate() {
   const { I18n } = getWazeMapEditorWindow();
