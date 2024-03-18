@@ -15,6 +15,12 @@
       ],
       "@/*": ["*"]
     },
+    "lib": [
+      "dom",
+      "es2019",
+      "es2022",
+      "es2023"
+    ],
     "resolveJsonModule": true
   },
   "exclude": [
