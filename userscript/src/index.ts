@@ -1,5 +1,4 @@
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
-import bootstrap from './main';
 
 function waitForEvent<N extends Node>(
   node: N,
@@ -19,5 +18,4 @@ await waitForEvent(
   'wme-initialized',
   getWazeMapEditorWindow().W?.userscripts?.state?.isInitialized,
 );
-// noinspection JSIgnoredPromiseFromCall
-bootstrap();
+import('./main').then(({ default: bootstrap }) => bootstrap());

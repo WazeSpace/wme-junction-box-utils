@@ -2,6 +2,7 @@
 const packageInfo = require('./package.json');
 const path = require('path');
 const { DefinePlugin, NormalModuleReplacementPlugin } = require('webpack');
+const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackUserscriptPlugin = require('webpack-userscript').default;
 const { nanoid } = require('nanoid');
@@ -71,6 +72,9 @@ module.exports = (env) => {
           filename: '[basename].proxy.user.js',
           enable: () => isDev,
         },
+      }),
+      new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1,
       }),
     ],
     optimization: {
