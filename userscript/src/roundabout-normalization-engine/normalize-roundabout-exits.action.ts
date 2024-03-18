@@ -5,7 +5,7 @@ export class NormalizeRoundaboutExitsAction extends ApplyTurnInstructionsFromMap
   actionName = 'NORMALIZE_ROUNDABOUT_EXITS';
 
   generateDescription() {
-    getWazeMapEditorWindow().I18n.t(
+    this._description = getWazeMapEditorWindow().I18n.t(
       'jb_utils.save.changes_log.actions.NormalizeRoundaboutExits',
       {
         exitsCount: this.getSubActions().length,

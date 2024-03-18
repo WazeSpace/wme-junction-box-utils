@@ -5,7 +5,7 @@ export class Action<P = any> {
   protected actionName: string;
 
   private _timestamp: number;
-  private _description: string;
+  protected _description: string;
   private _actionId: number;
 
   constructor(props?: P);
