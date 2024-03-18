@@ -107,6 +107,11 @@ export class RoundaboutNormalizationEngine {
       throw this._createNormalizationForbiddenError(null);
     if (!this.isSegmentConnectsToRoundabout())
       throw this._createNormalizationForbiddenError(null);
+    if (!this._bigJunction) {
+      throw this._createNormalizationForbiddenError(
+        RoundaboutNormalizationForbiddenReason.BigJunctionIsRequired,
+      );
+    }
 
     const turns = getAllTurnsOfBigJunctionFromSegment(
       this._fromSegment,
