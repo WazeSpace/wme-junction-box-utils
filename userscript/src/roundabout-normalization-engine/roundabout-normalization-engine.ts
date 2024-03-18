@@ -131,6 +131,15 @@ export class RoundaboutNormalizationEngine {
   hasExitInstructionBuildError(): boolean {
     return this._exitInstructionsBuildError != null;
   }
+
+  getExitInstructionBuildErrorMessage(): string {
+    if (!this._exitInstructionsBuildError.userLanguageExplanationKey)
+      return null;
+
+    const i18n = getWazeMapEditorWindow().I18n;
+    return i18n.t(this._exitInstructionsBuildError.userLanguageExplanationKey);
+  }
+
   hasSuggestedTurnsWithInstructionsStored(): boolean {
     return this._turnsWithInstructionMap != null;
   }
