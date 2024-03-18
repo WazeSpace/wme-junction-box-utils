@@ -27,9 +27,16 @@ export function getAllJunctionNodesForSegment(
 
 export function isSegmentConnectsToRoundabout(
   segment: SegmentDataModel,
-  direction: 'forward' | 'reverse',
+  direction: 'forward' | 'reverse' | 'any' = 'any',
 ) {
   if (segment.isInRoundabout()) return false;
+  if (direction === 'any') {
+    return (
+      isSegmentConnectsToRoundabout(segment, 'forward') ||
+      isSegmentConnectsToRoundabout(segment, 'reverse')
+    );
+  }
+
   const node = getJunctionNodeFromSegmentDirection(segment, direction);
   return isJunctionNodePartOfRoundabout(node);
 }
