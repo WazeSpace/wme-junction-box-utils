@@ -1,3 +1,5 @@
+import { Geometry } from '@turf/helpers';
+
 interface WmeState {
   isInitialMapDataLoaded: boolean; // if `wme-map-data-loaded` has already been dispatched
   isInitialized: boolean; // if `wme-initialzied` has already been dispatched
@@ -14,4 +16,6 @@ export default interface UserScripts {
   registerSidebarTab(scriptId: string): RegisterSidebarTabResult;
   waitForElementConnected(el: HTMLElement): Promise<void>;
   removeSidebarTab(scriptId: string): void;
+  toGeoJSONGeometry<G extends Geometry = Geometry>(openLayersGeometry: any): G;
+  toOLGeometry(geometry: Geometry): any;
 }

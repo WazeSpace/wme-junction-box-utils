@@ -44,7 +44,8 @@
     "save": {
       "changes_log": {
         "actions": {
-          "NormalizeRoundaboutExits": "Normalize %{exitsCount} roundabout exit instructions"
+          "NormalizeRoundaboutExits": "Normalize %{exitsCount} roundabout exit instructions",
+          "UpdateBigJunctionGeometryToRoundabout": "Roundabout geometry applied"
         }
       }
     }

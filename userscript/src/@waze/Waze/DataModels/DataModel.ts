@@ -14,6 +14,8 @@ export interface DataModel<
   type: string;
   model: any;
   getAttribute<N extends keyof A>(attributeName: N): A[N];
+  getUniqueIdentifier(): { objectId: A['id']; objectType: string };
+  getUniqueID(): string;
 }
 
 export type ExtractAttributesFromDataModel<T> =

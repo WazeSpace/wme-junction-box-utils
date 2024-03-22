@@ -14,6 +14,8 @@ export class Action<P = any> {
   accept(dataModel: any): void;
   doAction(dataModel: any): boolean;
   undoSupported(): boolean;
+  undoAction(dataModel: any): void;
+  redoAction(dataModel: any): void;
   flat(): Action<P>[];
   getBounds(): null;
   getAffectedUniqueIds(dataModel: any): string[];

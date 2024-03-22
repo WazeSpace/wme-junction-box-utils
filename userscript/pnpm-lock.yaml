@@ -14,6 +14,9 @@ dependencies:
   '@turf/helpers':
     specifier: ^6.5.0
     version: 6.5.0
+  '@turf/transform-scale':
+    specifier: ^6.5.0
+    version: 6.5.0
   '@wazespace/wme-react-components':
     specifier: ^1.2.4
     version: 1.2.4
@@ -727,8 +730,83 @@ packages:
     engines: {node: '>=14.0.0'}
     dev: false
 
+  /@turf/bbox@6.5.0:
+    resolution: {integrity: sha512-RBbLaao5hXTYyyg577iuMtDB8ehxMlUqHEJiMs8jT1GHkFhr6sYre3lmLsPeYEi/ZKj5TP5tt7fkzNdJ4GIVyw==}
+    dependencies:
+      '@turf/helpers': 6.5.0
+      '@turf/meta': 6.5.0
+    dev: false
+
+  /@turf/center@6.5.0:
+    resolution: {integrity: sha512-T8KtMTfSATWcAX088rEDKjyvQCBkUsLnK/Txb6/8WUXIeOZyHu42G7MkdkHRoHtwieLdduDdmPLFyTdG5/e7ZQ==}
+    dependencies:
+      '@turf/bbox': 6.5.0
+      '@turf/helpers': 6.5.0
+    dev: false
+
+  /@turf/centroid@6.5.0:
+    resolution: {integrity: sha512-MwE1oq5E3isewPprEClbfU5pXljIK/GUOMbn22UM3IFPDJX0KeoyLNwghszkdmFp/qMGL/M13MMWvU+GNLXP/A==}
+    dependencies:
+      '@turf/helpers': 6.5.0
+      '@turf/meta': 6.5.0
+    dev: false
+
+  /@turf/clone@6.5.0:
+    resolution: {integrity: sha512-mzVtTFj/QycXOn6ig+annKrM6ZlimreKYz6f/GSERytOpgzodbQyOgkfwru100O1KQhhjSudKK4DsQ0oyi9cTw==}
+    dependencies:
+      '@turf/helpers': 6.5.0
+    dev: false
+
   /@turf/helpers@6.5.0:
     resolution: {integrity: sha512-VbI1dV5bLFzohYYdgqwikdMVpe7pJ9X3E+dlr425wa2/sMJqYDhTO++ec38/pcPvPE6oD9WEEeU3Xu3gza+VPw==}
+    dev: false
+
+  /@turf/invariant@6.5.0:
+    resolution: {integrity: sha512-Wv8PRNCtPD31UVbdJE/KVAWKe7l6US+lJItRR/HOEW3eh+U/JwRCSUl/KZ7bmjM/C+zLNoreM2TU6OoLACs4eg==}
+    dependencies:
+      '@turf/helpers': 6.5.0
+    dev: false
+
+  /@turf/meta@6.5.0:
+    resolution: {integrity: sha512-RrArvtsV0vdsCBegoBtOalgdSOfkBrTJ07VkpiCnq/491W67hnMWmDu7e6Ztw0C3WldRYTXkg3SumfdzZxLBHA==}
+    dependencies:
+      '@turf/helpers': 6.5.0
+    dev: false
+
+  /@turf/rhumb-bearing@6.5.0:
+    resolution: {integrity: sha512-jMyqiMRK4hzREjQmnLXmkJ+VTNTx1ii8vuqRwJPcTlKbNWfjDz/5JqJlb5NaFDcdMpftWovkW5GevfnuzHnOYA==}
+    dependencies:
+      '@turf/helpers': 6.5.0
+      '@turf/invariant': 6.5.0
+    dev: false
+
+  /@turf/rhumb-destination@6.5.0:
+    resolution: {integrity: sha512-RHNP1Oy+7xTTdRrTt375jOZeHceFbjwohPHlr9Hf68VdHHPMAWgAKqiX2YgSWDcvECVmiGaBKWus1Df+N7eE4Q==}
+    dependencies:
+      '@turf/helpers': 6.5.0
+      '@turf/invariant': 6.5.0
+    dev: false
+
+  /@turf/rhumb-distance@6.5.0:
+    resolution: {integrity: sha512-oKp8KFE8E4huC2Z1a1KNcFwjVOqa99isxNOwfo4g3SUABQ6NezjKDDrnvC4yI5YZ3/huDjULLBvhed45xdCrzg==}
+    dependencies:
+      '@turf/helpers': 6.5.0
+      '@turf/invariant': 6.5.0
+    dev: false
+
+  /@turf/transform-scale@6.5.0:
+    resolution: {integrity: sha512-VsATGXC9rYM8qTjbQJ/P7BswKWXHdnSJ35JlV4OsZyHBMxJQHftvmZJsFbOqVtQnIQIzf2OAly6rfzVV9QLr7g==}
+    dependencies:
+      '@turf/bbox': 6.5.0
+      '@turf/center': 6.5.0
+      '@turf/centroid': 6.5.0
+      '@turf/clone': 6.5.0
+      '@turf/helpers': 6.5.0
+      '@turf/invariant': 6.5.0
+      '@turf/meta': 6.5.0
+      '@turf/rhumb-bearing': 6.5.0
+      '@turf/rhumb-destination': 6.5.0
+      '@turf/rhumb-distance': 6.5.0
     dev: false
 
   /@types/eslint-scope@3.7.7:

@@ -61,3 +61,53 @@ export function getSegmentGeometryForDirection(
     ? clonedCoordinates
     : clonedCoordinates.reverse();
 }
+
+export function isBidirectionalSegment(segment: SegmentDataModel): boolean {
+  return (
+    segment.getAttribute('fwdDirection') && segment.getAttribute('revDirection')
+  );
+}
+
+export function getSegmentTravelDirection(
+  segment: SegmentDataModel,
+): 'forward' | 'reverse' {
+  if (isBidirectionalSegment(segment)) {
+    throw new Error(
+      'Travel direction is not available for bidirectional segments',
+    );
+  }
+
+  if (segment.getAttribute('fwdDirection')) return 'forward';
+  if (segment.getAttribute('revDirection')) return 'reverse';
+
+  throw new Error(
+    'Travel direction is not available probably due to a data model structure error',
+  );
+}
+
+export function getSegmentGeometryInTravelDirection(
+  segment: SegmentDataModel,
+): number[][] {
+  return getSegmentGeometryForDirection(
+    segment,
+    getSegmentTravelDirection(segment),
+  );
+}
+
+export function getSegmentDestinationNodeInTravelDirection(
+  segment: SegmentDataModel,
+): JunctionNodeDataModel {
+  return getJunctionNodeFromSegmentDirection(
+    segment,
+    getSegmentTravelDirection(segment),
+  );
+}
+
+export function getSegmentFromNodeInTravelDirection(
+  segment: SegmentDataModel,
+): JunctionNodeDataModel {
+  return getJunctionNodeFromSegmentDirection(
+    segment,
+    getSegmentTravelDirection(segment) === 'forward' ? 'reverse' : 'forward',
+  );
+}
