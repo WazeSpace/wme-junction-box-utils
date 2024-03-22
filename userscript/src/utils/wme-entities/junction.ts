@@ -8,7 +8,7 @@ export function getAllJunctionSegments(
   junction: JunctionDataModel,
 ): SegmentDataModel[] {
   const segmentRepository = junction.model.getRepository('segment');
-  return segmentRepository.getByIds(junction.getSegmentIds());
+  return segmentRepository.getByIds(junction.getSegmentsIds());
 }
 
 export function getAllJunctionNodes(

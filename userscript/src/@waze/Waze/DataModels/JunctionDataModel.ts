@@ -11,5 +11,5 @@ export interface JunctionDataModelAttributes extends DataModelAttributes {
 
 export interface JunctionDataModel
   extends DataModel<JunctionDataModelAttributes> {
-  getSegmentIds(): number[];
+  getSegmentsIds(): number[];
 }
