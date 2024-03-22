@@ -1,3 +1,6 @@
+import {
+  BackgroundActions
+} from '@/components/background-actions/BackgroundActions';
 import { EditPanel } from '@/components/edit-panel/EditPanel';
 import { RoundaboutExitInstructionNormalizationTemplate } from '@/components/edit-panel/roundabout-exit-instruction-normalization/template';
 import { RoundaboutPerimeterPolygonTemplate } from '@/components/edit-panel/roundabout-perimeter-geometry/template';
@@ -23,6 +26,7 @@ export function App() {
           RoundaboutPerimeterPolygonTemplate,
         ]}
       />
+      <BackgroundActions />
     </SelectedDataModelsContextProvider>
   );
 }
