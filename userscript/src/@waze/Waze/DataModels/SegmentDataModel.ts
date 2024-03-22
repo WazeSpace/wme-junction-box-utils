@@ -2,7 +2,7 @@ import {
   DataModel,
   DataModelAttributes,
 } from '@/@waze/Waze/DataModels/DataModel';
-import { GeoJsonGeometry } from '@/@waze/Waze/interfaces';
+import { LineString } from '@turf/helpers';
 
 export interface SegmentDataModelAttributes extends DataModelAttributes {
   roadType: number;
@@ -43,7 +43,7 @@ export interface SegmentDataModelAttributes extends DataModelAttributes {
   revFlags: number;
   level: number;
   rank: number;
-  geoJSONGeometry: GeoJsonGeometry;
+  geoJSONGeometry: LineString;
   pathIds: number[];
   suggestionPermissions: number;
   geometry: unknown;

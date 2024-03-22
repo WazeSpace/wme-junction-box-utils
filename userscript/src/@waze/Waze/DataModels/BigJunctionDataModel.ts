@@ -3,16 +3,16 @@ import {
   DataModelAttributes,
 } from '@/@waze/Waze/DataModels/DataModel';
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
-import { GeoJsonGeometry } from '@/@waze/Waze/interfaces';
 import { Turn } from '@/@waze/Waze/Model/turn';
 import { Vertex } from '@/@waze/Waze/Vertex';
+import { Polygon } from '@turf/helpers';
 
 export interface BigJunctionDataModelAttributes extends DataModelAttributes {
   segIDs: number[];
   rank: number;
   name: string;
   cityID: number;
-  geoJSONGeometry: GeoJsonGeometry;
+  geoJSONGeometry: Polygon;
   geometry: unknown;
 }
 

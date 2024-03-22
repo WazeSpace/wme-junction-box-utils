@@ -3,10 +3,10 @@ import {
   DataModelAttributes,
 } from '@/@waze/Waze/DataModels/DataModel';
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
-import { GeoJsonGeometry } from '@/@waze/Waze/interfaces';
+import { Point } from '@turf/helpers';
 
 export interface JunctionNodeDataModelAttributes extends DataModelAttributes {
-  geoJSONGeometry: GeoJsonGeometry;
+  geoJSONGeometry: Point;
   geometry: unknown;
   partial: boolean;
   permissions: number;
