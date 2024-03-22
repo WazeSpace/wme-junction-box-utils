@@ -1,5 +1,6 @@
 import { EditPanel } from '@/components/edit-panel/EditPanel';
 import { RoundaboutExitInstructionNormalizationTemplate } from '@/components/edit-panel/roundabout-exit-instruction-normalization/template';
+import { RoundaboutPerimeterPolygonTemplate } from '@/components/edit-panel/roundabout-perimeter-geometry/template';
 import { SelectedDataModelsContextProvider } from '@/contexts/SelectedDataModelsContext';
 import { createPortal } from 'react-dom';
 import { Preferences } from './components/preferences/Preferences';
@@ -16,7 +17,12 @@ export function App() {
         document.querySelector('#sidepanel-prefs.tab-pane .settings'),
       )}
 
-      <EditPanel templates={[RoundaboutExitInstructionNormalizationTemplate]} />
+      <EditPanel
+        templates={[
+          RoundaboutExitInstructionNormalizationTemplate,
+          RoundaboutPerimeterPolygonTemplate,
+        ]}
+      />
     </SelectedDataModelsContextProvider>
   );
 }

@@ -13,6 +13,8 @@ export interface DataModel<
   attributes: A;
   type: string;
   model: any;
+  state: null | 'INSERT' | 'DELETE' | 'UPDATE';
+
   getAttribute<N extends keyof A>(attributeName: N): A[N];
   getUniqueIdentifier(): { objectId: A['id']; objectType: string };
   getUniqueID(): string;

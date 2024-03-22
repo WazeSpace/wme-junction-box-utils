@@ -41,6 +41,11 @@
         }
       }
     },
+    "big_junction": {
+      "actions": {
+        "clone_roundabout_geom": "Roundaboutize"
+      }
+    },
     "save": {
       "changes_log": {
         "actions": {
