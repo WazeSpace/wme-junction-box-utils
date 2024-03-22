@@ -16,8 +16,8 @@ export class Action<P = any> {
   undoSupported(): boolean;
   flat(): Action<P>[];
   getBounds(): null;
-  getAffectedUniqueIds(dataModel: any): number[];
-  getFocusFeatures(dataModel: any): DataModel;
+  getAffectedUniqueIds(dataModel: any): string[];
+  getFocusFeatures(dataModel: any): DataModel[];
   getTimestamp(): number;
   generateDescription(dataModel: any): void;
   getDescription(): string;
