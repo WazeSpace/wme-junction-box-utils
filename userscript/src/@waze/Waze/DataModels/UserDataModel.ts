@@ -17,6 +17,15 @@ export interface UserManagedArea {
   name: string;
 }
 
+
+/*
+ * `email`: Represents the primary email address associated with the user's account.
+ * This attribute is defined by Waze and is essential for replicating user data accurately.
+ *
+ * `emailAddress`: May serve a specific or secondary role distinct from `email`. The exact purpose
+ * is defined by Waze, and both attributes are necessary to replicate the user data models accurately.
+ * Further clarification on the distinct roles of these attributes should be sought from Waze documentation or support.
+ */
 export interface UserDataModelAttributes extends DataModelAttributes {
   adOperator: boolean;
   anonymous: boolean;
