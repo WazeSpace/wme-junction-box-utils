@@ -1,3 +1,5 @@
+export type DefaultDataModelPermissionFlags = 'DELETE' | 'EDIT_PROPERTIES';
+
 export interface DataModelAttributes {
   id: number;
   createdBy: number;
@@ -9,12 +11,15 @@ export interface DataModelAttributes {
 
 export interface DataModel<
   A extends DataModelAttributes = DataModelAttributes,
+  PK extends string | number | symbol = DefaultDataModelPermissionFlags,
 > {
   attributes: A;
   type: string;
   model: any;
   state: null | 'INSERT' | 'DELETE' | 'UPDATE';
+  permissionFlags: Record<PK, number>;
 
+  isAllowed(permission: PK): boolean;
   getAttribute<N extends keyof A>(attributeName: N): A[N];
   getUniqueIdentifier(): { objectId: A['id']; objectType: string };
   getUniqueID(): string;
