@@ -2,11 +2,12 @@ import {
   DataModel,
   DataModelAttributes,
 } from '@/@waze/Waze/DataModels/DataModel';
+import { RoadType } from '../enums';
 import { LineString } from '@turf/helpers';
 
 export interface SegmentDataModelAttributes extends DataModelAttributes {
-  roadType: number;
-  routingRoadType: number;
+  roadType: RoadType;
+  routingRoadType: RoadType;
   separator: boolean;
   lockRank: number;
   validated: boolean;
