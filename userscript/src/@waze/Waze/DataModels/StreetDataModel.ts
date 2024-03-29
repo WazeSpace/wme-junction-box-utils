@@ -2,7 +2,6 @@ import {
   DataModel,
   DataModelAttributes,
 } from '@/@waze/Waze/DataModels/DataModel';
-import { SegmentDataModelAttributes } from '@/@waze/Waze/DataModels/SegmentDataModel';
 
 export interface StreetDataModelAttributes extends DataModelAttributes {
   cityID: number;
@@ -13,7 +12,7 @@ export interface StreetDataModelAttributes extends DataModelAttributes {
   signType: number;
 }
 
-export interface StreetDataModel extends DataModel<SegmentDataModelAttributes> {
+export interface StreetDataModel extends DataModel<StreetDataModelAttributes> {
   getName(): string;
   getSuggestionStatus(): unknown;
   get hasRoadShield(): boolean;
