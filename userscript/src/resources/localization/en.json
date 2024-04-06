@@ -60,7 +60,8 @@
       "changes_log": {
         "actions": {
           "NormalizeRoundaboutExits": "Normalize %{exitsCount} roundabout exit instructions",
-          "UpdateBigJunctionGeometryToRoundabout": "Roundabout geometry applied"
+          "UpdateBigJunctionGeometryToRoundabout": "Roundabout geometry applied",
+          "UpdateBigJunction": "Update Junction Box"
         }
       }
     }

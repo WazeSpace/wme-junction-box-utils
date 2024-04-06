@@ -6,8 +6,10 @@ import {
 import { UpdateFeatureAddressAction } from '@/@waze/Waze/actions/update-feature-address.action';
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { CountryDataModel } from '@/@waze/Waze/DataModels/CountryDataModel';
+import { DataModel } from '@/@waze/Waze/DataModels/DataModel';
 import { StateDataModel } from '@/@waze/Waze/DataModels/StateDataModel';
 import { Turn } from '@/@waze/Waze/Model/turn';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
 interface UpdateBigJunctionActionAttributes {
   turns: Turn[];
@@ -16,7 +18,7 @@ interface UpdateBigJunctionActionAttributes {
   stateName?: string;
   countryName: string;
 }
-export class UpdateBigJunctionAction extends MultiAction {
+export class UpdateBigJunctionAction extends MultiAction.Base {
   actionName = 'JBU_UPDATE_BIG_JUNCTION_ACTION';
 
   constructor(
@@ -88,5 +90,23 @@ export class UpdateBigJunctionAction extends MultiAction {
   private _getDefaultState() {
     const states: StateDataModel[] = this._dataModel.states.getObjectArray();
     return states.find((state) => state.getAttribute('isDefault'));
+  }
+
+  generateDescription(): void {
+    this._description = getWazeMapEditorWindow().I18n.t(
+      'jb_utils.save.changes_log.actions.UpdateBigJunction',
+    );
+  }
+
+  getFocusFeatures(dataModel: any): DataModel[] {
+    return this.getSubActions().flatMap((action) =>
+      action.getFocusFeatures(dataModel),
+    );
+  }
+
+  getAffectedUniqueIds(dataModel: any): string[] {
+    return this.getSubActions().flatMap((action) =>
+      action.getAffectedUniqueIds(dataModel),
+    );
   }
 }
