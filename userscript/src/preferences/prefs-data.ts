@@ -1,4 +1,5 @@
 export type Preferences = {
+  master_disable: boolean;
   prefs_location: 'tab' | 'wme-prefs';
   roundabout: {
     clone_geometry: boolean;
@@ -9,6 +10,7 @@ export type Preferences = {
 };
 
 export const defaultPreferences: Preferences = {
+  master_disable: false,
   prefs_location: 'tab',
   roundabout: {
     clone_geometry: false,

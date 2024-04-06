@@ -6,29 +6,30 @@ import { EditPanel } from '@/components/edit-panel/EditPanel';
 import { RoundaboutExitInstructionNormalizationTemplate } from '@/components/edit-panel/roundabout-exit-instruction-normalization/template';
 import { RoundaboutPerimeterPolygonTemplate } from '@/components/edit-panel/roundabout-perimeter-geometry/template';
 import { SelectedDataModelsContextProvider } from '@/contexts/SelectedDataModelsContext';
-import { createPortal } from 'react-dom';
 import { Preferences } from './components/preferences/Preferences';
-import { useInjectTranslations } from './hooks';
+import { useInjectTranslations, usePreference } from './hooks';
 import { translations } from './resources/localization';
 
 export function App() {
   useInjectTranslations(translations);
+  const [isMasterDisabled] = usePreference('master_disable');
 
   return (
     <SelectedDataModelsContextProvider>
-      {createPortal(
-        <Preferences />,
-        document.querySelector('#sidepanel-prefs.tab-pane .settings'),
-      )}
+      <Preferences />
 
-      <EditPanel
-        templates={[
-          RoundaboutExitInstructionNormalizationTemplate,
-          RoundaboutPerimeterPolygonTemplate,
-          BigJunctionPropsBackupTemplate,
-        ]}
-      />
-      <BackgroundActions />
+      {!isMasterDisabled && (
+        <>
+          <EditPanel
+            templates={[
+              RoundaboutExitInstructionNormalizationTemplate,
+              RoundaboutPerimeterPolygonTemplate,
+              BigJunctionPropsBackupTemplate,
+            ]}
+          />
+          <BackgroundActions />
+        </>
+      )}
     </SelectedDataModelsContextProvider>
   );
 }

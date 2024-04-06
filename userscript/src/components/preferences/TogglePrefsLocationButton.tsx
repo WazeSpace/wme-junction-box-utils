@@ -25,15 +25,13 @@ export function TogglePrefsLocationButton() {
   };
 
   return (
-    <div className="form-group">
-      <WzButton
-        onClick={togglePrefsLocation}
-        size="sm"
-        color="secondary"
-        style={{ width: '100%' }}
-      >
-        {t(`jb_utils.user.prefs.prefs_location.move_to.${moveToLocation}`)}
-      </WzButton>
-    </div>
+    <WzButton
+      onClick={togglePrefsLocation}
+      size="sm"
+      color="secondary"
+      style={{ width: '100%' }}
+    >
+      {t(`jb_utils.user.prefs.prefs_location.move_to.${moveToLocation}`)}
+    </WzButton>
   );
 }
