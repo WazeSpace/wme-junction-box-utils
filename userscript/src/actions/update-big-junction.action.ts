@@ -68,9 +68,16 @@ export class UpdateBigJunctionAction extends MultiAction.Base {
     const countries: CountryDataModel[] =
       this._dataModel.countries.getObjectArray();
 
-    return countries.find(
+    const country = countries.find(
       (country) => country.getName() === this._newAttributes.countryName,
     );
+
+    if (!country) {
+      throw new Error(
+        `Country '${this._newAttributes.countryName}' not found.`,
+      );
+    }
+    return country;
   }
 
   private _getStateByAttributes(): StateDataModel {
@@ -80,11 +87,18 @@ export class UpdateBigJunctionAction extends MultiAction.Base {
     const countryId = country.getAttribute('id');
 
     const states: StateDataModel[] = this._dataModel.states.getObjectArray();
-    return states.find(
+    const state = states.find(
       (state) =>
         state.getAttribute('countryID') === countryId &&
         state.getName() === this._newAttributes.stateName,
     );
+
+    if (!state) {
+      throw new Error(
+        `State '${this._newAttributes.stateName}' not found in country ID ${countryId}.`,
+      );
+    }
+    return state;
   }
 
   private _getDefaultState() {
