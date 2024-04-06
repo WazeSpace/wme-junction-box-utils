@@ -46,7 +46,6 @@ function putImmideateSaveErrorResponse(locks: AnyLock[]) {
       );
     });
   };
-  return;
 }
 
 function getOrCreatePostFeaturesInterceptor() {
