@@ -22,11 +22,15 @@ export interface BigJunctionDataModel
   getAddress(dataModel: any): AddressDataModel;
   getSegmentCount(): number;
   getRank(): number;
-  getAllPossibleTurns(): Turn[];
-  getPossibleTurnsBetween(fromVertex: Vertex, toVertex: Vertex): Turn[];
-  getTurnsFrom(fromVertex: Vertex): Turn[];
-  getShortestTurns(): Turn[];
-  getShortestNonImmediateTurns(): Turn[];
-  getShortSegments(): SegmentDataModel[];
+  getAllPossibleTurns(dataModel: any): Turn[];
+  getPossibleTurnsBetween(
+    dataModel: any,
+    fromVertex: Vertex,
+    toVertex: Vertex,
+  ): Turn[];
+  getTurnsFrom(dataModel: any, fromVertex: Vertex): Turn[];
+  getShortestTurns(dataModel: any): Turn[];
+  getShortestNonImmediateTurns(dataModel: any): Turn[];
+  getShortSegments(dataModel: any): SegmentDataModel[];
   canEditTurns(): boolean;
 }
