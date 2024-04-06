@@ -46,6 +46,7 @@
     "lodash": "^4.17.21",
     "nanoid": "^3.3.7",
     "react-router-dom": "^6.22.3",
+    "reflect-metadata": "^0.2.2",
     "typescript-memoize": "^1.1.1",
     "usehooks-ts": "^2.16.0"
   }

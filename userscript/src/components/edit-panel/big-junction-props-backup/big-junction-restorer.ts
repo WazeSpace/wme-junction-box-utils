@@ -1,11 +1,11 @@
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
-import { UpdateBigJunctionAction } from '@/actions';
 import { Logger } from '@/logger';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { Memoize } from 'typescript-memoize';
 import { BigJunctionBackupSnapshot } from './backup-snapshot';
 import { canUserEditTurnGuidanceForTurn } from '@/utils/wme-entities/turn';
 import { BigJunctionSignature } from '@/types/big-junction-signature';
+import { RestoreBigJunctionSnapshotAction } from './restore-big-junction-snapshot.action';
 
 interface BigJunctionRestorerOptions {
   allowMismatchSignatureRestoration?: boolean;
@@ -93,18 +93,13 @@ export class BigJunctionRestorer implements Disposable {
       return;
     }
 
-    const updateBigJunctionAction = new UpdateBigJunctionAction(
-      this._dataModel,
-      this._destinationBigJunction,
-      {
-        turns: this._sourceInformation.turns,
-        name: this._sourceInformation.name,
-        cityName: this._sourceInformation.address.city,
-        stateName: this._sourceInformation.address.state,
-        countryName: this._sourceInformation.address.country,
-      },
+    getWazeMapEditorWindow().W.model.actionManager.add(
+      new RestoreBigJunctionSnapshotAction(
+        this._dataModel,
+        this._destinationBigJunction,
+        this._sourceInformation,
+      ),
     );
-    getWazeMapEditorWindow().W.model.actionManager.add(updateBigJunctionAction);
   }
 
   [Symbol.dispose](): void {

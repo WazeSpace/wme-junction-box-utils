@@ -13,6 +13,8 @@ export interface BigJunctionBackupSnapshot {
   name?: string;
   turns: Turn[];
   signature: BigJunctionSignature;
+  isRestored: boolean;
+  createdFrom: BigJunctionDataModel;
 }
 
 export function createBackupSnapshotFromBigJunction(
@@ -41,5 +43,7 @@ export function createBackupSnapshotFromBigJunction(
       );
     }),
     signature: bjSignature,
+    isRestored: false,
+    createdFrom: bigJunction,
   };
 }

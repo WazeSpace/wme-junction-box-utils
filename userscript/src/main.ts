@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import ReactDOM from 'react-dom';
 import { createElement } from 'react';
 import { App } from './App';
