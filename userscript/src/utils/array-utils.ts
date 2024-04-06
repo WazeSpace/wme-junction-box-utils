@@ -41,3 +41,25 @@ export function groupArrayBy<T, K>(
 
   return map;
 }
+
+export function compareArrays<T, C>(
+  array1: ReadonlyArray<T>,
+  array2: ReadonlyArray<T>,
+  valueExtractor: (item: T) => C,
+) {
+  if (array1.length !== array2.length) return false;
+
+  const testArray = array1.map(valueExtractor);
+  const subjectArray = array2.map(valueExtractor);
+
+  for (const testItem of testArray) {
+    const itemIndexInSubject = subjectArray.indexOf(testItem);
+    // if this item was not found in the array, then return false
+    if (itemIndexInSubject === -1) return false;
+
+    // remove the item from the subject for multi-occurance items
+    subjectArray.splice(itemIndexInSubject, 1);
+  }
+
+  return true;
+}

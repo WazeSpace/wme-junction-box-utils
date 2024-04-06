@@ -17,6 +17,7 @@
     "@babel/plugin-proposal-decorators": "^7.24.1",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
+    "@types/lodash": "^4.17.0",
     "@types/react": "^17.0.76",
     "@types/react-dom": "^17.0.25",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
@@ -42,6 +43,7 @@
     "@turf/transform-scale": "^6.5.0",
     "@wazespace/wme-react-components": "^1.2.4",
     "clsx": "^2.1.0",
+    "lodash": "^4.17.21",
     "nanoid": "^3.3.7",
     "react-router-dom": "^6.22.3",
     "usehooks-ts": "^2.16.0"
