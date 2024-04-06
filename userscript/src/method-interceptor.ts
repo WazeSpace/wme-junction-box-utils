@@ -104,7 +104,7 @@ export class BeforeMethodInvocationInterceptor<
 > {
   static readonly CONTINUE_EXECUTION = Symbol(
     '__CONTINUE_EXECUTION__',
-  ) as unknown as Symbol & { __lock: '__INTERCEPTOR_CONTINUE_EXECUTION__' }; // the reason for this is to prevent from using other symbols
+  ) as unknown as Symbol & { __lock: '__INTERCEPTOR_CONTINUE_EXECUTION__' }; // ensures that only this specific symbol can be used to continue method execution, preventing misuse of other symbols
 
   constructor(
     object: O,
