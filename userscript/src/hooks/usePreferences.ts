@@ -1,6 +1,7 @@
 import {
   defaultPreferences,
   Preferences,
+  PREFERENCES_LS_KEY,
   preferencesReducer,
 } from '@/preferences';
 import {
@@ -13,7 +14,7 @@ import { useLocalStorage } from 'usehooks-ts';
 
 export function usePreferences() {
   const [prefs, setRawPrefs] = useLocalStorage(
-    'r0den.userscripts.jbu.prefs',
+    PREFERENCES_LS_KEY,
     defaultPreferences,
   );
 

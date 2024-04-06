@@ -15,3 +15,5 @@ export const defaultPreferences: Preferences = {
     },
   },
 };
+
+export const PREFERENCES_LS_KEY = 'r0den.userscripts.jbu.prefs';
