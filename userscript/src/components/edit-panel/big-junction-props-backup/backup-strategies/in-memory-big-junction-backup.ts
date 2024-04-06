@@ -9,7 +9,7 @@ export class InMemoryBigJunctionBackupStrategy
   _storedSnapshot: BigJunctionBackupSnapshot = null;
   _unrestoredSnapshotSaveLockSet: boolean = false;
 
-  private _setUnrestoreedSnapshotSaveLock() {
+  private _setUnrestoredSnapshotSaveLock() {
     if (this._unrestoredSnapshotSaveLockSet) return;
 
     SaveLock.addSoftLock(
@@ -32,7 +32,7 @@ export class InMemoryBigJunctionBackupStrategy
 
   saveSnapshot(snapshot: BigJunctionBackupSnapshot): void {
     this._storedSnapshot = snapshot;
-    this._setUnrestoreedSnapshotSaveLock();
+    this._setUnrestoredSnapshotSaveLock();
   }
 
   getSnapshot(): BigJunctionBackupSnapshot {
