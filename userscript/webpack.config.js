@@ -17,8 +17,8 @@ function getPurePackageName() {
   return name;
 }
 
-module.exports = (env) => {
-  const isDev = env.NODE_ENV === 'development';
+module.exports = () => {
+  const isDev = process.env.NODE_ENV === 'development';
 
   return {
     mode: isDev ? 'development' : 'production',
