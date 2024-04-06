@@ -8,7 +8,12 @@ import {
   createSetPreferenceAction,
   PreferencesAction,
 } from '@/preferences/actions';
-import { FlattenKeys, GetNestedType, getObjectItemByNestedKey } from '@/utils';
+import {
+  FlattenKeys,
+  GetNestedType,
+  getObjectItemByNestedKey,
+  mergeDeep,
+} from '@/utils';
 import { Dispatch, SetStateAction, useMemo } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 
@@ -16,6 +21,18 @@ export function usePreferences() {
   const [prefs, setRawPrefs] = useLocalStorage(
     PREFERENCES_LS_KEY,
     defaultPreferences,
+    {
+      serializer(value) {
+        return JSON.stringify(value);
+      },
+      deserializer(rawValue) {
+        const value = JSON.parse(rawValue);
+        return mergeDeep(
+          structuredClone(defaultPreferences),
+          value,
+        ) as Preferences;
+      },
+    },
   );
 
   const reducer = (action: PreferencesAction) => {

@@ -1,8 +1,7 @@
-import { CloneGeometryToggle } from '@/components/preferences/roundabout/CloneGeometryToggle';
-import { AppliedInstructionBadgeTypePreference } from '@/components/preferences/roundabout/instruction-normalization';
 import styled from '@emotion/styled';
 import { WzSectionHeader } from '@wazespace/wme-react-components';
 import { useTranslate } from '@/hooks';
+import { PreferencesContent } from './PreferencesContent';
 
 const PreferencesPanel = styled('div')({
   position: 'absolute',
@@ -35,8 +34,7 @@ export function PreferencesList(props: PreferencesProps) {
       />
 
       <PreferencesContentPanel>
-        <CloneGeometryToggle />
-        <AppliedInstructionBadgeTypePreference />
+        <PreferencesContent />
       </PreferencesContentPanel>
     </PreferencesPanel>
   );

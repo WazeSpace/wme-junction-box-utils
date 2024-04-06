@@ -3,6 +3,12 @@
     "user": {
       "prefs": {
         "card_helper_text": "Update userscript settings",
+        "prefs_location": {
+          "move_to": {
+            "tab": "Move to a dedicated userscript tab",
+            "wme-prefs": "Move to the editor preferences panel"
+          }
+        },
         "roundabout": {
           "clone_geometry_toggle": {
             "label": "Clone roundabout geometry",

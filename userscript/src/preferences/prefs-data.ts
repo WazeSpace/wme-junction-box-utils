@@ -1,4 +1,5 @@
 export type Preferences = {
+  prefs_location: 'tab' | 'wme-prefs';
   roundabout: {
     clone_geometry: boolean;
     instruction_normalization: {
@@ -8,6 +9,7 @@ export type Preferences = {
 };
 
 export const defaultPreferences: Preferences = {
+  prefs_location: 'tab',
   roundabout: {
     clone_geometry: false,
     instruction_normalization: {
