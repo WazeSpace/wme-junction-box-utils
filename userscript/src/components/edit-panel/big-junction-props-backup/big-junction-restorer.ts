@@ -68,24 +68,24 @@ export class BigJunctionRestorer implements Disposable {
     ).compareTo(this._sourceInformation.signature);
   }
 
-  canRestore(): boolean {
+  getRestorationUnavailableReason(): string {
     if (
       !this._options.allowMismatchSignatureRestoration &&
       !this._isBigJunctionSignatureMatch()
     ) {
-      return false;
+      return 'SIGNATURE_MISMATCH';
     }
 
-    if (!this._canEditBigJunction()) return false;
+    if (!this._canEditBigJunction()) return 'BIG_JUNCTION_EDITING_DISALLOWED';
     if (this._hasTurnsWithGuidance() && !this._canEditTurnGuidance()) {
-      return false;
+      return 'TURN_GUIDANCE_EDITING_DISALLOWED';
     }
 
-    return true;
+    return null;
   }
 
   restore() {
-    if (!this.canRestore()) {
+    if (this.getRestorationUnavailableReason()) {
       Logger.warn(
         'BigJunctionRestorer restore has been called, while restoration is prohibited, ' +
           'probably due to a missed validation before call',

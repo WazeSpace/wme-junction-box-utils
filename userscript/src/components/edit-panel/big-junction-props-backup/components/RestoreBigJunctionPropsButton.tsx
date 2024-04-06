@@ -4,6 +4,7 @@ import { useBigJunctionBackupContext } from '../contexts';
 import { useMemo } from 'react';
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { BigJunctionRestorer } from '../big-junction-restorer';
+import { ConditionalTooltip } from '@/components/ConditionalTooltip';
 
 interface RestoreBigJunctionPropsButtonProps {
   bigJunction: BigJunctionDataModel;
@@ -21,11 +22,18 @@ export function RestoreBigJunctionPropsButton(
   }, [props.bigJunction, snapshot]);
 
   return (
-    <BigJunctionEditPanelButton
-      disabled={!restorer?.canRestore()}
-      onClick={() => restorer.restore()}
+    <ConditionalTooltip
+      show={restorer && !!restorer.getRestorationUnavailableReason()}
+      tooltipContent={t(
+        `jb_utils.big_junction.restoration_disabled_reasons.${restorer?.getRestorationUnavailableReason()}`,
+      )}
     >
-      {t('jb_utils.big_junction.actions.restore_props')}
-    </BigJunctionEditPanelButton>
+      <BigJunctionEditPanelButton
+        disabled={!restorer || !!restorer.getRestorationUnavailableReason()}
+        onClick={() => restorer.restore()}
+      >
+        {t('jb_utils.big_junction.actions.restore_props')}
+      </BigJunctionEditPanelButton>
+    </ConditionalTooltip>
   );
 }
