@@ -65,5 +65,13 @@
         }
       }
     }
+  },
+  "save": {
+    "error_types": {
+      "jbu101": {
+        "title": "Junction Box backup hasn't been used",
+        "solution": "Restore the backup to avoid data loss"
+      }
+    }
   }
 }
