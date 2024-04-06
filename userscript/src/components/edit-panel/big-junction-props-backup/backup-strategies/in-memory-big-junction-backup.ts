@@ -6,10 +6,10 @@ import { WAS_RESTORED_METADATA_SYMBOL } from '../consts';
 export class InMemoryBigJunctionBackupStrategy
   implements BigJunctionBackupStrategy
 {
-  static _storedSnapshot: BigJunctionBackupSnapshot = null;
-  static _unrestoredSnapshotSaveLockSet: boolean = false;
+  _storedSnapshot: BigJunctionBackupSnapshot = null;
+  _unrestoredSnapshotSaveLockSet: boolean = false;
 
-  private static _setUnrestoreedSnapshotSaveLock() {
+  private _setUnrestoreedSnapshotSaveLock() {
     if (this._unrestoredSnapshotSaveLockSet) return;
 
     SaveLock.addSoftLock(
@@ -31,11 +31,11 @@ export class InMemoryBigJunctionBackupStrategy
   }
 
   saveSnapshot(snapshot: BigJunctionBackupSnapshot): void {
-    InMemoryBigJunctionBackupStrategy._storedSnapshot = snapshot;
-    InMemoryBigJunctionBackupStrategy._setUnrestoreedSnapshotSaveLock();
+    this._storedSnapshot = snapshot;
+    this._setUnrestoreedSnapshotSaveLock();
   }
 
   getSnapshot(): BigJunctionBackupSnapshot {
-    return InMemoryBigJunctionBackupStrategy._storedSnapshot;
+    return this._storedSnapshot;
   }
 }
