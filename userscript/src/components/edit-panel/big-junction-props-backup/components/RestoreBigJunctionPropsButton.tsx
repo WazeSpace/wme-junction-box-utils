@@ -25,7 +25,7 @@ export function RestoreBigJunctionPropsButton(
     <ConditionalTooltip
       show={restorer && !!restorer.getRestorationUnavailableReason()}
       tooltipContent={t(
-        `jb_utils.big_junction.restoration_disabled_reasons.${restorer?.getRestorationUnavailableReason()}`,
+        `jb_utils.big_junction.backup_restore.restoration_disabled_reasons.${restorer?.getRestorationUnavailableReason()}`,
       )}
     >
       <BigJunctionEditPanelButton
