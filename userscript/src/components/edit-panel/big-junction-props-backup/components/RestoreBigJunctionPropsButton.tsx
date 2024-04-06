@@ -1,0 +1,31 @@
+import { BigJunctionEditPanelButton } from '@/components/edit-panel/BigJunctionEditPanelButton';
+import { useTranslate } from '@/hooks';
+import { useBigJunctionBackupContext } from '../contexts';
+import { useMemo } from 'react';
+import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
+import { BigJunctionRestorer } from '../big-junction-restorer';
+
+interface RestoreBigJunctionPropsButtonProps {
+  bigJunction: BigJunctionDataModel;
+}
+export function RestoreBigJunctionPropsButton(
+  props: RestoreBigJunctionPropsButtonProps,
+) {
+  const t = useTranslate();
+  const backupStrategy = useBigJunctionBackupContext();
+  const snapshot = backupStrategy.get();
+  const restorer = useMemo(() => {
+    if (!snapshot) return null;
+    const bigJunction = props.bigJunction;
+    return new BigJunctionRestorer(bigJunction, snapshot, bigJunction.model);
+  }, [props.bigJunction, snapshot]);
+
+  return (
+    <BigJunctionEditPanelButton
+      disabled={!restorer?.canRestore()}
+      onClick={() => restorer.restore()}
+    >
+      {t('jb_utils.big_junction.actions.restore_props')}
+    </BigJunctionEditPanelButton>
+  );
+}

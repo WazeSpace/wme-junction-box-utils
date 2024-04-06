@@ -43,7 +43,9 @@
     },
     "big_junction": {
       "actions": {
-        "clone_roundabout_geom": "Roundaboutize"
+        "clone_roundabout_geom": "Roundaboutize",
+        "backup_props": "Backup properties",
+        "restore_props": "Restore properties"
       }
     },
     "save": {

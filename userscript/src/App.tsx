@@ -1,6 +1,7 @@
 import {
   BackgroundActions
 } from '@/components/background-actions/BackgroundActions';
+import { BigJunctionPropsBackupTemplate } from '@/components/edit-panel/big-junction-props-backup/template';
 import { EditPanel } from '@/components/edit-panel/EditPanel';
 import { RoundaboutExitInstructionNormalizationTemplate } from '@/components/edit-panel/roundabout-exit-instruction-normalization/template';
 import { RoundaboutPerimeterPolygonTemplate } from '@/components/edit-panel/roundabout-perimeter-geometry/template';
@@ -24,6 +25,7 @@ export function App() {
         templates={[
           RoundaboutExitInstructionNormalizationTemplate,
           RoundaboutPerimeterPolygonTemplate,
+          BigJunctionPropsBackupTemplate,
         ]}
       />
       <BackgroundActions />
