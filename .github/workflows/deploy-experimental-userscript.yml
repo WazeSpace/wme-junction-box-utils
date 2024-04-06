@@ -1,0 +1,54 @@
+name: "Userscript Deployment: Experimental"
+
+on:
+  push:
+    branches: [ experimental ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: userscript
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: userscript
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install package manager
+        run: npm i -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build userscript
+        run: pnpm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: userscript/dist/wme-junction-box-utils.user.js
+          retention-days: 1
+  
+  deploy_gh_release:
+    name: Deploy to GH Releases
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    permissions:
+      contents: write
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+      
+      - name: Upload to GitHub Releases page
+        uses: softprops/action-gh-release@v2
+        with:
+          files: wme-junction-box-utils.user.js
+          prerelease: true
+          tag_name: experimental
