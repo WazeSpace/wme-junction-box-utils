@@ -19,7 +19,7 @@ export interface DataModel<
   state: null | 'INSERT' | 'DELETE' | 'UPDATE';
   permissionFlags: Record<PK, number>;
 
-  isAllowed(permission: PK): boolean;
+  isAllowed(permission: number): boolean;
   getAttribute<N extends keyof A>(attributeName: N): A[N];
   getUniqueIdentifier(): { objectId: A['id']; objectType: string };
   getUniqueID(): string;
