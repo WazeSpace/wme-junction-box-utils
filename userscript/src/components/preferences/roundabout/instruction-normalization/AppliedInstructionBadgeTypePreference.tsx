@@ -35,7 +35,6 @@ export function AppliedInstructionBadgeTypePreference() {
     setSelectedBadgeType(event.detail.value as typeof selectedBadgeType);
   };
 
-  console.log(selectedBadgeType);
   return (
     <div className="form-group">
       <WzLabel>
