@@ -24,4 +24,5 @@ export function useSyncEffect(effect: EffectCallback, deps?: DependencyList) {
 
   if (cleanupFn.current) cleanupFn.current();
   cleanupFn.current = effect();
+  lastDeps.current = deps;
 }
