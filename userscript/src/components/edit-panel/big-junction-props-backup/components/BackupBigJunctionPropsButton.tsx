@@ -16,7 +16,13 @@ export function BackupBigJunctionPropsButton(
   const shouldAskForUserConfirmation = hasBackup;
 
   const handleButtonClick = () => {
-    if (shouldAskForUserConfirmation && !confirm('Confirm?')) return;
+    if (
+      shouldAskForUserConfirmation &&
+      !confirm(
+        t('jb_utils.big_junction.backup_restore.confirm_overwrite_backup'),
+      )
+    )
+      return;
 
     const backup = createBackupSnapshotFromBigJunction(props.bigJunction);
     backupStrategy.set(backup);
