@@ -4,11 +4,11 @@ import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataMod
 import { useBigJunctionBackupContext } from '../contexts';
 import { createBackupSnapshotFromBigJunction } from '../backup-snapshot';
 
-interface BackupBigJunctionPropsButton {
+interface BackupBigJunctionPropsButtonProps {
   bigJunction: BigJunctionDataModel;
 }
 export function BackupBigJunctionPropsButton(
-  props: BackupBigJunctionPropsButton,
+  props: BackupBigJunctionPropsButtonProps,
 ) {
   const t = useTranslate();
   const backupStrategy = useBigJunctionBackupContext();
