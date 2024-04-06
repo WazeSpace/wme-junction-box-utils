@@ -4,6 +4,7 @@
     "target": "es2017",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "experimentalDecorators": true,
     "sourceMap": true,
     "rootDir": "./src",
     "baseUrl": "./src",
@@ -19,7 +20,8 @@
       "dom",
       "es2019",
       "es2022",
-      "es2023"
+      "es2023",
+      "esnext.disposable"
     ],
     "resolveJsonModule": true
   },
