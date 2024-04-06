@@ -6,6 +6,7 @@ import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { Turn } from '@/@waze/Waze/Model/turn';
 import { Vertex } from '@/@waze/Waze/Vertex';
 import { Polygon } from '@turf/helpers';
+import { AddressDataModel } from './AddressDataModel';
 
 export interface BigJunctionDataModelAttributes extends DataModelAttributes {
   segIDs: number[];
@@ -18,7 +19,7 @@ export interface BigJunctionDataModelAttributes extends DataModelAttributes {
 
 export interface BigJunctionDataModel
   extends DataModel<BigJunctionDataModelAttributes> {
-  getAddress(): unknown;
+  getAddress(dataModel: any): AddressDataModel;
   getSegmentCount(): number;
   getRank(): number;
   getAllPossibleTurns(): Turn[];
