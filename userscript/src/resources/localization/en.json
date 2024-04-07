@@ -55,7 +55,7 @@
       },
       "auto_clone_roundabout_geom_confirm": {
         "title": "Roundaboutize Junction Boxes?",
-        "details": "Do you want to use the geometry of the roundabout for this and future junction boxes on roundabouts?"
+        "details": "Do you want to use the geometry of the roundabout for this Junction Box?"
       },
       "backup_restore": {
         "restoration_disabled_reasons": {
