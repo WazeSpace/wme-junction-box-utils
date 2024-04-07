@@ -43,7 +43,7 @@
     "@turf/helpers": "^6.5.0",
     "@turf/transform-scale": "^6.5.0",
     "@turf/turf": "^6.5.0",
-    "@wazespace/wme-react-components": "^1.2.4",
+    "@wazespace/wme-react-components": "1.3.0-1",
     "clsx": "^2.1.0",
     "lodash": "^4.17.21",
     "nanoid": "^3.3.7",

@@ -12,7 +12,7 @@ export interface ConfirmBalloonProps {
   cancelButtonText?: string;
 
   onConfirmClick: DecisionButtonClickHandler;
-  onCancelClick: DecisionButtonClickHandler;
+  onCancelClick?: DecisionButtonClickHandler;
 }
 interface ConfirmBalloonMetadataProps<TC extends ComponentType<TippyProps>> {
   TippyComponent: TC;
@@ -41,7 +41,7 @@ export function ConfirmBalloon<TC extends ComponentType<TippyProps>>(
     overridenDontShowAgain?: boolean,
   ) => {
     return () =>
-      callback(overridenDontShowAgain ?? dontShowAgainRef.current.checked);
+      callback?.(overridenDontShowAgain ?? dontShowAgainRef.current.checked);
   };
 
   return createElement(
@@ -61,11 +61,7 @@ export function ConfirmBalloon<TC extends ComponentType<TippyProps>>(
     <div className="map-balloon-confirm">
       <wz-h4>{title}</wz-h4>
       <wz-body2>{details}</wz-body2>
-      <WzCheckbox
-        ref={(instance: any) =>
-          (dontShowAgainRef.current = instance?.elementFromRef)
-        }
-      >
+      <WzCheckbox ref={dontShowAgainRef}>
         {t('edit.dont_show_again')}
       </WzCheckbox>
       <div className="controls-container">
