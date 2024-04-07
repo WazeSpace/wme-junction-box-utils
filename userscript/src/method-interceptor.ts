@@ -201,6 +201,9 @@ export class ManualMethodInvocationInterceptor<
   protected _interceptCb(
     ...args: Parameters<FunctionFromObject<O, FK>>
   ): ReturnType<FunctionFromObject<O, FK>> {
-    return this._executeInterceptionFn(this._executeOriginalFn, ...args);
+    return this._executeInterceptionFn(
+      this._executeOriginalFn.bind(this),
+      ...args,
+    );
   }
 }
