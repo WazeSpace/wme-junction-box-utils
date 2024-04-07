@@ -6,10 +6,12 @@ import { TippyProps } from '@tippyjs/react';
 type DecisionButtonClickHandler = (dontShowAgain: boolean) => void;
 
 export interface ConfirmBalloonProps {
+  alarming?: boolean;
   title: string;
   details: string;
   confirmButtonText?: string;
   cancelButtonText?: string;
+  disableDontShowAgainCheckbox?: boolean;
 
   onConfirmClick: DecisionButtonClickHandler;
   onCancelClick?: DecisionButtonClickHandler;
@@ -30,6 +32,8 @@ export function ConfirmBalloon<TC extends ComponentType<TippyProps>>(
     tippyProps,
     title,
     details,
+    alarming = false,
+    disableDontShowAgainCheckbox = false,
     confirmButtonText = t('edit.apply'),
     cancelButtonText = t('edit.cancel'),
     onConfirmClick,
@@ -41,7 +45,11 @@ export function ConfirmBalloon<TC extends ComponentType<TippyProps>>(
     overridenDontShowAgain?: boolean,
   ) => {
     return () =>
-      callback?.(overridenDontShowAgain ?? dontShowAgainRef.current.checked);
+      callback?.(
+        disableDontShowAgainCheckbox
+          ? false
+          : overridenDontShowAgain ?? dontShowAgainRef.current.checked,
+      );
   };
 
   return createElement(
@@ -61,17 +69,23 @@ export function ConfirmBalloon<TC extends ComponentType<TippyProps>>(
     <div className="map-balloon-confirm">
       <wz-h4>{title}</wz-h4>
       <wz-body2>{details}</wz-body2>
-      <WzCheckbox ref={dontShowAgainRef}>
-        {t('edit.dont_show_again')}
-      </WzCheckbox>
+      {!disableDontShowAgainCheckbox && (
+        <WzCheckbox ref={dontShowAgainRef}>
+          {t('edit.dont_show_again')}
+        </WzCheckbox>
+      )}
       <div className="controls-container">
         <WzButton
           color="secondary"
           onClick={createUserResponseHandler(onCancelClick)}
+          alarming={alarming}
         >
           {cancelButtonText}
         </WzButton>
-        <WzButton onClick={createUserResponseHandler(onConfirmClick)}>
+        <WzButton
+          onClick={createUserResponseHandler(onConfirmClick)}
+          alarming={alarming}
+        >
           {confirmButtonText}
         </WzButton>
       </div>
