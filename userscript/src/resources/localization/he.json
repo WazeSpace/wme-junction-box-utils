@@ -1,0 +1,93 @@
+{
+    "jb_utils": {
+      "user": {
+        "prefs": {
+          "card_helper_text": "לשנות הגדרות של התוסף",
+          "prefs_location": {
+            "move_to": {
+              "tab": "העבר לכרטיסיית userscript ייעודית",
+              "wme-prefs": "העבר למסך ההעדפות של העורך"
+            }
+          },
+          "roundabout": {
+            "clone_geometry_toggle": {
+              "label": "עגל לצורת הכיכר",
+              "help_label": "סמנו אם ברצונכם שלקופסאות צומת חדשות תהיה הגיאומטריה של הכיכר שאליהם הם נוספו"
+            },
+            "instruction_normalization": {
+              "applied_instruction_badge_type": {
+                "label": "אופן הצגת ההנחיה שנקבעה",
+                "graphical": {
+                  "label": "גרפי",
+                  "description": "יוצג אייקון הממחיש את ההנחיה שנבחרה"
+                },
+                "textual": {
+                  "label": "מלל",
+                  "description": "תוצג אות אחת שתמחיש את ההנחיה שנבחרה"
+                }
+              }
+            }
+          },
+          "auto_backup_on_delete": "גיבוי אוטומטי של קופסאות צומת"
+        }
+      },
+      "segment": {
+        "actions": {
+          "roundabout_norm": {
+            "cta": "נרמול יציאות (צומת %{node})",
+            "fail_reasons": {
+              "BIG_JUNCTION_REQUIRED": {
+                "description": "חסרה לצומת חיבור לקופסת צומת",
+                "suggestion": "הוסף אחת מתפריט \"כביש\""
+              },
+              "TOO_MANY_EXITS": {
+                "description": "יותר מדי יציאות",
+                "suggestion": "ערוך בצורה ידנית"
+              }
+            }
+          }
+        }
+      },
+      "big_junction": {
+        "actions": {
+          "clone_roundabout_geom": "להפוך לכיכר",
+          "backup_props": "לגבות תכונות",
+          "restore_props": "לשחזר תכונות"
+        },
+        "auto_clone_roundabout_geom_confirm": {
+          "title": "להפוך קופסאות צומת לכיכרות?",
+          "details": "האם ברצונך להשתמש בגיאומטריה של הכיכר בשביל קופסת צומת זו?"
+        },
+        "backup_restore": {
+          "restoration_disabled_reasons": {
+            "SIGNATURE_MISMATCH": "חתימת קופסת הצומת אינה תואמת לגיבוי האחרון",
+            "BIG_JUNCTION_EDITING_DISALLOWED": "אין לך הרשאות לערוך קופסת צומת זו",
+            "TURN_GUIDANCE_EDITING_DISALLOWED": "קופסת צומת זו מכילה הנחיות פניה שאינך יכול להגדיר"
+          },
+          "confirm_overwrite_backup": {
+            "title": "לדרוס את הגיבוי?",
+            "details": "אתם עומדים לדרוס את הגיבוי הקיים של תיבת צומת. פעולה זו בלתי הפיכה",
+            "backup_btn": "אישור",
+            "ignore_btn": "התעלם"
+          }
+        }
+      },
+      "save": {
+        "changes_log": {
+          "actions": {
+            "NormalizeRoundaboutExits": "נרמול של %{exitsCount} הנחיות יציאה מכיכר",
+            "UpdateBigJunctionGeometryToRoundabout": "הוחלה גיאומטריית כיכר",
+            "UpdateBigJunction": "קופסת צומת עודכנה"
+          }
+        }
+      }
+    },
+    "save": {
+      "error_types": {
+        "jbu101": {
+          "title": "לא נעשה שימוש בגיבוי של קופסת צומת",
+          "solution": "שחזרו את הגיבוי בשביל למנוע אובדן נתונים"
+        }
+      }
+    }
+  }

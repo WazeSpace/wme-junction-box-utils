@@ -60,13 +60,13 @@
       },
       "backup_restore": {
         "restoration_disabled_reasons": {
-          "SIGNATURE_MISMATCH": "Junction box signature is incompatible with the latest Big Junction backup",
-          "BIG_JUNCTION_EDITING_DISALLOWED": "You're not allowed to edit this Big Junction",
-          "TURN_GUIDANCE_EDITING_DISALLOWED": "Big Junction has some turn guidance that you can not apply"
+          "SIGNATURE_MISMATCH": "Junction box signature is incompatible with the latest Junction Box backup",
+          "BIG_JUNCTION_EDITING_DISALLOWED": "You're not allowed to edit this Junction Box",
+          "TURN_GUIDANCE_EDITING_DISALLOWED": "Junction Box has some turn guidance that you can not apply"
         },
         "confirm_overwrite_backup": {
           "title": "Override backup?",
-          "details": "You're about to override a Big Junction backup. This action is irreversible",
+          "details": "You're about to override a Junction Box backup. This action is irreversible",
           "backup_btn": "OK",
           "ignore_btn": "Ignore"
         }
