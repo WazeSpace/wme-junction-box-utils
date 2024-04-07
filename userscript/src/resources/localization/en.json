@@ -53,6 +53,10 @@
         "backup_props": "Backup properties",
         "restore_props": "Restore properties"
       },
+      "auto_clone_roundabout_geom_confirm": {
+        "title": "Roundaboutize Junction Boxes?",
+        "details": "Do you want to use the geometry of the roundabout for this and future junction boxes on roundabouts?"
+      },
       "backup_restore": {
         "restoration_disabled_reasons": {
           "SIGNATURE_MISMATCH": "Junction box signature is incompatible with the latest Big Junction backup",

@@ -1,8 +1,11 @@
 import { Action } from '@/@waze/Waze/actions';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
-import { useEffect, useRef } from 'react';
+import { DependencyList, useEffect, useRef } from 'react';
 
-export function useNewActionHandler(handler: (action: Action) => void): void {
+export function useNewActionHandler(
+  handler: (action: Action) => void,
+  deps?: DependencyList,
+): void {
   const savedHandler = useRef(handler);
 
   useEffect(() => {
@@ -16,5 +19,5 @@ export function useNewActionHandler(handler: (action: Action) => void): void {
     actionManager.events.on('afteraction', listener);
 
     return () => actionManager.events.off('afteraction', listener);
-  }, []);
+  }, deps);
 }

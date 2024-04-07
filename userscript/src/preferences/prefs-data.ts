@@ -2,7 +2,7 @@ export type Preferences = {
   master_disable: boolean;
   prefs_location: 'tab' | 'wme-prefs';
   roundabout: {
-    clone_geometry: boolean;
+    clone_geometry: 'ask' | boolean;
     instruction_normalization: {
       applied_instruction_badge_type: 'graphical' | 'textual';
     };
@@ -13,7 +13,7 @@ export const defaultPreferences: Preferences = {
   master_disable: false,
   prefs_location: 'tab',
   roundabout: {
-    clone_geometry: false,
+    clone_geometry: 'ask',
     instruction_normalization: {
       applied_instruction_badge_type: 'graphical',
     },
