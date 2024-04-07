@@ -26,8 +26,8 @@ export function createBackupSnapshotFromBigJunction(
 
   return {
     address: {
-      city: address.getCityName(),
-      state: address.getStateName(),
+      city: address.getCity().isEmpty() ? null : address.getCityName(),
+      state: address.hasState() ? address.getStateName() : null,
       country: address.getCountryName(),
     },
     name: bigJunction.getAttribute('name'),
