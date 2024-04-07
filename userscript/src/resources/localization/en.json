@@ -27,7 +27,8 @@
               }
             }
           }
-        }
+        },
+        "auto_backup_on_delete": "Automatically backup junction boxes"
       }
     },
     "segment": {
@@ -65,7 +66,9 @@
         },
         "confirm_overwrite_backup": {
           "title": "Override backup?",
-          "details": "You're about to override a Big Junction backup. This action is irreversible"
+          "details": "You're about to override a Big Junction backup. This action is irreversible",
+          "backup_btn": "OK",
+          "ignore_btn": "Ignore"
         }
       }
     },

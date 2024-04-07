@@ -29,6 +29,10 @@ export const BigJunctionPropsBackupTemplate = class
     return true;
   }
 
+  static getBackupStrategyForAutoBackup() {
+    return BACKUP_STRATEGIES[0];
+  }
+
   getTargetElement(): HTMLElement {
     return document.querySelector(
       '#edit-panel .big-junction.sidebar-column .tab-content .form-group .controls.junction-actions',

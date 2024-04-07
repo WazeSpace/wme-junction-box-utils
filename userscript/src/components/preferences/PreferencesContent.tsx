@@ -1,3 +1,4 @@
+import { AutoBackupToggle } from './AutoBackupToggle';
 import { DisableScriptToggle } from './DisableScriptToggle';
 import { TogglePrefsLocationButton } from './TogglePrefsLocationButton';
 import { CloneGeometryToggle } from './roundabout/CloneGeometryToggle';
@@ -17,6 +18,7 @@ export function PreferencesContent() {
         <TogglePrefsLocationButton />
       </div>
       <CloneGeometryToggle />
+      <AutoBackupToggle />
       <AppliedInstructionBadgeTypePreference />
     </>
   );

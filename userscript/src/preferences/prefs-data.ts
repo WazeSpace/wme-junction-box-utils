@@ -7,6 +7,7 @@ export type Preferences = {
       applied_instruction_badge_type: 'graphical' | 'textual';
     };
   };
+  auto_backup: boolean;
 };
 
 export const defaultPreferences: Preferences = {
@@ -18,6 +19,7 @@ export const defaultPreferences: Preferences = {
       applied_instruction_badge_type: 'graphical',
     },
   },
+  auto_backup: false,
 };
 
 export const PREFERENCES_LS_KEY = 'r0den.userscripts.jbu.prefs';
