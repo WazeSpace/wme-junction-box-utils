@@ -34,3 +34,13 @@ export function getExitSegmentsByBigJunction(
     turn.getToVertex().getSegmentID(),
   );
 }
+
+export function isBigJunctionOnRoundabout(bigJunction: BigJunctionDataModel) {
+  const segments = bigJunction.getShortSegments(bigJunction);
+  // check if we have segments, because it is possible to have a big junction with no segments at all
+  if (!segments.length) return false;
+
+  // use "some" iterator over "every" iterator for performance reasons
+  // (if a single segment is not in roundabout, then we don't have to check the rest)
+  return !segments.some((segment) => !segment.isInRoundabout());
+}

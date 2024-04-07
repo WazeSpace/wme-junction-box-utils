@@ -7,6 +7,7 @@ import { useNewActionHandler } from '@/components/background-actions/hooks';
 import { usePreferences, useTranslate } from '@/hooks';
 import { createSetPreferenceAction } from '@/preferences/actions';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
+import { isBigJunctionOnRoundabout } from '@/utils/wme-entities/big-junction';
 import { ReactElement } from 'react';
 
 function roundaboutizeBigJunctionByAction(action: AddBigJunctionAction) {
@@ -24,13 +25,7 @@ export function BackgroundActions(): ReactElement {
   useNewActionHandler(
     (action) => {
       if (!isAddBigJunctionAction(action)) return;
-      if (
-        !action.bigJunction
-          .getShortSegments()
-          .every((segment) => segment.isInRoundabout())
-      ) {
-        return;
-      }
+      if (!isBigJunctionOnRoundabout(action.bigJunction)) return;
 
       if (preferences.roundabout.clone_geometry === false) return;
       if (preferences.roundabout.clone_geometry === 'ask') {
