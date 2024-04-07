@@ -20,14 +20,15 @@ export abstract class MethodInterceptor<
   private readonly _object: O;
   private readonly _fnPropName: FK;
   private _interceptionFn: IFN;
-  private _isEnabled: boolean = false;
-  private _originalFn: FunctionFromObject<O, FK> =
-    this.getRefreshedOriginalFn();
+  private _isEnabled: boolean;
+  private _originalFn: FunctionFromObject<O, FK>;
 
   constructor(object: O, fnPropName: FK, interceptionFn: IFN) {
     this._object = object;
     this._fnPropName = fnPropName;
     this._interceptionFn = interceptionFn;
+    this._isEnabled = false;
+    this._originalFn = this.getRefreshedOriginalFn();
   }
 
   private getRefreshedOriginalFn(): FunctionFromObject<O, FK> {
