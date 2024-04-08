@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const packageInfo = require('./package.json');
 const path = require('path');
-const { DefinePlugin, NormalModuleReplacementPlugin } = require('webpack');
+const { DefinePlugin } = require('webpack');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackUserscriptPlugin = require('webpack-userscript').default;
@@ -28,14 +28,6 @@ module.exports = () => {
       filename: `${getPurePackageName()}.user.js`,
     },
     plugins: [
-      new NormalModuleReplacementPlugin(
-        /^react$/,
-        path.join(__dirname, './react-module-wrapper.js'),
-      ),
-      new NormalModuleReplacementPlugin(
-        /^react-dom$/,
-        path.join(__dirname, './react-dom-module-wrapper.js'),
-      ),
       new DefinePlugin({
         'process.env.VERSION': JSON.stringify(packageInfo.version),
         'process.env.SCRIPT_ID': JSON.stringify(nanoid()),
@@ -103,5 +95,9 @@ module.exports = () => {
       },
     },
     target: 'web',
+    externals: {
+      react: 'window.React || unsafeWindow.React',
+      'react-dom': 'window.ReactDOM || unsafeWindow.ReactDOM',
+    },
   };
 };
