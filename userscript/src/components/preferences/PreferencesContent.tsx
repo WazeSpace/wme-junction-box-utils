@@ -19,7 +19,7 @@ export function PreferencesContent() {
       </div>
       <CloneGeometryToggle />
       <AutoBackupToggle />
-      <AppliedInstructionBadgeTypePreference />
+      {/* <AppliedInstructionBadgeTypePreference /> */}
     </>
   );
 }
