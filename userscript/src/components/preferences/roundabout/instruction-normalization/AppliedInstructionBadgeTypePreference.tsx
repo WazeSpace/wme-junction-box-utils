@@ -4,6 +4,7 @@ import {
   WzCheckableChip,
   WzChipSelect,
   WzLabel,
+  WzTooltip,
 } from '@wazespace/wme-react-components';
 import { usePreference, useTranslate } from '@/hooks';
 import { WzChipSelectProps } from '@wazespace/wme-react-components/build/wme-intrinsic-elements-props';
@@ -46,14 +47,26 @@ export function AppliedInstructionBadgeTypePreference() {
         value={selectedBadgeType}
         onChipSelected={handleBadgeTypeChange}
       >
-        <BadgeTypeCheckableChip
-          checked={selectedBadgeType === 'graphical'}
-          value="graphical"
-        />
-        <BadgeTypeCheckableChip
-          checked={selectedBadgeType === 'textual'}
-          value="textual"
-        />
+        <WzTooltip
+          tooltipContent={t(
+            'jb_utils.user.prefs.roundabout.instruction_normalization.applied_instruction_badge_type.graphical.description'
+          )}
+        >
+          <BadgeTypeCheckableChip
+            checked={selectedBadgeType === 'graphical'}
+            value="graphical"
+          />
+        </WzTooltip>
+        <WzTooltip
+          tooltipContent={t(
+            'jb_utils.user.prefs.roundabout.instruction_normalization.applied_instruction_badge_type.textual.description'
+          )}
+        >
+          <BadgeTypeCheckableChip
+            checked={selectedBadgeType === 'textual'}
+            value="textual"
+          />
+        </WzTooltip>
       </SpaciousWzChipSelect>
     </div>
   );
