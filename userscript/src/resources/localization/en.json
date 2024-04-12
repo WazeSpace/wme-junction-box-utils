@@ -11,7 +11,7 @@
         },
         "roundabout": {
           "clone_geometry_toggle": {
-            "label": "Clone roundabout geometry",
+            "label": "Apply roundabout geometry",
             "help_label": "Select this if you want new junction boxes to have the geometry of the roundabout they are applied to"
           },
           "instruction_normalization": {
