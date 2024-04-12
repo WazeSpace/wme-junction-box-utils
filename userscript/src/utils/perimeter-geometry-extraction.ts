@@ -28,6 +28,13 @@ function extractOneWaySegmentsPerimeterPolygon(
     );
   }
 
+  if (
+    coordinates[0][0] !== coordinates[coordinates.length - 1][0] ||
+    coordinates[0][1] !== coordinates[coordinates.length - 1][1]
+  ) {
+    coordinates.push(coordinates[0]);
+  }
+
   return polygon([coordinates]).geometry;
 }
 
