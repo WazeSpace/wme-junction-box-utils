@@ -11,6 +11,7 @@ import { getRoundaboutExitsFrom } from '@/utils/wme-entities/roundabout/get-roun
 import { getBigJunctionFromSegmentAndDirection } from '@/utils/wme-entities/segment-big-junction';
 import { RoundaboutInstructionMethod } from './methods/roundabout-instruction-method-application';
 import normalizationMethod from './methods/normalization-method';
+import deNormalizationMethod from './methods/denormalization-method';
 import {
   getJunctionNodeFromSegmentDirection,
   isSegmentConnectsToRoundabout,
@@ -20,7 +21,7 @@ import { createVertexFromSegment } from '@/utils/wme-entities/segment-vertex';
 import { UnresolvableRoundaboutTurns } from './errors';
 
 const DEFAULT_INSTRUCTION_METHODS: ReadonlyArray<RoundaboutInstructionMethod> =
-  [normalizationMethod];
+  [normalizationMethod, deNormalizationMethod];
 
 export class RoundaboutInstructionEngine {
   private _bigJunction: BigJunctionDataModel;

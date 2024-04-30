@@ -34,7 +34,8 @@
     "segment": {
       "actions": {
         "exit_instructions": {
-          "NORMALIZATION": "Normalize (Node %{node})"
+          "NORMALIZATION": "Normalize (Node %{node})",
+          "DE_NORMALIZATION": "Denormalize (Node %{node})"
         }
       }
     },
