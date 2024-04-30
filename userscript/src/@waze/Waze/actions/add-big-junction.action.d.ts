@@ -9,6 +9,7 @@ export class AddBigJunctionAction extends MultiAction {
   actionName: 'ADD_BIG_JUNCTION';
   bigJunction: BigJunctionDataModel;
   initialGeometry: BigJunctionDataModelAttributes['geometry'];
+  __jbuSkipAutoRoundaboutize: boolean;
 
   constructor(bigJunction: BigJunctionDataModel);
 }

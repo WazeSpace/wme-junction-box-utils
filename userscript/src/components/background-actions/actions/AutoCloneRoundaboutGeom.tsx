@@ -31,6 +31,7 @@ export function AutoCloneRoundaboutGeometryBackgroundAction() {
       // this action handler should only run for new big junctions on roundabouts
       if (!isAddBigJunctionAction(action)) return;
       if (!isBigJunctionOnRoundabout(action.bigJunction)) return;
+      if (action.__jbuSkipAutoRoundaboutize) return;
 
       // if the user decided to disable the preference altogether
       if (!isEnabled) return;
