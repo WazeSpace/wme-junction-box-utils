@@ -20,6 +20,7 @@
     "@types/lodash": "^4.17.0",
     "@types/react": "^17.0.76",
     "@types/react-dom": "^17.0.25",
+    "@types/react-reconciler": "^0.28.8",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "babel-loader": "^9.1.3",
