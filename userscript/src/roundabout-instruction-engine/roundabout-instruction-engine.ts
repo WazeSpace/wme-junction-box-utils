@@ -6,9 +6,12 @@ import { RoundaboutTurnInstructionOpcode } from '@/@waze/Waze/Model/turn-instruc
 import { Vertex } from '@/@waze/Waze/Vertex';
 import { BulkSetTurnOpcodeActions } from '@/actions/bulk-set-turn-opcode.actions';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
+import { extractRoundaboutPerimeterPolygon } from '@/utils/perimeter-geometry-extraction';
 import { getRoundaboutByNode } from '@/utils/wme-entities/roundabout';
 import { getRoundaboutExitsFrom } from '@/utils/wme-entities/roundabout/get-roundabout-exits';
 import { getBigJunctionFromSegmentAndDirection } from '@/utils/wme-entities/segment-big-junction';
+import { createAddBigJunctionAction } from '@/utils/wme-feature-creation';
+import transformScale from '@turf/transform-scale';
 import { RoundaboutInstructionMethod } from './methods/roundabout-instruction-method-application';
 import normalizationMethod from './methods/normalization-method';
 import deNormalizationMethod from './methods/denormalization-method';
@@ -127,7 +130,32 @@ export class RoundaboutInstructionEngine {
   }
   //#endregion
 
+  private _hasBigJunction() {
+    const segment = this._getFromSegment();
+    switch (this._getFromSegmentDirection()) {
+      case 'forward':
+        return segment.getAttribute('toCrossroads').length > 0;
+      case 'reverse':
+        return segment.getAttribute('fromCrossroads').length > 0;
+      default:
+        return false;
+    }
+  }
+  private _createBigJunctionIfNotExist() {
+    if (this._hasBigJunction()) return;
+
+    const perimeter = transformScale(
+      extractRoundaboutPerimeterPolygon(this._roundaboutJunction),
+      1.2,
+    );
+    const addBigJunctionAction = createAddBigJunctionAction(perimeter);
+    addBigJunctionAction.__jbuSkipAutoRoundaboutize = true;
+    getWazeMapEditorWindow().W.model.actionManager.add(addBigJunctionAction);
+  }
+
   applyInstructionMethod(instructionMethod: RoundaboutInstructionMethod): void {
+    this._createBigJunctionIfNotExist();
+
     const turnNodesAndOpcodes = this._instructionMethodTurnsMap.get(
       instructionMethod.type,
     );
