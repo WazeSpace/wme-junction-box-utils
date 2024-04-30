@@ -33,18 +33,8 @@
     },
     "segment": {
       "actions": {
-        "roundabout_norm": {
-          "cta": "Normalize exits (Node %{node})",
-          "fail_reasons": {
-            "BIG_JUNCTION_REQUIRED": {
-              "description": "Node is missing a Junction Box connection",
-              "suggestion": "Add one from the 'Roads' menu"
-            },
-            "TOO_MANY_EXITS": {
-              "description": "Too many exits",
-              "suggestion": "Edit exits manually"
-            }
-          }
+        "exit_instructions": {
+          "NORMALIZATION": "Normalize (Node %{node})"
         }
       }
     },
@@ -75,9 +65,9 @@
     "save": {
       "changes_log": {
         "actions": {
-          "NormalizeRoundaboutExits": "Normalize %{exitsCount} roundabout exit instructions",
           "UpdateBigJunctionGeometryToRoundabout": "Roundabout geometry applied",
-          "UpdateBigJunction": "Update Junction Box"
+          "UpdateBigJunction": "Update Junction Box",
+          "BulkSetTurn": "Updated %{count} turns"
         }
       }
     }

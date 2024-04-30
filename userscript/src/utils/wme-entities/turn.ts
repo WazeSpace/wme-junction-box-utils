@@ -1,5 +1,5 @@
 import { UserDataModel } from '@/@waze/Waze/DataModels/UserDataModel';
-import { Turn } from '@/@waze/Waze/Model/turn';
+import { Turn, TurnNodes } from '@/@waze/Waze/Model/turn';
 import { getAngleBetweenLinesInDegrees, Line } from '@/utils/lines';
 import { getCountryByStreet, getToStreetByTurn } from '@/utils/location';
 import { getSegmentGeometryFromVertex } from '@/utils/wme-entities/vertex';
@@ -14,19 +14,19 @@ export function sortFarTurnsBySegmentPathLength(turns: Turn[]) {
   );
 }
 
-export function getAbsoluteTurnAngleInDegrees(turn: Turn): number {
+export function getAbsoluteTurnAngleInDegrees(turn: TurnNodes): number {
   const { fromLine, toLine } = extractLinesFromVertices(turn);
 
   const angle = getAngleBetweenLinesInDegrees(fromLine, toLine);
   return Math.abs(angle);
 }
 
-function extractLinesFromVertices(turn: Turn): {
+function extractLinesFromVertices(turn: TurnNodes): {
   fromLine: Line;
   toLine: Line;
 } {
-  const fromGeometry = getSegmentGeometryFromVertex(turn.getFromVertex());
-  const toGeometry = getSegmentGeometryFromVertex(turn.getToVertex());
+  const fromGeometry = getSegmentGeometryFromVertex(turn.fromVertex);
+  const toGeometry = getSegmentGeometryFromVertex(turn.toVertex);
 
   const fromLine: Line = {
     startY: fromGeometry[fromGeometry.length - 2][0],

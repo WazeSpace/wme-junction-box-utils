@@ -1,13 +1,14 @@
 import { MultiAction, SetTurnAction } from '@/@waze/Waze/actions';
-import { Turn } from '@/@waze/Waze/Model/turn';
+import { Turn, TurnNodes } from '@/@waze/Waze/Model/turn';
 import { TurnInstructionOpcode } from '@/@waze/Waze/Model/turn-instruction-opcode.enum';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
-export class ApplyTurnInstructionsFromMapAction extends MultiAction {
-  actionName = 'APPLY_TURN_INSTRUCTIONS_FROM_MAP';
+export class BulkSetTurnOpcodeActions extends MultiAction {
+  actionName = 'BULK_SET_TURN_OPCODES';
 
   constructor(
     private _turnGraph: any,
-    private _newInstructionsMap: Map<TurnInstructionOpcode, Turn[]>,
+    private _newTurns: (TurnNodes & { opcode: TurnInstructionOpcode })[],
     props?: unknown,
   ) {
     super(props);
@@ -15,12 +16,12 @@ export class ApplyTurnInstructionsFromMapAction extends MultiAction {
   }
 
   private _createSingleSetTurnAction(
-    turn: Turn,
+    turnNodes: TurnNodes,
     newInstruction: TurnInstructionOpcode,
   ): SetTurnAction {
     const previousTurn: Turn = this._turnGraph.getTurn(
-      turn.getFromVertex(),
-      turn.getToVertex(),
+      turnNodes.fromVertex,
+      turnNodes.toVertex,
     );
     const previousTurnData = previousTurn.getTurnData();
     const newTurn = previousTurn.withTurnData(
@@ -31,13 +32,16 @@ export class ApplyTurnInstructionsFromMapAction extends MultiAction {
 
   private _createAllSetTurnActions(): SetTurnAction[] {
     const actions: SetTurnAction[] = [];
-    this._newInstructionsMap.forEach((turns, instruction) => {
-      actions.push(
-        ...turns.map((turn) =>
-          this._createSingleSetTurnAction(turn, instruction),
-        ),
-      );
+    this._newTurns.forEach((turn) => {
+      actions.push(this._createSingleSetTurnAction(turn, turn.opcode));
     });
     return actions;
+  }
+
+  generateDescription() {
+    this._description = getWazeMapEditorWindow().I18n.t(
+      'jb_utils.save.changes_log.actions.BulkSetTurn',
+      { count: this._newTurns.length },
+    );
   }
 }

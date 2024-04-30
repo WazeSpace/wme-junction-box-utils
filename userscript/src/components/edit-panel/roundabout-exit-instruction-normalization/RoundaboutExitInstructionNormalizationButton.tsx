@@ -1,7 +1,6 @@
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
-import { ConditionalTooltip } from '@/components/ConditionalTooltip';
 import { useTranslate } from '@/hooks';
-import { RoundaboutNormalizationEngine } from '@/roundabout-normalization-engine';
+import { RoundaboutInstructionEngine } from '@/roundabout-instruction-engine/roundabout-instruction-engine';
 import { WzButton } from '@wazespace/wme-react-components';
 import { useMemo } from 'react';
 
@@ -11,34 +10,27 @@ export interface Props {
 }
 export function RoundaboutExitInstructionNormalizationButton(props: Props) {
   const engine = useMemo(() => {
-    return new RoundaboutNormalizationEngine(props.segment, props.direction);
+    const instructionEngine = new RoundaboutInstructionEngine(
+      props.segment.model,
+      props.segment,
+      props.direction,
+    );
+    instructionEngine.calcTurnsForAvailableInstructionMethods();
+    return instructionEngine;
   }, [props.direction, props.segment]);
   const t = useTranslate();
   const nodeLabel = props.direction === 'forward' ? 'B' : 'A';
-  const buttonLabel = t('jb_utils.segment.actions.roundabout_norm.cta', {
-    node: nodeLabel,
-  });
-  const errorTooltipContent = engine.hasExitInstructionBuildError()
-    ? engine.getExitInstructionBuildErrorMessage()
-    : null;
 
-  const handleButtonClick = () => {
-    engine.applySuggestedTurnInstructions();
-  };
-
-  return (
-    <ConditionalTooltip
-      show={!!errorTooltipContent}
-      tooltipContent={errorTooltipContent}
+  return engine.getPopulatedInstructionMethods().map((rim) => (
+    <WzButton
+      key={rim.type}
+      onClick={() => engine.applyInstructionMethod(rim)}
+      size="sm"
+      color="text"
     >
-      <WzButton
-        disabled={!engine.isBuilt()}
-        onClick={handleButtonClick}
-        size="sm"
-        color="text"
-      >
-        {buttonLabel}
-      </WzButton>
-    </ConditionalTooltip>
-  );
+      {t(`jb_utils.segment.actions.exit_instructions.${rim.type}`, {
+        node: nodeLabel,
+      })}
+    </WzButton>
+  ));
 }

@@ -12,7 +12,7 @@ export interface TurnData {
   turnGuidance: unknown | null;
 
   getRestrictions(): unknown[];
-  getInstructionOpcode(): number | null;
+  getInstructionOpcode(): TurnInstructionOpcode | null;
   getTurnGuidance(): unknown | null;
   hasTurnGuidance(): boolean;
   hasRestrictions(): boolean;
