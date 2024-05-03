@@ -1,7 +1,8 @@
 import en from './en.json';
 import he from './he.json';
+import pt from './pt.json';
 
-export const translations = { en, he };
+export const translations = { en, he, pt };
 
 const availableLocales = new Set(Object.keys(translations));
 const defaultLocale: keyof typeof translations = 'en';
