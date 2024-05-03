@@ -1,3 +1,4 @@
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { SaveLock } from '@/utils/save-lock';
 import { BigJunctionBackupSnapshot } from '../backup-snapshot';
 import { BigJunctionBackupStrategy } from './big-junction-backup-strategy';
@@ -18,6 +19,9 @@ export class InMemoryBigJunctionBackupStrategy
       },
       () =>
         this._storedSnapshot.createdFrom?.state === 'DELETE' &&
+        getWazeMapEditorWindow().W.model.bigJunctions.getObjectById(
+          this._storedSnapshot.createdFrom?.getAttribute('id'),
+        ) &&
         !Reflect.getMetadata(
           WAS_RESTORED_METADATA_SYMBOL,
           this._storedSnapshot,
