@@ -18,6 +18,7 @@ const DEFAULT_RESTORER_OPTIONS: BigJunctionRestorerOptions = {
 export class BigJunctionRestorer implements Disposable {
   private readonly _destinationBigJunction: BigJunctionDataModel;
   private readonly _sourceInformation: BigJunctionBackupSnapshot;
+  private readonly _bigJunctionSignature: BigJunctionSignature;
   private readonly _dataModel: any; // temporarily set to "any" as at the given time, we don't have an accurate type
   private _options: BigJunctionRestorerOptions;
 
@@ -29,6 +30,8 @@ export class BigJunctionRestorer implements Disposable {
   ) {
     this._destinationBigJunction = destinationBigJunction;
     this._sourceInformation = sourceBackup;
+    this._bigJunctionSignature =
+      sourceBackup.signature.upgradeSignatureSegmentsLineage();
     this._dataModel = dataModel ?? destinationBigJunction.model;
 
     this._options = Object.assign(DEFAULT_RESTORER_OPTIONS, options);
@@ -65,7 +68,7 @@ export class BigJunctionRestorer implements Disposable {
   private _isBigJunctionSignatureMatch() {
     return BigJunctionSignature.fromBigJunction(
       this._destinationBigJunction,
-    ).compareTo(this._sourceInformation.signature);
+    ).compareTo(this._bigJunctionSignature);
   }
 
   getRestorationUnavailableReason(): string {

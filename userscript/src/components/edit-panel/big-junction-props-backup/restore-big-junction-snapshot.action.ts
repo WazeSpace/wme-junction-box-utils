@@ -1,6 +1,9 @@
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { UpdateBigJunctionAction } from '@/actions';
-import { BigJunctionBackupSnapshot } from './backup-snapshot';
+import {
+  BigJunctionBackupSnapshot,
+  updateSnapshotWithSegmentLineage,
+} from './backup-snapshot';
 import { WAS_RESTORED_METADATA_SYMBOL } from './consts';
 
 export class RestoreBigJunctionSnapshotAction extends UpdateBigJunctionAction {
@@ -11,12 +14,13 @@ export class RestoreBigJunctionSnapshotAction extends UpdateBigJunctionAction {
     bigJunction: BigJunctionDataModel,
     private readonly _snapshot: BigJunctionBackupSnapshot,
   ) {
+    const upgradedSnapshot = updateSnapshotWithSegmentLineage(_snapshot);
     super(dataModel, bigJunction, {
-      turns: _snapshot.turns,
-      name: _snapshot.name,
-      cityName: _snapshot.address.city,
-      stateName: _snapshot.address.state,
-      countryName: _snapshot.address.country,
+      turns: upgradedSnapshot.turns,
+      name: upgradedSnapshot.name,
+      cityName: upgradedSnapshot.address.city,
+      stateName: upgradedSnapshot.address.state,
+      countryName: upgradedSnapshot.address.country,
     });
   }
 
