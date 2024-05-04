@@ -1,6 +1,11 @@
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { compareArrays } from '@/utils/array-utils';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
+import {
+  createIdChangelist,
+  findTargetIdByIdChangelist,
+} from '@/utils/split-merge-objects';
 import {
   getEntranceSegmentsByBigJunction,
   getExitSegmentsByBigJunction,
@@ -73,5 +78,35 @@ export class BigJunctionSignature {
 
   getContainedSegments(): ReadonlyArray<SegmentDataModel> {
     return this._containedSegments;
+  }
+
+  upgradeSignatureSegmentsLineage(): BigJunctionSignature {
+    const segmentsLineage = createIdChangelist(
+      getWazeMapEditorWindow().W.model.segments.getObjectArray() as SegmentDataModel[],
+      (segment) => segment.getAttribute('id'),
+      (segment) => segment.getAttribute('origIDs'),
+    );
+
+    const updateOldSegmentsReferenceList = (segmentIds: number[]) => {
+      return segmentIds.flatMap((segmentId) =>
+        findTargetIdByIdChangelist(segmentId, segmentsLineage),
+      );
+    };
+
+    const upgradedContainedSegments = this._containedSegments
+      .flatMap((segment) => {
+        const segmentId = segment.getAttribute('id');
+        const newSegmentIds = updateOldSegmentsReferenceList([segmentId]);
+        return getWazeMapEditorWindow().W.model.segments.getByIds(
+          newSegmentIds,
+        );
+      })
+      .filter((item, pos, arr) => pos === 0 || arr.indexOf(item) === pos);
+
+    return new BigJunctionSignature(
+      this._entranceSegments,
+      this._exitSegments,
+      upgradedContainedSegments,
+    );
   }
 }
