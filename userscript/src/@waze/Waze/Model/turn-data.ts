@@ -29,7 +29,7 @@ export interface TurnData {
   withoutDifficultRestrictions(): TurnData;
   withState(state: string): TurnData;
   withRestrictions(restrictions: unknown[]): TurnData;
-  withSegmentPath(segmentPath: string[]): TurnData;
+  withSegmentPath(segmentPath: number[]): TurnData;
   withInstructionOpcode(
     instructionOpcode: TurnInstructionOpcode | null,
   ): TurnData;
@@ -42,7 +42,7 @@ export interface TurnData {
   hasAdditionalData(): boolean;
   withToggledState(isAllowed: boolean): TurnData;
   hasSegmentPath(): boolean;
-  getSegmentPath(): string[];
+  getSegmentPath(): number[];
   getSegmentPathLength(): number;
   isPathTurn(): boolean;
   getPathID(): number | null;
