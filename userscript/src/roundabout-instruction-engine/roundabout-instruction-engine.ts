@@ -159,10 +159,7 @@ export class RoundaboutInstructionEngine {
     const turnNodesAndOpcodes = this._instructionMethodTurnsMap.get(
       instructionMethod.type,
     );
-    const applyTIOsAction = new BulkSetTurnOpcodeActions(
-      this._dataModel.getTurnGraph(),
-      turnNodesAndOpcodes,
-    );
+    const applyTIOsAction = new BulkSetTurnOpcodeActions(turnNodesAndOpcodes);
     getWazeMapEditorWindow().W.model.actionManager.add(applyTIOsAction);
   }
 }

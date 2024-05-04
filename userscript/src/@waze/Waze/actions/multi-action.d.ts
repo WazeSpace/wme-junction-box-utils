@@ -5,7 +5,7 @@ export class MultiAction<P = any> extends Action<P> {
   static Base: typeof MultiAction<any>;
   protected subActions: Action[];
 
-  constructor(props?: P, subActions?: Action[]);
+  constructor(subActions?: Action[], props?: P);
 
   doSubAction(dataModel: any, action: Action): void;
   getSubActions(): Action[];

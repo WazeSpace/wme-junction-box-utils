@@ -7,19 +7,19 @@ export class BulkSetTurnOpcodeActions extends MultiAction {
   actionName = 'BULK_SET_TURN_OPCODES';
 
   constructor(
-    private _turnGraph: any,
     private _newTurns: (TurnNodes & { opcode: TurnInstructionOpcode })[],
     props?: unknown,
   ) {
     super(props);
-    this.subActions = this._createAllSetTurnActions();
   }
 
-  private _createSingleSetTurnAction(
+  private _doSetTurnSubAction(
+    dataModel: any,
     turnNodes: TurnNodes,
     newInstruction: TurnInstructionOpcode,
-  ): SetTurnAction {
-    const previousTurn: Turn = this._turnGraph.getTurn(
+  ) {
+    const turnGraph = dataModel.getTurnGraph();
+    const previousTurn: Turn = turnGraph.getTurn(
       turnNodes.fromVertex,
       turnNodes.toVertex,
     );
@@ -27,15 +27,13 @@ export class BulkSetTurnOpcodeActions extends MultiAction {
     const newTurn = previousTurn.withTurnData(
       previousTurnData.withInstructionOpcode(newInstruction),
     );
-    return new SetTurnAction(this._turnGraph, newTurn);
+    this.doSubAction(dataModel, new SetTurnAction(turnGraph, newTurn));
   }
 
-  private _createAllSetTurnActions(): SetTurnAction[] {
-    const actions: SetTurnAction[] = [];
-    this._newTurns.forEach((turn) => {
-      actions.push(this._createSingleSetTurnAction(turn, turn.opcode));
-    });
-    return actions;
+  doAction(dataModel: any) {
+    this._newTurns.forEach((turn) =>
+      this._doSetTurnSubAction(dataModel, turn, turn.opcode),
+    );
   }
 
   generateDescription() {
