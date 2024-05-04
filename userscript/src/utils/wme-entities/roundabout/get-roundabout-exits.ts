@@ -49,6 +49,8 @@ export function getRoundaboutExitsFrom(
   for (const roundaboutSegment of roundaboutSegments) {
     // get the destination node to loop over the segments connected to it
     const node = getSegmentDestinationNodeInTravelDirection(roundaboutSegment);
+    if (!node) return [];
+
     const nodeSegIDs = node.getSegmentIds();
     const nodeSegments: SegmentDataModel[] =
       node.model.segments.getByIds(nodeSegIDs);

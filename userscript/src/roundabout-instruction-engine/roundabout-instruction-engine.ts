@@ -122,6 +122,7 @@ export class RoundaboutInstructionEngine {
 
   calcTurnsForAvailableInstructionMethods(): void {
     const turnNodes = this.getAvailableTurnNodes();
+    if (!turnNodes.length) return;
     this.getAvailableInstructionMethods().forEach((method) => {
       this._instructionMethodTurnsMap.set(
         method.type,
