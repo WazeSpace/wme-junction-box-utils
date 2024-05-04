@@ -29,13 +29,10 @@ export class RestoreBigJunctionSnapshotAction extends UpdateBigJunctionAction {
     );
   }
 
-  doAction(dataModel: any): boolean {
-    const success = super.doAction(dataModel);
-    if (success) {
-      this._previousSnapshotRestoredState = this.getSnapshotRestoredState();
-      this.setSnapshotRestoredState(true);
-    }
-    return success;
+  doAction(dataModel: any): void {
+    super.doAction(dataModel);
+    this._previousSnapshotRestoredState = this.getSnapshotRestoredState();
+    this.setSnapshotRestoredState(true);
   }
 
   undoAction(dataModel: any): void {
