@@ -2,7 +2,7 @@
   "name": "@wazespace/wme-junction-box-utils",
   "fullDisplayName": "WME Junction Box Utils",
   "displayName": "Junction Box Utils",
-  "version": "2.0.0-alpha3.3",
+  "version": "2.0.0-alpha3.4",
   "description": "Formerly known as \"Roundabout JB\". An enhancement add-on for the WME with a wide variety of capabilities for controlling and managing Junction Boxes.",
   "main": "index.js",
   "scripts": {
