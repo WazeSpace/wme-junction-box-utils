@@ -52,6 +52,7 @@ export interface SegmentDataModelAttributes extends DataModelAttributes {
   revLaneCount: number;
   suggestionTransactionIds: number[];
   virtualNodeIDs: number[];
+  origIDs?: number[];
 }
 export interface SegmentDataModel
   extends DataModel<SegmentDataModelAttributes> {
