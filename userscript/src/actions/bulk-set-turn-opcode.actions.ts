@@ -41,5 +41,6 @@ export class BulkSetTurnOpcodeActions extends MultiAction {
       'jb_utils.save.changes_log.actions.BulkSetTurn',
       { count: this._newTurns.length },
     );
+    return this._description;
   }
 }

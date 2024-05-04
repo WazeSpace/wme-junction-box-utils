@@ -1,3 +1,4 @@
+import { AddBigJunctionAction, MultiAction } from '@/@waze/Waze/actions';
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { JunctionDataModel } from '@/@waze/Waze/DataModels/JunctionDataModel';
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
@@ -141,8 +142,8 @@ export class RoundaboutInstructionEngine {
         return false;
     }
   }
-  private _createBigJunctionIfNotExist() {
-    if (this._hasBigJunction()) return;
+  private _createAddBigJunctionIfNotExistAction(): AddBigJunctionAction {
+    if (this._hasBigJunction()) return null;
 
     const perimeter = transformScale(
       extractRoundaboutPerimeterPolygon(this._roundaboutJunction),
@@ -150,16 +151,29 @@ export class RoundaboutInstructionEngine {
     );
     const addBigJunctionAction = createAddBigJunctionAction(perimeter);
     addBigJunctionAction.__jbuSkipAutoRoundaboutize = true;
-    getWazeMapEditorWindow().W.model.actionManager.add(addBigJunctionAction);
+    return addBigJunctionAction;
   }
 
   applyInstructionMethod(instructionMethod: RoundaboutInstructionMethod): void {
-    this._createBigJunctionIfNotExist();
+    const addBigJunctionAction = this._createAddBigJunctionIfNotExistAction();
 
     const turnNodesAndOpcodes = this._instructionMethodTurnsMap.get(
       instructionMethod.type,
     );
     const applyTIOsAction = new BulkSetTurnOpcodeActions(turnNodesAndOpcodes);
+
+    if (addBigJunctionAction) {
+      const multiActionWrapper = new MultiAction([
+        addBigJunctionAction,
+        applyTIOsAction,
+      ]);
+      multiActionWrapper.generateDescription = function () {
+        this._description = applyTIOsAction.generateDescription();
+      };
+
+      getWazeMapEditorWindow().W.model.actionManager.add(multiActionWrapper);
+      return;
+    }
     getWazeMapEditorWindow().W.model.actionManager.add(applyTIOsAction);
   }
 }
