@@ -51,7 +51,11 @@ const normalizationMethod: RoundaboutInstructionMethod = {
         }
       }
 
-      hashTurnMap.set(turn.fromVertex.getID() + turn.toVertex.getID(), {
+      const turnId = turn.fromVertex.getID() + turn.toVertex.getID();
+      if (preferredOpcode !== TurnInstructionOpcode.CountRoundaboutExits)
+        opcodeHashMap.set(preferredOpcode, turnId);
+
+      hashTurnMap.set(turnId, {
         ...turn,
         opcode: preferredOpcode,
       });
