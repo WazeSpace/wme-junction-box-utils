@@ -60,7 +60,8 @@
           "details": "You're about to override a Junction Box backup. This action is irreversible",
           "backup_btn": "OK",
           "ignore_btn": "Ignore"
-        }
+        },
+        "mistmatch_signature_snapshot_restored_alert": "Restored snapshot signature differs from Big Junction signature. Verify newly added turns before saving."
       }
     },
     "save": {

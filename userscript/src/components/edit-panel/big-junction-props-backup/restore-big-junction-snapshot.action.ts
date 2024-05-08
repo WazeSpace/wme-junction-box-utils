@@ -16,7 +16,9 @@ export class RestoreBigJunctionSnapshotAction extends UpdateBigJunctionAction {
   ) {
     const upgradedSnapshot = updateSnapshotWithSegmentLineage(_snapshot);
     super(dataModel, bigJunction, {
-      turns: upgradedSnapshot.turns,
+      turns: upgradedSnapshot.turns.filter((turn) =>
+        dataModel.turnGraph.hasTurn(turn),
+      ),
       name: upgradedSnapshot.name,
       cityName: upgradedSnapshot.address.city,
       stateName: upgradedSnapshot.address.state,

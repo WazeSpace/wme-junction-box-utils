@@ -1,6 +1,6 @@
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { BigJunctionBackupSnapshot } from '../backup-snapshot';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { canUserEditTurnGuidanceForTurn } from '@/utils/wme-entities/turn';
 import { RestoreBigJunctionSnapshotAction } from '../restore-big-junction-snapshot.action';
@@ -10,6 +10,8 @@ export function useBigJunctionRestorer(
   destBigJunction: BigJunctionDataModel,
   backupSnapshot: BigJunctionBackupSnapshot,
 ) {
+  const [isRestored, setIsRestored] = useState(false);
+
   const upgradedLineageSignature = useMemo(
     () => backupSnapshot?.signature?.upgradeSignatureSegmentsLineage?.(),
     [backupSnapshot?.signature],
@@ -52,6 +54,7 @@ export function useBigJunctionRestorer(
     canEditBigJunction,
     canEditTurnGuidance,
     hasTurnsWithGuidance,
+    isRestored,
     restore() {
       getWazeMapEditorWindow().W.model.actionManager.add(
         new RestoreBigJunctionSnapshotAction(
@@ -60,9 +63,9 @@ export function useBigJunctionRestorer(
           backupSnapshot,
         ),
       );
+      setIsRestored(true);
     },
     restorationUnavailableReason: (() => {
-      if (!isBigJunctionSignatureMatch) return 'SIGNATURE_MISMATCH';
       if (!canEditBigJunction) return 'BIG_JUNCTION_EDITING_DISALLOWED';
       if (!canEditTurnGuidance && hasTurnsWithGuidance)
         return 'TURN_GUIDANCE_EDITING_DISALLOWED';
