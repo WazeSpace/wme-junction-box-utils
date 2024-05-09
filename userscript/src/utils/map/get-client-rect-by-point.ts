@@ -1,4 +1,4 @@
-import { Point } from '@turf/turf';
+import { Point } from '@turf/helpers';
 import { getWazeMapEditorWindow } from '../get-wme-window';
 
 export function getClientRectByPoint(

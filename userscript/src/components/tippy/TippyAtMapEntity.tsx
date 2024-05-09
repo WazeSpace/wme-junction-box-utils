@@ -2,8 +2,9 @@ import {
   DataModel,
   DataModelAttributes,
 } from '@/@waze/Waze/DataModels/DataModel';
-import { Geometry } from '@turf/turf';
-import * as turf from '@turf/turf';
+import { Geometry } from '@turf/helpers'
+import centerOfMass from '@turf/center-of-mass';
+import center from '@turf/center';
 import { ComponentProps, useCallback } from 'react';
 import { TippyAtPoint } from './TippyAtPoint';
 import { createTippyDisplayName } from './create-tippy-display-name';
@@ -19,8 +20,8 @@ export function TippyAtMapEntity(props: TippyAtMapEntityProps) {
   const { entity, centerType = 'mass', ...restProps } = props;
 
   const getCenterFn = {
-    mass: turf.centerOfMass,
-    normal: turf.center,
+    mass: centerOfMass,
+    normal: center,
   }[centerType];
 
   const getEntityCenterPoint = useCallback(() => {

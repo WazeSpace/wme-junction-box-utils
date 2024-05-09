@@ -1,7 +1,7 @@
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { getClientRectByPoint } from '@/utils/map';
 import Tippy from '@tippyjs/react';
-import { Point } from '@turf/turf';
+import { Point } from '@turf/helpers';
 import { ComponentProps, useCallback } from 'react';
 import { createTippyDisplayName } from './create-tippy-display-name';
 import { TippyModal } from './TippyModal';

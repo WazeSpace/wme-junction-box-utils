@@ -1,7 +1,7 @@
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { Turn } from '@/@waze/Waze/Model/turn';
-import { uniqBy } from 'lodash';
+import { uniqBy } from '../uniq-by';
 
 function getTurnSegmentsByBigJunction(
   bigJunction: BigJunctionDataModel,
