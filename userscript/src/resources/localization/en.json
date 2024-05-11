@@ -35,7 +35,9 @@
       "actions": {
         "exit_instructions": {
           "NORMALIZATION": "Normalize (Node %{node})",
-          "DE_NORMALIZATION": "Denormalize (Node %{node})"
+          "NORMALIZATION_SHORT": "Normalize",
+          "DE_NORMALIZATION": "Denormalize (Node %{node})",
+          "DE_NORMALIZATION_SHORT": "Denormalize"
         }
       }
     },
@@ -71,6 +73,11 @@
           "UpdateBigJunction": "Update Junction Box",
           "BulkSetTurn": "Updated %{count} turns"
         }
+      }
+    },
+    "turn_tooltip": {
+      "roundabout": {
+        "title": "Roundabout"
       }
     }
   },
