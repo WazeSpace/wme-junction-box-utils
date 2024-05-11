@@ -256,9 +256,27 @@ export default class OtaClient {
     if (this.manifestHolder && !this.disableManifestCache) {
       return this.manifestHolder;
     } else {
-      this.manifestHolder = this.httpClient.get(
-        `${OtaClient.BASE_URL}/${this.distributionHash}/manifest.json`,
-      );
+      this.manifestHolder = this.httpClient
+        .get(`${OtaClient.BASE_URL}/${this.distributionHash}/manifest.json`)
+        .then((manifest: Manifest) => {
+          if (manifest.language_mapping) {
+            Object.keys(manifest.language_mapping).forEach(
+              (crowdinLangCode) => {
+                const mapping = manifest.language_mapping[crowdinLangCode];
+                // if the mapping has a different locale code, then update the content locale codes as well
+                if (
+                  mapping.hasOwnProperty('locale') &&
+                  manifest.content.hasOwnProperty(crowdinLangCode)
+                ) {
+                  manifest.content[mapping.locale] =
+                    manifest.content[crowdinLangCode];
+                  delete manifest.content[crowdinLangCode];
+                }
+              },
+            );
+          }
+          return manifest;
+        });
       return this.manifestHolder;
     }
   }
