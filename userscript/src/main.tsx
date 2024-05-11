@@ -5,13 +5,13 @@ import { migratePreferencesFromRoundaboutJB } from './legacy-migrator';
 import axios from 'axios';
 import { axiosGmXhrAdapter } from './tampermonkey/axios-gmxhr-adapter';
 import { getWazeMapEditorWindow } from './utils/get-wme-window';
-import { createCrowdinOtaClient } from './localization/crowdin-client';
+import CrowdinOtaClient from './localization/crowdin-ota/ota-client';
 
 export default async function bootstrap() {
   axios.defaults.adapter = axiosGmXhrAdapter;
 
   const currentLocale = getWazeMapEditorWindow().I18n.currentLocale();
-  const translations = await createCrowdinOtaClient(
+  const translations = await new CrowdinOtaClient(
     process.env.CROWDIN_DISTRIBUTION_HASH,
   ).getStringsByLocale(currentLocale);
 

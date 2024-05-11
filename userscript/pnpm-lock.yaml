@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@crowdin/ota-client':
-    specifier: ^1.1.1
-    version: 1.1.1
   '@emotion/react':
     specifier: ^11.11.4
     version: 11.11.4(@types/react@17.0.76)(react@18.2.0)
@@ -568,15 +565,6 @@ packages:
       '@babel/helper-string-parser': 7.23.4
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
-
-  /@crowdin/ota-client@1.1.1:
-    resolution: {integrity: sha512-4hjiJuuEOrOdmQpibpP6XRUg78cuNm2Yg4Ldd7SDq8yTCPnLk8DKUB+1IqzOSzU8ZDHG1IY/TA0BI/y04d+RWg==}
-    engines: {node: '>=16.0.0'}
-    dependencies:
-      axios: 1.6.8
-    transitivePeerDependencies:
-      - debug
-    dev: false
 
   /@discoveryjs/json-ext@0.5.7:
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
