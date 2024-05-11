@@ -13,6 +13,7 @@ export function useTurnArrowTooltips(): ReadonlyArray<OpenTurnArrow> {
     (_prevState: OpenTurnArrow[], newTooltipContainers: HTMLDivElement[]) => {
       return newTooltipContainers.map((tooltipContainer): OpenTurnArrow => {
         const fiberNode = getReactFiberNode(tooltipContainer);
+        if (!fiberNode) throw new Error('Fiber node not found');
         const turnArrowProviderNode = findFiberParentNode(
           fiberNode,
           (node) =>
