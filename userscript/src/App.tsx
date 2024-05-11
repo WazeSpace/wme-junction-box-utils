@@ -8,14 +8,14 @@ import { RoundaboutPerimeterPolygonTemplate } from '@/components/edit-panel/roun
 import { SelectedDataModelsContextProvider } from '@/contexts/SelectedDataModelsContext';
 import { Preferences } from './components/preferences/Preferences';
 import { useInjectTranslations, usePreference } from './hooks';
-import { translations } from './resources/localization';
+import FallbackUserscriptTranslations from './resources/localization/userscript.json';
 import { LanguageTranslations } from './@waze/I18n';
 
 interface AppProps {
   translations: LanguageTranslations;
 }
 export function App(props: AppProps) {
-  useInjectTranslations(props.translations ?? translations);
+  useInjectTranslations(props.translations ?? FallbackUserscriptTranslations);
   const [isMasterDisabled] = usePreference('master_disable');
 
   return (
