@@ -1,5 +1,4 @@
-import { getReactFiberNode } from '@/utils/react-fiber';
-import { Fiber } from 'react-reconciler';
+import { findFiberParentNode, getReactFiberNode } from '@/utils/react-fiber';
 
 function getDrawBigJunctionPolygonButton() {
   return document.querySelector(
@@ -12,17 +11,6 @@ function getDrawBigJunctionPolygonButtonFiber() {
   if (!drawPolygonButton) return null;
 
   return getReactFiberNode(drawPolygonButton);
-}
-
-function findFiberParentNode(
-  currentFiberNode: Fiber,
-  predicate: (node: Fiber) => boolean,
-): Fiber {
-  while (currentFiberNode) {
-    if (predicate(currentFiberNode)) return currentFiberNode;
-    currentFiberNode = currentFiberNode.return;
-  }
-  return null;
 }
 
 function getFiberNodeOfBigJunctionToolbarItem() {
