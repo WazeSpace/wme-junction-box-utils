@@ -58,10 +58,10 @@
         "confirm_overwrite_backup": {
           "title": "Override backup?",
           "details": "You're about to override a Junction Box backup. This action is irreversible",
-          "backup_btn": "OK",
-          "ignore_btn": "Ignore"
+          "backup_btn": "Yes",
+          "ignore_btn": "No"
         },
-        "mistmatch_signature_snapshot_restored_alert": "Restored snapshot signature differs from Big Junction signature. Verify newly added turns before saving."
+        "mistmatch_signature_snapshot_restored_alert": "Restored snapshot signature differs from Junction Box signature. Verify newly added turns before saving."
       }
     },
     "save": {
