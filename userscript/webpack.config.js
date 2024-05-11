@@ -35,6 +35,9 @@ module.exports = () => {
           packageInfo.fullDisplayName,
         ),
         'process.env.SCRIPT_NAME': JSON.stringify(packageInfo.displayName),
+        'process.env.CROWDIN_DISTRIBUTION_HASH': JSON.stringify(
+          'd1b4fd3a44adaf1825a0668031c',
+        ),
       }),
       new WebpackUserscriptPlugin({
         headers: {
@@ -50,9 +53,10 @@ module.exports = () => {
             'GM_deleteValue',
             'GM_xmlhttpRequest',
           ],
-          connect: [packageInfo.useWazeSpace && 'us.waze.space'].filter(
-            Boolean,
-          ),
+          connect: [
+            packageInfo.useWazeSpace && 'us.waze.space',
+            'distributions.crowdin.net',
+          ].filter(Boolean),
           require: [
             packageInfo.useWazeSpace &&
               'https://wazespace.github.io/userscripts-lib/index.js',

@@ -9,9 +9,13 @@ import { SelectedDataModelsContextProvider } from '@/contexts/SelectedDataModels
 import { Preferences } from './components/preferences/Preferences';
 import { useInjectTranslations, usePreference } from './hooks';
 import { translations } from './resources/localization';
+import { LanguageTranslations } from './@waze/I18n';
 
-export function App() {
-  useInjectTranslations(translations);
+interface AppProps {
+  translations: LanguageTranslations;
+}
+export function App(props: AppProps) {
+  useInjectTranslations(props.translations ?? translations);
   const [isMasterDisabled] = usePreference('master_disable');
 
   return (

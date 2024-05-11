@@ -55,11 +55,6 @@ function removeTranslationsByKeys(
 export function useInjectTranslations(
   translationsToInject: LanguageTranslations,
 ) {
-  const localeToInject = useMemo(() => {
-    const { I18n } = getWazeMapEditorWindow();
-    return getBestSuitableLocale(I18n.locale);
-  }, [translationsToInject]);
-
   useSyncEffect(() => {
     const { I18n } = getWazeMapEditorWindow();
     const wmeTranslations = I18n.translations[
@@ -68,7 +63,7 @@ export function useInjectTranslations(
 
     const appendedTranslationKeys = addNonExistingTranslationKeys(
       wmeTranslations,
-      translationsToInject[localeToInject] as LanguageTranslations,
+      translationsToInject[I18n.currentLocale()] as LanguageTranslations,
     );
 
     return () => {
