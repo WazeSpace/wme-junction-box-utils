@@ -1,5 +1,5 @@
 import { Polygon } from '@turf/helpers';
-import { getDrawBigJunctionHandler } from './get-draw-big-junction-handler';
+import getBigJunctionDrawCallback from './draw-callback-impl';
 
 function createDrawAttributes(polygon: Polygon) {
   return {
@@ -11,6 +11,6 @@ function createDrawAttributes(polygon: Polygon) {
 
 export function drawBigJunction(polygon: Polygon) {
   const drawAttributes = createDrawAttributes(polygon);
-  const drawHandler = getDrawBigJunctionHandler();
-  drawHandler(drawAttributes);
+  const drawCallback = getBigJunctionDrawCallback();
+  drawCallback(drawAttributes);
 }
