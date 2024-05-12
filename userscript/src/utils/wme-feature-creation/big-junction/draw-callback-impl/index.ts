@@ -1,6 +1,7 @@
+import getFromDrawer from './drawer';
 import getFromToolbar from './toolbar';
 
-const SUPPORTED_GETTERS_BY_RELEVANCE = [getFromToolbar];
+const SUPPORTED_GETTERS_BY_RELEVANCE = [getFromDrawer, getFromToolbar];
 
 export default function getBigJunctionDrawCallback() {
   for (const getter of SUPPORTED_GETTERS_BY_RELEVANCE) {
