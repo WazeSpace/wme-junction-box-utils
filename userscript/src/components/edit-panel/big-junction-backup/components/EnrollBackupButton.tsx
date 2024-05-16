@@ -8,7 +8,7 @@ import { MouseEventHandler, useRef, useState } from 'react';
 import { ConfirmBalloon } from '@/components/ConfirmBalloon';
 import { TippyModal } from '@/components/tippy';
 
-export function EntrollBackupButton() {
+export function EnrollBackupButton() {
   const buttonRef = useRef<HTMLButtonElement>();
   const { isBackupAvailable, setBackup } = useBackupContext();
   const [bigJunction] = useSelectedDataModelsContext<BigJunctionDataModel>();

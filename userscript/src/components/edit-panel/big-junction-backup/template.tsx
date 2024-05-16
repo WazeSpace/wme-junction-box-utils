@@ -6,7 +6,7 @@ import {
   RestoreContextProvider,
   useRestoreContext,
 } from './contexts';
-import { EntrollBackupButton, RestoreBackupButton } from './components';
+import { EnrollBackupButton, RestoreBackupButton } from './components';
 import { BigJunctionActionsPortal, BigJunctionAlertsPortal } from './portals';
 import { BigJunctionBackup } from './models';
 import { backupNotRestoredSaveLock } from './backup-not-restored-save-lock';
@@ -58,7 +58,7 @@ export const BigJunctionBackupTemplate = class implements EditPanelTemplate {
             })}
           </BigJunctionAlertsPortal>
           <BigJunctionActionsPortal>
-            <EntrollBackupButton />
+            <EnrollBackupButton />
             <RestoreBackupButton />
           </BigJunctionActionsPortal>
         </RestoreContextProvider>
