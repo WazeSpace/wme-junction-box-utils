@@ -1,7 +1,6 @@
 import {
   BackgroundActions
 } from '@/components/background-actions/BackgroundActions';
-import { BigJunctionPropsBackupTemplate } from '@/components/edit-panel/big-junction-props-backup/template';
 import { EditPanel } from '@/components/edit-panel/EditPanel';
 import { RoundaboutExitInstructionNormalizationTemplate } from '@/components/edit-panel/roundabout-exit-instruction-normalization/template';
 import { RoundaboutPerimeterPolygonTemplate } from '@/components/edit-panel/roundabout-perimeter-geometry/template';
@@ -10,6 +9,7 @@ import { Preferences } from './components/preferences/Preferences';
 import { useInjectTranslations, usePreference } from './hooks';
 import FallbackUserscriptTranslations from './resources/localization/userscript.json';
 import { LanguageTranslations } from './@waze/I18n';
+import { BigJunctionBackupTemplate } from './components/edit-panel/big-junction-backup';
 
 interface AppProps {
   translations: LanguageTranslations;
@@ -28,7 +28,7 @@ export function App(props: AppProps) {
             templates={[
               RoundaboutExitInstructionNormalizationTemplate,
               RoundaboutPerimeterPolygonTemplate,
-              BigJunctionPropsBackupTemplate,
+              BigJunctionBackupTemplate,
             ]}
           />
           <BackgroundActions />

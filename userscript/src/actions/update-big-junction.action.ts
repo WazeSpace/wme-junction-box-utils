@@ -34,7 +34,7 @@ export class UpdateBigJunctionAction extends MultiAction.Base {
       ...this._newAttributes.turns.map(
         (turn) => new SetTurnAction(_dataModel.turnGraph, turn),
       ),
-    ];
+    ].filter(Boolean);
   }
 
   private _createUpdateObjectAction() {
@@ -47,7 +47,13 @@ export class UpdateBigJunctionAction extends MultiAction.Base {
     );
   }
 
+  private _isEmptyAddress(): boolean {
+    return !this._newAttributes.countryName;
+  }
+
   private _createUpdateAddressAction() {
+    if (this._isEmptyAddress()) return null;
+
     return new UpdateFeatureAddressAction(
       this._bigJunction,
       {

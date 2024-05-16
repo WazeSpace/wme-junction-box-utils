@@ -1,0 +1,8 @@
+{
+  "material-icon-theme.folders.associations": {
+    "portal": "routes",
+    "portals": "routes",
+    "action": "functions",
+    "actions": "functions"
+  }
+}

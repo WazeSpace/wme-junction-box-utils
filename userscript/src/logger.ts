@@ -37,4 +37,5 @@ export class Logger {
   static warn = Logger.bindLogLevel('warn');
   static error = Logger.bindLogLevel('error');
   static info = Logger.bindLogLevel('info');
+  static debug = Logger.bindLogLevel('debug');
 }

@@ -2,6 +2,8 @@ import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataMod
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { Turn } from '@/@waze/Waze/Model/turn';
 import { uniqBy } from '../uniq-by';
+import { Vertex } from '@/@waze/Waze/Vertex';
+import { getSegmentByVertex } from '../location';
 
 function getTurnSegmentsByBigJunction(
   bigJunction: BigJunctionDataModel,
@@ -43,4 +45,17 @@ export function isBigJunctionOnRoundabout(bigJunction: BigJunctionDataModel) {
   // use "some" iterator over "every" iterator for performance reasons
   // (if a single segment is not in roundabout, then we don't have to check the rest)
   return !segments.some((segment) => !segment.isInRoundabout());
+}
+
+export function isVertexConnectsToBigJunction(
+  dataModel: any,
+  vertex: Vertex,
+  bigJunction?: BigJunctionDataModel,
+): boolean {
+  const segment = getSegmentByVertex(dataModel, vertex);
+  const crossroads = segment.getAttribute(
+    vertex.direction === 'fwd' ? 'toCrossroads' : 'fromCrossroads',
+  );
+  if (!bigJunction) return crossroads.length > 0;
+  return crossroads.includes(bigJunction.getAttribute('id'));
 }

@@ -1,13 +1,13 @@
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { Action, isDeleteBigJunctionAction } from '@/@waze/Waze/actions';
 import { ConfirmMapBalloon } from '@/components/ConfirmMapBalloon';
-import { createBackupSnapshotFromBigJunction } from '@/components/edit-panel/big-junction-props-backup/backup-snapshot';
-import { BigJunctionBackupStrategy } from '@/components/edit-panel/big-junction-props-backup/backup-strategies';
-import { BigJunctionPropsBackupTemplate } from '@/components/edit-panel/big-junction-props-backup/template';
+import {
+  BigJunctionBackup,
+  BigJunctionBackupTemplate,
+} from '@/components/edit-panel/big-junction-backup';
 import { usePreference, useTranslate } from '@/hooks';
 import { Logger } from '@/logger';
 import { ManualMethodInvocationInterceptor } from '@/method-interceptor';
-import { BigJunctionSignature } from '@/types/big-junction-signature';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { useEffect, useMemo, useState } from 'react';
 import { useEventCallback } from 'usehooks-ts';
@@ -23,12 +23,9 @@ export function AutoBackupBigJunctionBeforeDelete() {
     reject(): void;
   }>(null);
 
-  const backupBigJunction = (
-    bigJunction: BigJunctionDataModel,
-    backupStrategy: BigJunctionBackupStrategy,
-  ) => {
-    const snapshot = createBackupSnapshotFromBigJunction(bigJunction);
-    backupStrategy.saveSnapshot(snapshot);
+  const backupBigJunction = (bigJunction: BigJunctionDataModel) => {
+    const backup = BigJunctionBackup.fromBigJunction(bigJunction);
+    BigJunctionBackupTemplate.backup = backup;
     Logger.info('Big Junction snapshot has been created and saved');
   };
 
@@ -39,20 +36,15 @@ export function AutoBackupBigJunctionBeforeDelete() {
 
       Logger.info('Automatic big junction backup script running...');
 
-      const autoBackupStrategy =
-        BigJunctionPropsBackupTemplate.getBackupStrategyForAutoBackup();
-      const bigJunctionSignature = BigJunctionSignature.fromBigJunction(
-        action.bigJunction,
-      );
-
-      const storedSnapshot = autoBackupStrategy.getSnapshot();
+      const storedSnapshot = BigJunctionBackupTemplate.backup;
       const snapshotSignatureMatch =
         storedSnapshot &&
-        bigJunctionSignature.compareTo(storedSnapshot.signature);
+        storedSnapshot.getOriginalBigJunction()?.getAttribute('id') ===
+          action.bigJunction.getAttribute('id');
 
       if (!storedSnapshot) {
         Logger.info('Has no snapshot stored, backing up...');
-        backupBigJunction(action.bigJunction, autoBackupStrategy);
+        backupBigJunction(action.bigJunction);
         addAction(action);
       } else if (snapshotSignatureMatch) {
         Logger.info('Big Junction and Snapshot signatures matches, skipping');
@@ -68,7 +60,7 @@ export function AutoBackupBigJunctionBeforeDelete() {
         })
           .then(() => {
             Logger.info('User confirmed, overriding');
-            backupBigJunction(action.bigJunction, autoBackupStrategy);
+            backupBigJunction(action.bigJunction);
           })
           .catch(() => {
             Logger.info('User rejected, adding action w/o backup');

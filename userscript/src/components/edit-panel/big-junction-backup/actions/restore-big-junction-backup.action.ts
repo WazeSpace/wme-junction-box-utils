@@ -1,29 +1,34 @@
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { UpdateBigJunctionAction } from '@/actions';
-import {
-  BigJunctionBackupSnapshot,
-  updateSnapshotWithSegmentLineage,
-} from './backup-snapshot';
-import { WAS_RESTORED_METADATA_SYMBOL } from './consts';
+import { BigJunctionBackup } from '../models';
+import { WAS_RESTORED_METADATA_SYMBOL } from '../constants/meta-symbols';
+import { reconcileTurnSegments } from '../utils';
+import { ChangedIdMapping } from '@/utils';
 
-export class RestoreBigJunctionSnapshotAction extends UpdateBigJunctionAction {
+export class RestoreBigJunctionBackupAction extends UpdateBigJunctionAction {
   private _previousSnapshotRestoredState: boolean;
+  private _snapshot: BigJunctionBackup;
 
   constructor(
-    dataModel: any,
-    bigJunction: BigJunctionDataModel,
-    private readonly _snapshot: BigJunctionBackupSnapshot,
+    targetBigJunction: BigJunctionDataModel,
+    backup: BigJunctionBackup,
+    segmentChangedIds: ChangedIdMapping[],
   ) {
-    const upgradedSnapshot = updateSnapshotWithSegmentLineage(_snapshot);
-    super(dataModel, bigJunction, {
-      turns: upgradedSnapshot.turns.filter((turn) =>
-        dataModel.turnGraph.hasTurn(turn),
-      ),
-      name: upgradedSnapshot.name,
-      cityName: upgradedSnapshot.address.city,
-      stateName: upgradedSnapshot.address.state,
-      countryName: upgradedSnapshot.address.country,
+    const name = backup.getName();
+    const address = backup.getAddress();
+    const turns = backup
+      .getTurns()
+      .map((turn) => reconcileTurnSegments(turn, segmentChangedIds));
+
+    super(targetBigJunction.model, targetBigJunction, {
+      turns,
+      name,
+      cityName: address.isEmpty ? null : address.cityName,
+      stateName: address.isEmpty ? null : address.stateName,
+      countryName: address.isEmpty ? null : address.countryName,
     });
+
+    this._snapshot = backup;
   }
 
   private setSnapshotRestoredState(state: boolean) {

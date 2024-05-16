@@ -15,7 +15,7 @@ function getVertexDirectionFromNormalDirection(
   }
 }
 
-function createVertex(
+export function createVertex(
   segmentId: number,
   direction: 'forward' | 'reverse',
 ): Vertex {
