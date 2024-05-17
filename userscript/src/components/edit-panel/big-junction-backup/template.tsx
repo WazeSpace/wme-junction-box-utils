@@ -7,11 +7,16 @@ import {
   useRestoreContext,
 } from './contexts';
 import { EnrollBackupButton, RestoreBackupButton } from './components';
-import { BigJunctionActionsPortal, BigJunctionAlertsPortal } from './portals';
+import {
+  BigJunctionActionsPortal,
+  BigJunctionAlertsPortal,
+  NewBigJunctionFormGroupPortal,
+} from './portals';
 import { BigJunctionBackup } from './models';
 import { backupNotRestoredSaveLock } from './backup-not-restored-save-lock';
 import { WzAlert } from '@wazespace/wme-react-components';
 import { useTranslate } from '@/hooks';
+import { UnverifiedTurnsListView } from './components/UnverifiedTurnsListView';
 
 export const BigJunctionBackupTemplate = class implements EditPanelTemplate {
   static backup: BigJunctionBackup = null;
@@ -57,6 +62,9 @@ export const BigJunctionBackupTemplate = class implements EditPanelTemplate {
               );
             })}
           </BigJunctionAlertsPortal>
+          <NewBigJunctionFormGroupPortal>
+            <UnverifiedTurnsListView />
+          </NewBigJunctionFormGroupPortal>
           <BigJunctionActionsPortal>
             <EnrollBackupButton />
             <RestoreBackupButton />

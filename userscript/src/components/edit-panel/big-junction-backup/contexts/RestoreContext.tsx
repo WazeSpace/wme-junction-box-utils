@@ -7,12 +7,15 @@ import { useSelectedDataModelsContext } from '@/contexts/SelectedDataModelsConte
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { RestoreBigJunctionBackupAction } from '../actions';
 import { getBigJunctionTurns } from '@/utils/wme-entities/big-junction-turns';
+import { Turn } from '@/@waze/Waze/Model/turn';
+import { UNVERIFIED_TURN_METADATA_SYMBOL } from '../constants/meta-symbols';
 
 interface RestoreContextPayload {
   readonly targetBigJunction: BigJunctionDataModel;
   readonly isSameJunction: boolean;
   readonly hasJunctionNewTurns: boolean;
   readonly isBackupRestored: boolean;
+  readonly unverifiedTurns: Turn[];
   restore(): void;
 }
 interface RestoreContextProps {
@@ -57,6 +60,14 @@ export function RestoreContextProvider(props: RestoreContextProps) {
         isSameJunction,
         isBackupRestored,
         hasJunctionNewTurns,
+        unverifiedTurns: getBigJunctionTurns(targetBigJunction).filter(
+          (turn) =>
+            turn.isFarTurn() &&
+            Reflect.getMetadata(
+              UNVERIFIED_TURN_METADATA_SYMBOL,
+              turn.getTurnData(),
+            ) === true,
+        ),
         restore: restoreCurrentBackup,
       }}
     >

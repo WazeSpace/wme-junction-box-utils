@@ -4,6 +4,7 @@ import {
 } from '@/@waze/Waze/DataModels/DataModel';
 import { RoadType } from '../enums';
 import { LineString } from '@turf/helpers';
+import { AddressDataModel } from './AddressDataModel';
 
 export interface SegmentDataModelAttributes extends DataModelAttributes {
   roadType: RoadType;
@@ -56,6 +57,7 @@ export interface SegmentDataModelAttributes extends DataModelAttributes {
 }
 export interface SegmentDataModel
   extends DataModel<SegmentDataModelAttributes> {
+  getAddress(): AddressDataModel;
   isLockedByHigherRank(): boolean;
   isWalkingRoadType(): boolean;
   isRoutable(): boolean;

@@ -1,4 +1,4 @@
-import { ComponentType, ReactNode } from 'react';
+import { ComponentType, ReactNode, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 
 interface PortalProps {
@@ -6,9 +6,10 @@ interface PortalProps {
   portalKey?: string;
 }
 export function createReactPortal(
-  container: () => Element | DocumentFragment,
+  getContainer: () => Element | DocumentFragment,
 ): ComponentType<PortalProps> {
   return ({ children, portalKey }: PortalProps) => {
-    return createPortal(children, container(), portalKey);
+    const container = useMemo(() => getContainer(), []);
+    return createPortal(children, container, portalKey);
   };
 }
