@@ -32,7 +32,11 @@ function setSaveLock() {
     },
     () => {
       const backup = BigJunctionBackupTemplate.backup;
-      return !isBackupRestored(backup) && isBackupBigJunctionDeleted(backup);
+      return (
+        backup &&
+        !isBackupRestored(backup) &&
+        isBackupBigJunctionDeleted(backup)
+      );
     },
   );
   isSaveLockSet = true;
