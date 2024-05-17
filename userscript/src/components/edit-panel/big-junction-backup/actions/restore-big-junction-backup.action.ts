@@ -1,13 +1,22 @@
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { UpdateBigJunctionAction } from '@/actions';
 import { BigJunctionBackup } from '../models';
-import { WAS_RESTORED_METADATA_SYMBOL } from '../constants/meta-symbols';
-import { reconcileTurnSegments } from '../utils';
+import {
+  UNVERIFIED_TURN_METADATA_SYMBOL,
+  WAS_RESTORED_METADATA_SYMBOL,
+} from '../constants/meta-symbols';
+import {
+  omitUnexistingBigJunctionTurns,
+  reconcileTurnSegments,
+} from '../utils';
 import { ChangedIdMapping } from '@/utils';
+import { getBigJunctionTurns } from '@/utils/wme-entities/big-junction-turns';
 
 export class RestoreBigJunctionBackupAction extends UpdateBigJunctionAction {
   private _previousSnapshotRestoredState: boolean;
   private _snapshot: BigJunctionBackup;
+  private _verifiedTurnIds = new Set<string>();
+  private readonly _targetBigJunction: BigJunctionDataModel;
 
   constructor(
     targetBigJunction: BigJunctionDataModel,
@@ -16,10 +25,12 @@ export class RestoreBigJunctionBackupAction extends UpdateBigJunctionAction {
   ) {
     const name = backup.getName();
     const address = backup.getAddress();
-    const turns = backup
-      .getTurns()
-      .map((turn) => reconcileTurnSegments(turn, segmentChangedIds));
-
+    const turns = omitUnexistingBigJunctionTurns(
+      targetBigJunction,
+      backup
+        .getTurns()
+        .map((turn) => reconcileTurnSegments(turn, segmentChangedIds)),
+    );
     super(targetBigJunction.model, targetBigJunction, {
       turns,
       name,
@@ -28,7 +39,10 @@ export class RestoreBigJunctionBackupAction extends UpdateBigJunctionAction {
       countryName: address.isEmpty ? null : address.countryName,
     });
 
+    turns.forEach((turn) => this._verifiedTurnIds.add(turn.getID()));
+
     this._snapshot = backup;
+    this._targetBigJunction = targetBigJunction;
   }
 
   private setSnapshotRestoredState(state: boolean) {
@@ -44,6 +58,15 @@ export class RestoreBigJunctionBackupAction extends UpdateBigJunctionAction {
     super.doAction(dataModel);
     this._previousSnapshotRestoredState = this.getSnapshotRestoredState();
     this.setSnapshotRestoredState(true);
+    getBigJunctionTurns(this._targetBigJunction)
+      .filter((turn) => !this._verifiedTurnIds.has(turn.getID()))
+      .forEach((turn) => {
+        Reflect.defineMetadata(
+          UNVERIFIED_TURN_METADATA_SYMBOL,
+          true,
+          turn.getTurnData(),
+        );
+      });
   }
 
   undoAction(dataModel: any): void {
