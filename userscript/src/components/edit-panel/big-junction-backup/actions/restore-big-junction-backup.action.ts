@@ -11,6 +11,7 @@ import {
 } from '../utils';
 import { ChangedIdMapping } from '@/utils';
 import { getBigJunctionTurns } from '@/utils/wme-entities/big-junction-turns';
+import { reconcileTurnsWithPossibleExtension } from '../utils';
 
 export class RestoreBigJunctionBackupAction extends UpdateBigJunctionAction {
   private _previousSnapshotRestoredState: boolean;
@@ -27,9 +28,12 @@ export class RestoreBigJunctionBackupAction extends UpdateBigJunctionAction {
     const address = backup.getAddress();
     const turns = omitUnexistingBigJunctionTurns(
       targetBigJunction,
-      backup
-        .getTurns()
-        .map((turn) => reconcileTurnSegments(turn, segmentChangedIds)),
+      reconcileTurnsWithPossibleExtension(
+        backup
+          .getTurns()
+          .map((turn) => reconcileTurnSegments(turn, segmentChangedIds)),
+        getBigJunctionTurns(targetBigJunction),
+      ),
     );
     super(targetBigJunction.model, targetBigJunction, {
       turns,
