@@ -119,41 +119,43 @@ function reconcileTurns(
 ): Turn[] {
   const extensionList = createExtensionList(turns, currentTurns, vertex);
   const turnsList = createTurnList(turns);
-  return currentTurns.map((turn) => {
-    const inferedTurnId = extensionList.get(turn.getID());
-    if (!inferedTurnId) {
-      // this turn wasn't infered
-      const originalTurn = turnsList.get(turn.getID());
-      if (!originalTurn) return turn; // whoops, seems like this is a new turn
-      return turn.withTurnData(originalTurn.getTurnData());
-    }
+  return currentTurns
+    .map((turn) => {
+      const inferedTurnId = extensionList.get(turn.getID());
+      if (!inferedTurnId) {
+        // this turn wasn't infered
+        const originalTurn = turnsList.get(turn.getID());
+        if (!originalTurn) return null; // whoops, seems like this is a new turn
+        return turn.withTurnData(originalTurn.getTurnData());
+      }
 
-    const inferedTurnData = turnsList.get(inferedTurnId).getTurnData();
-    let updatedTurnData: TurnData = turn.getTurnData();
-    let hasIncompatiableProps: boolean = false;
-    Object.keys(TURN_PROPERTIES_CARRIER).forEach(
-      (turnProperty: TurnProperties) => {
-        const { carry, has } = TURN_PROPERTIES_CARRIER[turnProperty];
-        if (!propertiesToCarry.includes(turnProperty)) {
-          if (has(inferedTurnData)) hasIncompatiableProps = true;
-          return;
-        }
+      const inferedTurnData = turnsList.get(inferedTurnId).getTurnData();
+      let updatedTurnData: TurnData = turn.getTurnData();
+      let hasIncompatiableProps: boolean = false;
+      Object.keys(TURN_PROPERTIES_CARRIER).forEach(
+        (turnProperty: TurnProperties) => {
+          const { carry, has } = TURN_PROPERTIES_CARRIER[turnProperty];
+          if (!propertiesToCarry.includes(turnProperty)) {
+            if (has(inferedTurnData)) hasIncompatiableProps = true;
+            return;
+          }
 
-        updatedTurnData = carry(inferedTurnData, updatedTurnData);
-      },
-    );
-    const updatedTurn = turn.withTurnData(updatedTurnData);
-
-    if (hasIncompatiableProps)
-      markTurnAsUnverified(updatedTurn.getTurnData(), true);
-    else {
-      carryoverUnverifiedMarkBetweenTurns(
-        turn.getTurnData(),
-        updatedTurn.getTurnData(),
+          updatedTurnData = carry(inferedTurnData, updatedTurnData);
+        },
       );
-    }
-    return updatedTurn;
-  });
+      const updatedTurn = turn.withTurnData(updatedTurnData);
+
+      if (hasIncompatiableProps)
+        markTurnAsUnverified(updatedTurn.getTurnData(), true);
+      else {
+        carryoverUnverifiedMarkBetweenTurns(
+          turn.getTurnData(),
+          updatedTurn.getTurnData(),
+        );
+      }
+      return updatedTurn;
+    })
+    .filter(Boolean); // since we ignore new turns and return null instead
 }
 
 const RECONCILE_PARAMS: Record<'from' | 'to', TurnProperties[]> = {
