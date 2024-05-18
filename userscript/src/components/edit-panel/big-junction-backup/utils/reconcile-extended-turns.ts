@@ -36,16 +36,18 @@ const TURN_PROPERTIES_CARRIER: Record<
   },
 };
 
-function consecutive<T>(array: T[], testArray: T[]): boolean {
-  const firstMatchIndex = array.indexOf(testArray[0]);
-  if (firstMatchIndex === -1) return false;
-  for (
-    let index = firstMatchIndex;
-    index < firstMatchIndex + testArray.length;
-    index++
-  ) {
-    if (array[index] !== testArray[index - firstMatchIndex]) return false;
+function isArrayInSequence<T>(mainArray: T[], subArray: T[]): boolean {
+  // Find the starting index of the first element of subArray in mainArray
+  const startIndex = mainArray.indexOf(subArray[0]);
+
+  // If the first element of subArray is not found in mainArray, return false
+  if (startIndex === -1) return false;
+
+  // Check if all elements of subArray appear consecutively in mainArray
+  for (let i = 0; i < subArray.length; i++) {
+    if (mainArray[startIndex + i] !== subArray[i]) return false;
   }
+
   return true;
 }
 
@@ -70,9 +72,17 @@ function createExtensionList(
     originalTurnPath: number[],
     segmentId: number,
   ) => {
-    if (vertex === 'from')
-      return consecutive(possibleTurnPath, [segmentId, ...originalTurnPath]);
-    else return consecutive(possibleTurnPath, [...originalTurnPath, segmentId]);
+    if (vertex === 'from') {
+      return isArrayInSequence(possibleTurnPath, [
+        segmentId,
+        ...originalTurnPath,
+      ]);
+    } else {
+      return isArrayInSequence(possibleTurnPath, [
+        ...originalTurnPath,
+        segmentId,
+      ]);
+    }
   };
   sortedTurns.forEach((turn) => {
     const vertex = turn[vertexPropName];
