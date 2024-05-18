@@ -6,18 +6,18 @@ function wrapStreetName(streetName: string): ReactElement {
 
 interface TurnListViewEntryStreeetNamesProps {
   fromStreet: string;
-  toSteet: string;
+  toStreet: string;
   showFromStreet: boolean;
 }
 export function TurnListViewEntryStreetNames({
   fromStreet,
-  toSteet,
+  toStreet,
   showFromStreet,
 }: TurnListViewEntryStreeetNamesProps): ReactElement {
   const fromStreetChildren = wrapStreetName(fromStreet);
   if (!showFromStreet) return fromStreetChildren;
 
-  const toStreetChildren = wrapStreetName(toSteet);
+  const toStreetChildren = wrapStreetName(toStreet);
   return (
     <>
       {fromStreetChildren}

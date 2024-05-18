@@ -30,7 +30,7 @@ export function TurnListViewEntry({
       />
       <TurnListViewEntryStreetNames
         fromStreet={fromStreetName}
-        toSteet={toStreetName}
+        toStreet={toStreetName}
         showFromStreet={showFromStreet}
       />
     </div>
