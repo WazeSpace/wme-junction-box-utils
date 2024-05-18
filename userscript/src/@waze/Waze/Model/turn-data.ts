@@ -27,7 +27,7 @@ export interface TurnData {
   countNonDifficultTimeRestrictions(): number;
   with24SevenDifficulty(isDifficult24Seven: boolean): TurnData;
   withoutDifficultRestrictions(): TurnData;
-  withState(state: string): TurnData;
+  withState(state: TurnState): TurnData;
   withRestrictions(restrictions: unknown[]): TurnData;
   withSegmentPath(segmentPath: number[]): TurnData;
   withInstructionOpcode(
