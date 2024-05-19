@@ -1,5 +1,8 @@
 import { Turn } from '@/@waze/Waze/Model/turn';
-import { UNVERIFIED_TURN_METADATA_SYMBOL } from '../constants/meta-symbols';
+import {
+  EXTENDED_TURN_METADATA_SYMBOL,
+  UNVERIFIED_TURN_METADATA_SYMBOL,
+} from '../constants/meta-symbols';
 import { TurnData } from '@/@waze/Waze/Model/turn-data';
 
 type TurnPropertyCarrier = (from: TurnData, to: TurnData) => TurnData;
@@ -135,7 +138,12 @@ function reconcileTurns(
       if (!inferedTurnId) {
         // this turn wasn't infered
         const originalTurn = turnsList.get(turn.getID());
-        if (!originalTurn) return null; // whoops, seems like this is a new turn
+        if (!originalTurn) {
+          if (Reflect.getMetadata(EXTENDED_TURN_METADATA_SYMBOL, turn) === true)
+            return turn; // this turn was extended previously, so we already took care of it
+
+          return null; // whoops, seems like this is a new turn
+        }
         return turn.withTurnData(originalTurn.getTurnData());
       }
 
@@ -163,6 +171,7 @@ function reconcileTurns(
           updatedTurn.getTurnData(),
         );
       }
+      Reflect.defineMetadata(EXTENDED_TURN_METADATA_SYMBOL, true, updatedTurn);
       return updatedTurn;
     })
     .filter(Boolean); // since we ignore new turns and return null instead
