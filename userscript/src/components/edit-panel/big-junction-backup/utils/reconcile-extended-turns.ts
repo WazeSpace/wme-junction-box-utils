@@ -132,49 +132,50 @@ function reconcileTurns(
 ): Turn[] {
   const extensionList = createExtensionList(turns, currentTurns, vertex);
   const turnsList = createTurnList(turns);
-  return currentTurns
-    .map((turn) => {
-      const inferedTurnId = extensionList.get(turn.getID());
-      if (!inferedTurnId) {
-        // this turn wasn't infered
-        const originalTurn = turnsList.get(turn.getID());
-        if (!originalTurn) {
-          if (Reflect.getMetadata(EXTENDED_TURN_METADATA_SYMBOL, turn) === true)
-            return turn; // this turn was extended previously, so we already took care of it
-
-          return null; // whoops, seems like this is a new turn
-        }
-        return turn.withTurnData(originalTurn.getTurnData());
-      }
-
-      const inferedTurnData = turnsList.get(inferedTurnId).getTurnData();
-      let updatedTurnData: TurnData = turn.getTurnData();
-      let hasIncompatiableProps: boolean = false;
-      Object.keys(TURN_PROPERTIES_CARRIER).forEach(
-        (turnProperty: TurnProperties) => {
-          const { carry, has } = TURN_PROPERTIES_CARRIER[turnProperty];
-          if (!propertiesToCarry.includes(turnProperty)) {
-            if (has(inferedTurnData)) hasIncompatiableProps = true;
-            return;
-          }
-
-          updatedTurnData = carry(inferedTurnData, updatedTurnData);
-        },
-      );
-      const updatedTurn = turn.withTurnData(updatedTurnData);
-
-      if (hasIncompatiableProps)
-        markTurnAsUnverified(updatedTurn.getTurnData(), true);
-      else {
-        carryoverUnverifiedMarkBetweenTurns(
-          turn.getTurnData(),
-          updatedTurn.getTurnData(),
+  return currentTurns.map((turn) => {
+    const inferedTurnId = extensionList.get(turn.getID());
+    if (!inferedTurnId) {
+      // this turn isn't extended
+      const originalTurn = turnsList.get(turn.getID());
+      if (originalTurn) {
+        Reflect.defineMetadata(
+          EXTENDED_TURN_METADATA_SYMBOL,
+          true,
+          originalTurn,
         );
+        return originalTurn;
       }
-      Reflect.defineMetadata(EXTENDED_TURN_METADATA_SYMBOL, true, updatedTurn);
-      return updatedTurn;
-    })
-    .filter(Boolean); // since we ignore new turns and return null instead
+      return turn;
+    }
+
+    const inferedTurnData = turnsList.get(inferedTurnId).getTurnData();
+    let updatedTurnData: TurnData = turn.getTurnData();
+    let hasIncompatiableProps: boolean = false;
+    Object.keys(TURN_PROPERTIES_CARRIER).forEach(
+      (turnProperty: TurnProperties) => {
+        const { carry, has } = TURN_PROPERTIES_CARRIER[turnProperty];
+        if (!propertiesToCarry.includes(turnProperty)) {
+          if (has(inferedTurnData)) hasIncompatiableProps = true;
+          return;
+        }
+
+        updatedTurnData = carry(inferedTurnData, updatedTurnData);
+      },
+    );
+    const updatedTurn = turn.withTurnData(updatedTurnData);
+
+    if (hasIncompatiableProps)
+      markTurnAsUnverified(updatedTurn.getTurnData(), true);
+    else {
+      carryoverUnverifiedMarkBetweenTurns(
+        turn.getTurnData(),
+        updatedTurn.getTurnData(),
+      );
+    }
+    Reflect.defineMetadata(EXTENDED_TURN_METADATA_SYMBOL, true, updatedTurn);
+
+    return updatedTurn;
+  });
 }
 
 const RECONCILE_PARAMS: Record<'from' | 'to', TurnProperties[]> = {
@@ -186,15 +187,19 @@ export function reconcileTurnsWithPossibleExtension(
   turns: Turn[],
   currentTurns: Turn[],
 ): Turn[] {
-  return Object.keys(RECONCILE_PARAMS).reduce(
-    (updatedTurns, params: 'from' | 'to') => {
-      return reconcileTurns(
+  return Object.keys(RECONCILE_PARAMS)
+    .reduce((updatedTurns, params: 'from' | 'to') => {
+      const newTurns = reconcileTurns(
         turns,
         updatedTurns,
         params,
         RECONCILE_PARAMS[params],
       );
-    },
-    currentTurns,
-  );
+      return newTurns;
+    }, currentTurns)
+    .filter(
+      // remove any new turns that aren't extended
+      (turn) =>
+        Reflect.getMetadata(EXTENDED_TURN_METADATA_SYMBOL, turn) === true,
+    );
 }
