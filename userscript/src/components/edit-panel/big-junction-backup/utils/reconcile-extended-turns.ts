@@ -71,32 +71,51 @@ function createExtensionList(
   const vertexPropName = `${vertex}Vertex` as const;
   const extensionList = new Map<string, string>();
   const isInPath = (
-    possibleTurnPath: number[],
-    originalTurnPath: number[],
+    possibelTurn: Turn,
+    originalTurn: Turn,
     segmentId: number,
   ) => {
+    const possibleTurnPath = possibelTurn.getTurnData().getSegmentPath();
+    const originalTurnPath = originalTurn.getTurnData().getSegmentPath();
+    const isSameTo =
+      originalTurn.toVertex.getID() === possibelTurn.toVertex.getID();
+    const isSameFrom =
+      originalTurn.fromVertex.getID() === possibelTurn.fromVertex.getID();
+    const isCompletelyDifferent = !isSameFrom && !isSameTo;
+
     if (vertex === 'from') {
-      return isArrayInSequence(possibleTurnPath, [
-        segmentId,
-        ...originalTurnPath,
-      ]);
+      return (
+        (isSameTo || isCompletelyDifferent) &&
+        isArrayInSequence(possibleTurnPath, [segmentId, ...originalTurnPath])
+      );
     } else {
-      return isArrayInSequence(possibleTurnPath, [
-        ...originalTurnPath,
-        segmentId,
-      ]);
+      return (
+        (isSameFrom || isCompletelyDifferent) &&
+        isArrayInSequence(possibleTurnPath, [...originalTurnPath, segmentId])
+      );
     }
   };
   sortedTurns.forEach((turn) => {
     const vertex = turn[vertexPropName];
     const segmentId = vertex.getSegmentID();
     sortedPossibleTurns.forEach((possibleTurn) => {
-      const isExtendedTurn = isInPath(
-        possibleTurn.getTurnData().getSegmentPath(),
-        turn.getTurnData().getSegmentPath(),
-        segmentId,
-      );
+      const isExtendedTurn = isInPath(possibleTurn, turn, segmentId);
       if (!isExtendedTurn) return;
+      const existingExtensionId = extensionList.get(possibleTurn.getID());
+      if (existingExtensionId) {
+        const existingExtension = turns.find(
+          (turn) => turn.getID() === existingExtensionId,
+        );
+        if (!existingExtension) return;
+        // if the existing extension is more specific (has the same from/to)
+        // then skip, as we must be less specific
+        if (
+          existingExtension.fromVertex.getID() === possibleTurn.getID() ||
+          existingExtension.toVertex.getID() === possibleTurn.toVertex.getID()
+        ) {
+          return;
+        }
+      }
       extensionList.set(possibleTurn.getID(), turn.getID());
     });
   });
