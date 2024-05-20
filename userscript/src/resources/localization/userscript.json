@@ -56,7 +56,7 @@
           "SIGNATURE_MISMATCH": "Junction box signature is incompatible with the latest Junction Box backup",
           "BIG_JUNCTION_EDITING_DISALLOWED": "You're not allowed to edit this Junction Box",
           "TURN_GUIDANCE_EDITING_DISALLOWED": "Junction Box has some turn guidance that you can not apply",
-          "BIG_JUNCTION_MISMATCH": "Restoration is only available to Junction Boxes related to the same location"
+          "BIG_JUNCTION_MISMATCH": "Restoration is only available for Junction Boxes at the same location"
         },
         "confirm_overwrite_backup": {
           "title": "Override backup?",
