@@ -63,6 +63,10 @@
           "details": "You're about to override a Junction Box backup. This action is irreversible",
           "backup_btn": "Yes",
           "ignore_btn": "No"
+        },
+        "unverified_turns": {
+          "title": "Unverified Turns",
+          "description": "These turns couldn't be restored and must be manually validated"
         }
       }
     },
