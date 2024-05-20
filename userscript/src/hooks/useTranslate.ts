@@ -1,6 +1,11 @@
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
-export function useTranslate() {
+export function useTranslate(prefix?: string) {
   const { I18n } = getWazeMapEditorWindow();
-  return I18n.t;
+  const constructFullKey = (key: string) => {
+    if (prefix) return `${prefix}.${key}`;
+    return key;
+  };
+  const translate = (key: string) => I18n.t(constructFullKey(key));
+  return translate;
 }
