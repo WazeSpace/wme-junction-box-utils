@@ -8,7 +8,13 @@ export function getAllJunctionSegments(
   junction: JunctionDataModel,
 ): SegmentDataModel[] {
   const segmentRepository = junction.model.getRepository('segment');
-  return segmentRepository.getByIds(junction.getSegmentsIds());
+  const allLoadedSegments: SegmentDataModel[] =
+    segmentRepository.getObjectArray();
+  return allLoadedSegments.filter(
+    (segment) =>
+      segment.getAttribute('junctionID') === junction.getAttribute('id') &&
+      segment.state !== 'DELETE',
+  );
 }
 
 export function getAllJunctionNodes(
