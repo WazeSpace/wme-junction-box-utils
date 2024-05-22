@@ -94,13 +94,13 @@ export function RestoreBackupButton() {
           target={buttonRef}
           placement="right-start"
           headline={t(
-            'jb_utils.big_jucntion.backup_restore.auto_feat_discover.title',
+            'jb_utils.big_junction.backup_restore.auto_feat_discover.title',
           )}
           body={t(
-            'jb_utils.big_jucntion.backup_restore.auto_feat_discover.body',
+            'jb_utils.big_junction.backup_restore.auto_feat_discover.body',
           )}
           primaryButtonText={t(
-            'jb_utils.big_jucntion.backup_restore.auto_feat_discover.button',
+            'jb_utils.big_junction.backup_restore.auto_feat_discover.button',
           )}
           onPrimaryButtonClick={() => {
             setShowFeatureDiscover(false);
