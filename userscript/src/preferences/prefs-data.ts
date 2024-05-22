@@ -8,6 +8,9 @@ export type Preferences = {
     };
   };
   auto_backup: boolean;
+  feat_discovers: {
+    auto_restore: boolean;
+  };
 };
 
 export const defaultPreferences: Preferences = {
@@ -19,7 +22,10 @@ export const defaultPreferences: Preferences = {
       applied_instruction_badge_type: 'graphical',
     },
   },
-  auto_backup: false,
+  auto_backup: true,
+  feat_discovers: {
+    auto_restore: false,
+  },
 };
 
 export const PREFERENCES_LS_KEY = 'r0den.userscripts.jbu.prefs';

@@ -67,6 +67,11 @@
         "unverified_turns": {
           "title": "Unverified Turns",
           "description": "These turns couldn't be restored and must be manually validated"
+        },
+        "auto_feat_discover": {
+          "title": "Old configuration restored",
+          "body": "Never lose your edits again! Junction Boxes now automatically save your progress. You can also manually save or restore properties from the edit panel at any time.",
+          "button": "Got it"
         }
       }
     },
