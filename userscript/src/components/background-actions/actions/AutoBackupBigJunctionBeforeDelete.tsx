@@ -5,6 +5,7 @@ import {
   BigJunctionBackup,
   BigJunctionBackupTemplate,
 } from '@/components/edit-panel/big-junction-backup';
+import { gtag } from '@/google-analytics';
 import { usePreference, useTranslate } from '@/hooks';
 import { Logger } from '@/logger';
 import { ManualMethodInvocationInterceptor } from '@/method-interceptor';
@@ -44,6 +45,7 @@ export function AutoBackupBigJunctionBeforeDelete() {
 
       if (!storedSnapshot) {
         Logger.info('Has no snapshot stored, backing up...');
+        gtag('event', 'auto_backup', { event_category: 'big_junction_backup' });
         backupBigJunction(action.bigJunction);
         addAction(action);
       } else if (snapshotSignatureMatch) {
@@ -61,9 +63,17 @@ export function AutoBackupBigJunctionBeforeDelete() {
           .then(() => {
             Logger.info('User confirmed, overriding');
             backupBigJunction(action.bigJunction);
+            gtag('event', 'auto_backup', {
+              event_category: 'big_junction_backup',
+              user_confirmed: true,
+            });
           })
           .catch(() => {
             Logger.info('User rejected, adding action w/o backup');
+            gtag('event', 'auto_backup_rejected', {
+              event_category: 'big_junction_backup',
+              user_confirmed: true,
+            });
           })
           .finally(() => {
             addAction(action);

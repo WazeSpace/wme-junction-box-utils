@@ -7,6 +7,7 @@ import { useTranslate } from '@/hooks';
 import { MouseEventHandler, useRef, useState } from 'react';
 import { ConfirmBalloon } from '@/components/ConfirmBalloon';
 import { TippyModal } from '@/components/tippy';
+import { gtag } from '@/google-analytics';
 
 export function EnrollBackupButton() {
   const buttonRef = useRef<HTMLButtonElement>();
@@ -19,10 +20,12 @@ export function EnrollBackupButton() {
   const backupBigJunction = () => {
     const backup = BigJunctionBackup.fromBigJunction(bigJunction);
     setBackup(backup);
+    gtag('event', 'backup_set', { event_category: 'big_junction_backup' });
   };
 
   const handleButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.currentTarget.blur();
+    gtag('event', 'backup_clicked', { event_category: 'big_junction_backup' });
     if (isBackupAvailable) {
       setShowOverrideConfirmation(true);
       return;

@@ -9,10 +9,12 @@ import { UpdateBigJunctionGeometryToRoundaboutAction } from '@/actions/update-bi
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { useState } from 'react';
 import { ConfirmMapBalloon } from '@/components/ConfirmMapBalloon';
+import { gtag } from '@/google-analytics';
 
 function roundaboutizeBigJunctionByAction(action: AddBigJunctionAction) {
   const dataModel = getWazeMapEditorWindow().W.model;
   const map = getWazeMapEditorWindow().W.map;
+  gtag('event', 'roundaboutize_big_junction', { background_action: true });
   dataModel.actionManager.add(
     new UpdateBigJunctionGeometryToRoundaboutAction(action, dataModel, map),
   );

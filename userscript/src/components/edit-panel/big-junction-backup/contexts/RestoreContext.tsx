@@ -9,6 +9,7 @@ import { RestoreBigJunctionBackupAction } from '../actions';
 import { getBigJunctionTurns } from '@/utils/wme-entities/big-junction-turns';
 import { Turn } from '@/@waze/Waze/Model/turn';
 import { UNVERIFIED_TURN_METADATA_SYMBOL } from '../constants/meta-symbols';
+import { gtag } from '@/google-analytics';
 
 interface RestoreContextPayload {
   readonly targetBigJunction: BigJunctionDataModel;
@@ -51,6 +52,7 @@ export function RestoreContextProvider(props: RestoreContextProps) {
       ),
     );
     setIsBackupRestored(true);
+    gtag('event', 'backup_restored', { event_category: 'big_junction_backup' });
   };
 
   return (

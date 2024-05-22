@@ -2,11 +2,14 @@ import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { useTranslate } from '@/hooks';
 import { RoundaboutInstructionEngine } from '@/roundabout-instruction-engine/roundabout-instruction-engine';
 import { WzButton } from '@wazespace/wme-react-components';
-import { cloneElement, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useTurnArrowTooltips } from '../hooks/useTurnArrowTooltips';
 import { createPortal } from 'react-dom';
 import { TooltipControl } from './TooltipControl';
 import styled from '@emotion/styled';
+import { RoundaboutInstructionMethod } from '@/roundabout-instruction-engine/methods/roundabout-instruction-method-application';
+import { gtag } from '@/google-analytics';
+import { WzButtonProps } from '@wazespace/wme-react-components/dist/wme-intrinsic-elements-props';
 
 const TurnArrowTooltipButtonsRoot = styled('div')({
   display: 'flex',
@@ -40,19 +43,39 @@ export function RoundaboutExitInstructionNormalizationButton(props: Props) {
       ),
     [turnArrowTooltips],
   );
+  const createApplyInstructionMethodCallback = (
+    method: RoundaboutInstructionMethod,
+    trackingSource: string,
+  ) => {
+    return () => {
+      engine.applyInstructionMethod(method);
+      gtag('event', 'apply_instructions', {
+        event_category: 'roundabout_instructions',
+        method: method.type,
+        source: trackingSource,
+      });
+    };
+  };
 
-  const instructionMethodButtons = engine
-    .getPopulatedInstructionMethods()
-    .map((rim) => (
+  const createInsturctionMethodButtons = (
+    trackingSource: string,
+    buttonProps?: Partial<WzButtonProps>,
+    translationSuffix?: string,
+  ) =>
+    engine.getPopulatedInstructionMethods().map((rim) => (
       <WzButton
         key={rim.type}
-        onClick={() => engine.applyInstructionMethod(rim)}
+        onClick={createApplyInstructionMethodCallback(rim, trackingSource)}
         size="sm"
         color="text"
+        {...buttonProps}
       >
-        {t(`jb_utils.segment.actions.exit_instructions.${rim.type}`, {
-          node: nodeLabel,
-        })}
+        {t(
+          `jb_utils.segment.actions.exit_instructions.${rim.type}${translationSuffix || ''}`,
+          {
+            node: nodeLabel,
+          },
+        )}
       </WzButton>
     ));
 
@@ -60,13 +83,12 @@ export function RoundaboutExitInstructionNormalizationButton(props: Props) {
     ? createPortal(
         <TooltipControl label={t('jb_utils.turn_tooltip.roundabout.title')}>
           <TurnArrowTooltipButtonsRoot>
-            {instructionMethodButtons.map((button) =>
-              cloneElement(button, {
-                color: 'secondary',
-                children: t(
-                  `jb_utils.segment.actions.exit_instructions.${button.key}_SHORT`,
-                ),
-              }),
+            {createInsturctionMethodButtons(
+              'turn_tooltip',
+              {
+                color: 'text',
+              },
+              '_SHORT',
             )}
           </TurnArrowTooltipButtonsRoot>
         </TooltipControl>,
@@ -74,5 +96,5 @@ export function RoundaboutExitInstructionNormalizationButton(props: Props) {
       )
     : null;
 
-  return [...instructionMethodButtons, turnArrowPortal];
+  return [...createInsturctionMethodButtons('edit_panel'), turnArrowPortal];
 }

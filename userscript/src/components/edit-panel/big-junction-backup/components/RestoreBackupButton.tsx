@@ -10,6 +10,7 @@ import {
 } from '../utils';
 import { Logger } from '@/logger';
 import { ConditionalTooltip } from '@/components/ConditionalTooltip';
+import { gtag } from '@/google-analytics';
 
 export function RestoreBackupButton() {
   const t = useTranslate();
@@ -41,6 +42,7 @@ export function RestoreBackupButton() {
   }
 
   const handleButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    gtag('event', 'restore_clicked', { event_category: 'big_junction_backup' });
     e.currentTarget.blur();
     restoreContext.restore();
   };
