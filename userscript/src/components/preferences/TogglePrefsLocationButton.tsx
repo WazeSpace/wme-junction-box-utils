@@ -24,7 +24,7 @@ export function TogglePrefsLocationButton() {
   const togglePrefsLocation = () => {
     setPrefsLocation(moveToLocation);
     gtag('event', 'move_prefs_tab', {
-      event_cateogry: 'general',
+      event_category: 'general',
       from: prefsLocation,
       to: moveToLocation,
     });
