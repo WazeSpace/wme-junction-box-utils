@@ -1,5 +1,6 @@
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { UpdateBigJunctionGeometryToRoundaboutAction } from '@/actions';
+import { gtag } from '@/google-analytics';
 import { useTranslate } from '@/hooks';
 import { useFindBigJunctionAddAction } from '@/hooks/useFindBigJunctionAddAction';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
@@ -23,6 +24,7 @@ export function CloneRoundaboutGeometryToBigJunctionButton({
       map,
     );
     dataModel.actionManager.add(action);
+    gtag('event', 'roundaboutize_big_junction');
   };
 
   return (

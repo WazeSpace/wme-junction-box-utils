@@ -38,6 +38,7 @@ module.exports = () => {
         'process.env.CROWDIN_DISTRIBUTION_HASH': JSON.stringify(
           'd1b4fd3a44adaf1825a0668031c',
         ),
+        'process.env.G_MEASUREMENT_ID': JSON.stringify('G-GCY7VNDSPY'),
       }),
       new WebpackUserscriptPlugin({
         headers: {

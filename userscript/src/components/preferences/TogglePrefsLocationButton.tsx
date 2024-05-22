@@ -1,3 +1,4 @@
+import { gtag } from '@/google-analytics';
 import { usePreference, useTranslate } from '@/hooks';
 import { Preferences } from '@/preferences';
 import { WzButton } from '@wazespace/wme-react-components';
@@ -22,6 +23,11 @@ export function TogglePrefsLocationButton() {
 
   const togglePrefsLocation = () => {
     setPrefsLocation(moveToLocation);
+    gtag('event', 'move_prefs_tab', {
+      event_cateogry: 'general',
+      from: prefsLocation,
+      to: moveToLocation,
+    });
   };
 
   return (

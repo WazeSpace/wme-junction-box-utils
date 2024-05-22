@@ -6,6 +6,7 @@ import axios from 'axios';
 import { axiosGmXhrAdapter } from './tampermonkey/axios-gmxhr-adapter';
 import { getWazeMapEditorWindow } from './utils/get-wme-window';
 import CrowdinOtaClient from './localization/crowdin-ota/ota-client';
+import { addGoogleTagManagerToPage } from './google-analytics';
 
 export default async function bootstrap() {
   axios.defaults.adapter = axiosGmXhrAdapter;
@@ -15,6 +16,7 @@ export default async function bootstrap() {
     process.env.CROWDIN_DISTRIBUTION_HASH,
   ).getStringsByLocale(currentLocale);
 
+  addGoogleTagManagerToPage(process.env.G_MEASUREMENT_ID);
   migratePreferencesFromRoundaboutJB();
   ReactDOM.render(
     <App translations={{ [currentLocale]: translations }} />,
