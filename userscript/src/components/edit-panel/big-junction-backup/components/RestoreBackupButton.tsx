@@ -93,9 +93,15 @@ export function RestoreBackupButton() {
         <FeatureDiscoverTooltip
           target={buttonRef}
           placement="right-start"
-          headline="Old configuration restored"
-          body="Never lose your edits again! Junction Boxes now automatically save your progress.  You can also manually save or restore properties from the edit panel at any time."
-          primaryButtonText="Got it"
+          headline={t(
+            'jb_utils.big_jucntion.backup_restore.auto_feat_discover.title',
+          )}
+          body={t(
+            'jb_utils.big_jucntion.backup_restore.auto_feat_discover.body',
+          )}
+          primaryButtonText={t(
+            'jb_utils.big_jucntion.backup_restore.auto_feat_discover.button',
+          )}
           onPrimaryButtonClick={() => {
             setShowFeatureDiscover(false);
             setAutoRestoreDiscovered(true);
