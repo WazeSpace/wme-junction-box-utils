@@ -23,6 +23,7 @@ module.exports = () => {
   return {
     mode: isDev ? 'development' : 'production',
     entry: path.resolve(__dirname, 'src/index.ts'),
+    devtool: isDev ? 'eval-source-map' : false,
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: `${getPurePackageName()}.user.js`,
@@ -80,6 +81,7 @@ module.exports = () => {
         new TerserPlugin({
           terserOptions: {
             mangle: false,
+            sourceMap: true,
           },
         }),
       ],
