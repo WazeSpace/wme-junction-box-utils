@@ -23,7 +23,7 @@ export class RoundaboutExitInstructionNormalizationTemplate
 
   getTargetElement(): HTMLElement {
     return document.querySelector(
-      '.segment-edit-section .form-group.more-actions',
+      '.segment-edit-section #segment-edit-general div:has(wz-button.edit-house-numbers)',
     );
   }
 
