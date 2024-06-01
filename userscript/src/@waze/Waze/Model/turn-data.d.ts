@@ -1,7 +1,18 @@
 import { TurnInstructionOpcode } from '@/@waze/Waze/Model/turn-instruction-opcode.enum';
 import { TurnState } from '@/@waze/Waze/Model/turn-state.enum';
 
-export interface TurnData {
+export class TurnData {
+  constructor(
+    state: number,
+    restrictions?: any[],
+    instructionOpcode?: TurnInstructionOpcode,
+    segmentPath?: number[],
+    lanes?: any,
+    turnGuidance?: any,
+    junctionId?: number,
+    pathId?: number,
+  );
+
   instructionOpcode: TurnInstructionOpcode;
   junctionID: number | null;
   lanes: unknown;
