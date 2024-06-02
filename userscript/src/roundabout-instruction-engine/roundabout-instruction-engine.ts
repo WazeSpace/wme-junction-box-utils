@@ -3,14 +3,14 @@ import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataMod
 import { JunctionDataModel } from '@/@waze/Waze/DataModels/JunctionDataModel';
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { TurnNodes } from '@/@waze/Waze/Model/turn';
-import { Vertex } from '@/@waze/Waze/Vertex';
-import { SetTurnsByInstructionMethodAction } from '@/roundabout-instruction-engine/actions';
+import { InstructionEngine } from '@/roundabout-instruction-engine/instruction-engine';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { extractRoundaboutPerimeterPolygon } from '@/utils/perimeter-geometry-extraction';
 import { getRoundaboutByNode } from '@/utils/wme-entities/roundabout';
 import { getRoundaboutExitsFrom } from '@/utils/wme-entities/roundabout/get-roundabout-exits';
 import { getBigJunctionFromSegmentAndDirection } from '@/utils/wme-entities/segment-big-junction';
 import { createAddBigJunctionAction } from '@/utils/wme-feature-creation';
+import { Polygon } from '@turf/helpers';
 import transformScale from '@turf/transform-scale';
 import { TurnInstructionMethod } from './methods/turn-instruction-method';
 import normalizationMethod from './methods/normalization-method';
@@ -18,62 +18,32 @@ import deNormalizationMethod from './methods/denormalization-method';
 import {
   getJunctionNodeFromSegmentDirection,
   isSegmentConnectsToRoundabout,
-  isSegmentDirectionAllowed,
 } from '@/utils/wme-entities/segment';
-import { createVertexFromSegment } from '@/utils/wme-entities/segment-vertex';
 import { UnresolvableRoundaboutTurns } from './errors';
 
-const DEFAULT_INSTRUCTION_METHODS: ReadonlyArray<TurnInstructionMethod> =
-  [normalizationMethod, deNormalizationMethod];
+const DEFAULT_INSTRUCTION_METHODS: ReadonlyArray<TurnInstructionMethod> = [
+  normalizationMethod,
+  deNormalizationMethod,
+];
 
-export class RoundaboutInstructionEngine {
+export class RoundaboutInstructionEngine extends InstructionEngine {
   private _bigJunction: BigJunctionDataModel;
   private _roundaboutJunction: JunctionDataModel;
-  private _fromVertex: Vertex;
-  private _dataModel: any;
-  private _availableInstructionMethods: ReadonlyArray<TurnInstructionMethod> =
-    [...DEFAULT_INSTRUCTION_METHODS];
 
   constructor(
     dataModel: any,
     fromSegment: SegmentDataModel,
     fromSegmentDirection: 'forward' | 'reverse',
   ) {
-    this._dataModel = dataModel;
-    this._fromVertex = createVertexFromSegment(
-      fromSegment,
-      fromSegmentDirection,
-    );
+    super(dataModel, fromSegment, fromSegmentDirection, [
+      ...DEFAULT_INSTRUCTION_METHODS,
+    ]);
     this._roundaboutJunction = getRoundaboutByNode(
       getJunctionNodeFromSegmentDirection(fromSegment, fromSegmentDirection),
     );
     this._bigJunction = getBigJunctionFromSegmentAndDirection(
       fromSegment,
       fromSegmentDirection,
-    );
-  }
-
-  //#region From Segment Utility Methods
-  private _getFromSegment(): SegmentDataModel {
-    const segmentId = this._fromVertex.getSegmentID();
-    return this._dataModel.segments.getObjectById(segmentId);
-  }
-
-  private _getFromSegmentDirection(): 'forward' | 'reverse' {
-    switch (this._fromVertex.direction) {
-      case 'fwd':
-        return 'forward';
-      case 'rev':
-        return 'reverse';
-      default:
-        throw new Error('Unsupported direction');
-    }
-  }
-
-  private _isDrivingAllowed(): boolean {
-    return isSegmentDirectionAllowed(
-      this._getFromSegment(),
-      this._getFromSegmentDirection(),
     );
   }
 
@@ -85,65 +55,57 @@ export class RoundaboutInstructionEngine {
   }
   //#endregion
 
-  getAvailableInstructionMethods(): ReadonlyArray<TurnInstructionMethod> {
-    return this._availableInstructionMethods;
-  }
   getPopulatedInstructionMethods(): ReadonlyArray<TurnInstructionMethod> {
     return this.getAvailableInstructionMethods();
   }
 
   //#region Calculation Methods
-  getAvailableTurnNodes(): TurnNodes[] {
+  getAvailableTurns(): TurnNodes[] {
     if (!this._isDrivingAllowed()) {
       throw new UnresolvableRoundaboutTurns(
-        this._fromVertex,
-        this._dataModel,
+        this._getFromVertex(),
+        this._getDataModel(),
         'Driving direction restricted',
       );
     }
 
     if (!this._isConnectedToRoundabout()) {
       throw new UnresolvableRoundaboutTurns(
-        this._fromVertex,
-        this._dataModel,
+        this._getFromVertex(),
+        this._getDataModel(),
         'Not connected to a roundabout',
       );
     }
 
-    return getRoundaboutExitsFrom(this._fromVertex, this._dataModel);
+    return getRoundaboutExitsFrom(this._getFromVertex(), this._getDataModel());
   }
   //#endregion
 
-  private _hasBigJunction() {
-    const segment = this._getFromSegment();
-    switch (this._getFromSegmentDirection()) {
-      case 'forward':
-        return segment.getAttribute('toCrossroads').length > 0;
-      case 'reverse':
-        return segment.getAttribute('fromCrossroads').length > 0;
-      default:
-        return false;
-    }
-  }
-  private _createAddBigJunctionIfNotExistAction(): AddBigJunctionAction {
-    if (this._hasBigJunction()) return null;
-
-    const perimeter = transformScale(
+  private _getGeometryForBigJunction(): Polygon {
+    return transformScale(
       extractRoundaboutPerimeterPolygon(this._roundaboutJunction),
       1.2,
     );
-    const addBigJunctionAction = createAddBigJunctionAction(perimeter);
+  }
+
+  private _getAddBigJunctionAction(): AddBigJunctionAction {
+    const bigJunctionGeometry = this._getGeometryForBigJunction();
+    const addBigJunctionAction =
+      createAddBigJunctionAction(bigJunctionGeometry);
     addBigJunctionAction.__jbuSkipAutoRoundaboutize = true;
     return addBigJunctionAction;
+  }
+
+  private _createAddBigJunctionIfNotExistAction(): AddBigJunctionAction {
+    if (this._hasBigJunction()) return null;
+    return this._getAddBigJunctionAction();
   }
 
   applyInstructionMethod(instructionMethod: TurnInstructionMethod): void {
     const addBigJunctionAction = this._createAddBigJunctionIfNotExistAction();
 
-    const setTurnInstructionAction = new SetTurnsByInstructionMethodAction(
-      instructionMethod,
-      this.getAvailableTurnNodes(),
-    );
+    const setTurnInstructionAction =
+      this.getSetMethodInstructionsAction(instructionMethod);
 
     if (addBigJunctionAction) {
       const multiActionWrapper = new MultiAction([
