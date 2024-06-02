@@ -53,6 +53,7 @@
     "@wazespace/wme-react-components": "1.3.1-3",
     "axios": "^1.6.8",
     "clsx": "^2.1.0",
+    "deepmerge": "^4.3.1",
     "nanoid": "^3.3.7",
     "react-router-dom": "^6.22.3",
     "reflect-metadata": "^0.2.2",
