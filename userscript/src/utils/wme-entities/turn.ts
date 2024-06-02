@@ -1,7 +1,11 @@
 import { UserDataModel } from '@/@waze/Waze/DataModels/UserDataModel';
 import { Turn, TurnNodes } from '@/@waze/Waze/Model/turn';
+import { TurnData } from '@/@waze/Waze/Model/turn-data';
+import { Vertex } from '@/@waze/Waze/Vertex';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { getAngleBetweenLinesInDegrees, Line } from '@/utils/lines';
 import { getCountryByStreet, getToStreetByTurn } from '@/utils/location';
+import { createVertex } from '@/utils/wme-entities/segment-vertex';
 import { getSegmentGeometryFromVertex } from '@/utils/wme-entities/vertex';
 
 export function sortFarTurnsBySegmentPathLength(turns: Turn[]) {
@@ -63,4 +67,22 @@ export function canUserEditTurnGuidanceForTurn(
   }
 
   return true;
+}
+
+function getTurnPrototype(): {
+  new (fromVertex: Vertex, toVertex: Vertex, data: TurnData): Turn;
+} {
+  const turnGraph = getWazeMapEditorWindow().W.model.turnGraph;
+  const dummyVertex = createVertex(NaN, 'forward');
+  const turn: Turn = turnGraph.getTurn(dummyVertex, dummyVertex);
+  return Object.getPrototypeOf(turn);
+}
+
+export function createTurn(
+  fromVertex: Vertex,
+  toVertex: Vertex,
+  data: TurnData,
+): Turn {
+  const turnPrototype = getTurnPrototype();
+  return new turnPrototype(fromVertex, toVertex, data);
 }

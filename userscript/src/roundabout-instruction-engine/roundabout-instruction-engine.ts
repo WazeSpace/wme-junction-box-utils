@@ -3,9 +3,8 @@ import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataMod
 import { JunctionDataModel } from '@/@waze/Waze/DataModels/JunctionDataModel';
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { TurnNodes } from '@/@waze/Waze/Model/turn';
-import { RoundaboutTurnInstructionOpcode } from '@/@waze/Waze/Model/turn-instruction-opcode.enum';
 import { Vertex } from '@/@waze/Waze/Vertex';
-import { BulkSetTurnOpcodeActions } from '@/actions/bulk-set-turn-opcode.actions';
+import { SetTurnsByInstructionMethodAction } from '@/roundabout-instruction-engine/actions';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { extractRoundaboutPerimeterPolygon } from '@/utils/perimeter-geometry-extraction';
 import { getRoundaboutByNode } from '@/utils/wme-entities/roundabout';
@@ -34,10 +33,6 @@ export class RoundaboutInstructionEngine {
   private _dataModel: any;
   private _availableInstructionMethods: ReadonlyArray<RoundaboutInstructionMethod> =
     [...DEFAULT_INSTRUCTION_METHODS];
-  private _instructionMethodTurnsMap = new Map<
-    string,
-    (TurnNodes & { opcode: RoundaboutTurnInstructionOpcode })[]
-  >();
 
   constructor(
     dataModel: any,
@@ -94,9 +89,7 @@ export class RoundaboutInstructionEngine {
     return this._availableInstructionMethods;
   }
   getPopulatedInstructionMethods(): ReadonlyArray<RoundaboutInstructionMethod> {
-    return Array.from(this._instructionMethodTurnsMap.keys(), (rimType) =>
-      this._availableInstructionMethods.find((rim) => rim.type === rimType),
-    );
+    return this.getAvailableInstructionMethods();
   }
 
   //#region Calculation Methods
@@ -118,17 +111,6 @@ export class RoundaboutInstructionEngine {
     }
 
     return getRoundaboutExitsFrom(this._fromVertex, this._dataModel);
-  }
-
-  calcTurnsForAvailableInstructionMethods(): void {
-    const turnNodes = this.getAvailableTurnNodes();
-    if (!turnNodes.length) return;
-    this.getAvailableInstructionMethods().forEach((method) => {
-      this._instructionMethodTurnsMap.set(
-        method.type,
-        method.application(turnNodes),
-      );
-    });
   }
   //#endregion
 
@@ -158,23 +140,26 @@ export class RoundaboutInstructionEngine {
   applyInstructionMethod(instructionMethod: RoundaboutInstructionMethod): void {
     const addBigJunctionAction = this._createAddBigJunctionIfNotExistAction();
 
-    const turnNodesAndOpcodes = this._instructionMethodTurnsMap.get(
-      instructionMethod.type,
+    const setTurnInstructionAction = new SetTurnsByInstructionMethodAction(
+      instructionMethod,
+      this.getAvailableTurnNodes(),
     );
-    const applyTIOsAction = new BulkSetTurnOpcodeActions(turnNodesAndOpcodes);
 
     if (addBigJunctionAction) {
       const multiActionWrapper = new MultiAction([
         addBigJunctionAction,
-        applyTIOsAction,
+        setTurnInstructionAction,
       ]);
-      multiActionWrapper.generateDescription = function () {
-        this._description = applyTIOsAction.generateDescription();
+      multiActionWrapper.generateDescription = function (dataModel: any) {
+        this._description =
+          setTurnInstructionAction.generateDescription(dataModel);
       };
 
       getWazeMapEditorWindow().W.model.actionManager.add(multiActionWrapper);
       return;
     }
-    getWazeMapEditorWindow().W.model.actionManager.add(applyTIOsAction);
+    getWazeMapEditorWindow().W.model.actionManager.add(
+      setTurnInstructionAction,
+    );
   }
 }

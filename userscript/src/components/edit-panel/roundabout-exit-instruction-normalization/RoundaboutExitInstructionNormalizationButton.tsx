@@ -1,15 +1,15 @@
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
-import { useTranslate } from '@/hooks';
-import { RoundaboutInstructionEngine } from '@/roundabout-instruction-engine/roundabout-instruction-engine';
-import { WzButton } from '@wazespace/wme-react-components';
-import { useMemo } from 'react';
-import { useTurnArrowTooltips } from '../hooks/useTurnArrowTooltips';
-import { createPortal } from 'react-dom';
-import { TooltipControl } from './TooltipControl';
-import styled from '@emotion/styled';
-import { RoundaboutInstructionMethod } from '@/roundabout-instruction-engine/methods/roundabout-instruction-method-application';
 import { gtag } from '@/google-analytics';
+import { useTranslate } from '@/hooks';
+import { RoundaboutInstructionMethod } from '@/roundabout-instruction-engine/methods/roundabout-instruction-method-application';
+import { RoundaboutInstructionEngine } from '@/roundabout-instruction-engine/roundabout-instruction-engine';
+import styled from '@emotion/styled';
+import { WzButton } from '@wazespace/wme-react-components';
 import { WzButtonProps } from '@wazespace/wme-react-components/dist/wme-intrinsic-elements-props';
+import { useMemo } from 'react';
+import { createPortal } from 'react-dom';
+import { useTurnArrowTooltips } from '../hooks/useTurnArrowTooltips';
+import { TooltipControl } from './TooltipControl';
 
 const TurnArrowTooltipButtonsRoot = styled('div')({
   display: 'flex',
@@ -24,13 +24,11 @@ export interface Props {
 }
 export function RoundaboutExitInstructionNormalizationButton(props: Props) {
   const engine = useMemo(() => {
-    const instructionEngine = new RoundaboutInstructionEngine(
+    return new RoundaboutInstructionEngine(
       props.segment.model,
       props.segment,
       props.direction,
     );
-    instructionEngine.calcTurnsForAvailableInstructionMethods();
-    return instructionEngine;
   }, [props.direction, props.segment]);
   const t = useTranslate();
   const nodeLabel = props.direction === 'forward' ? 'B' : 'A';

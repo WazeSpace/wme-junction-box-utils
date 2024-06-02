@@ -80,7 +80,13 @@
         "actions": {
           "UpdateBigJunctionGeometryToRoundabout": "Roundabout geometry applied",
           "UpdateBigJunction": "Update Junction Box",
-          "BulkSetTurn": "Updated %{count} turns"
+          "SetTurnsByInstructionMethod": {
+            "general": "%{name} %{count} turns",
+            "types": {
+              "NORMALIZATION": "Normalized",
+              "DE_NORMALIZATION": "Denormalized"
+            }
+          }
         }
       }
     },

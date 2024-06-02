@@ -1,10 +1,10 @@
-import { TurnNodes } from '@/@waze/Waze/Model/turn';
+import { Turn, TurnNodes } from '@/@waze/Waze/Model/turn';
 import {
   RoundaboutTurnInstructionOpcode,
   TurnInstructionOpcode,
 } from '@/@waze/Waze/Model/turn-instruction-opcode.enum';
-import { RoundaboutInstructionMethod } from './roundabout-instruction-method-application';
 import { getAbsoluteTurnAngleInDegrees } from '@/utils/wme-entities/turn';
+import { RoundaboutInstructionMethod } from './roundabout-instruction-method-application';
 
 function getPreferredInstructionFromAngle(
   angle: number,
@@ -24,12 +24,9 @@ function getPreferredInstructionFromTurn(
 
 const normalizationMethod: RoundaboutInstructionMethod = {
   type: 'NORMALIZATION',
-  application: function (turns: TurnNodes[]) {
+  application: function (turns: Turn[]) {
     const opcodeHashMap = new Map<TurnInstructionOpcode, string>();
-    const hashTurnMap = new Map<
-      string,
-      TurnNodes & { opcode: RoundaboutTurnInstructionOpcode }
-    >();
+    const hashTurnMap = new Map<string, Turn>();
     turns.forEach((turn) => {
       let preferredOpcode = getPreferredInstructionFromTurn(turn);
       if (opcodeHashMap.has(preferredOpcode)) {
@@ -42,10 +39,16 @@ const normalizationMethod: RoundaboutInstructionMethod = {
           // in which case the map will still preserve the opcode was used...
           // ...but will not be tied to any turn anymore
           const ambiguousTurn = hashTurnMap.get(ambiguousTurnHash);
-          hashTurnMap.set(ambiguousTurnHash, {
-            ...ambiguousTurn,
-            opcode: TurnInstructionOpcode.CountRoundaboutExits,
-          });
+          hashTurnMap.set(
+            ambiguousTurnHash,
+            ambiguousTurn.withTurnData(
+              ambiguousTurn
+                .getTurnData()
+                .withInstructionOpcode(
+                  TurnInstructionOpcode.CountRoundaboutExits,
+                ),
+            ),
+          );
           opcodeHashMap.set(preferredOpcode, null);
           preferredOpcode = TurnInstructionOpcode.CountRoundaboutExits;
         }
@@ -55,10 +58,12 @@ const normalizationMethod: RoundaboutInstructionMethod = {
       if (preferredOpcode !== TurnInstructionOpcode.CountRoundaboutExits)
         opcodeHashMap.set(preferredOpcode, turnId);
 
-      hashTurnMap.set(turnId, {
-        ...turn,
-        opcode: preferredOpcode,
-      });
+      hashTurnMap.set(
+        turnId,
+        turn.withTurnData(
+          turn.getTurnData().withInstructionOpcode(preferredOpcode),
+        ),
+      );
     });
 
     return Array.from(hashTurnMap.values());
