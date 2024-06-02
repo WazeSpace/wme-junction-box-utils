@@ -2,6 +2,10 @@ import { TurnInstructionOpcode } from '@/@waze/Waze/Model/turn-instruction-opcod
 import { TurnState } from '@/@waze/Waze/Model/turn-state.enum';
 
 export class TurnData {
+  static ALLOWED_TURN: TurnData;
+  static DISALLOWED_TURN: TurnData;
+  static UNKNOWN_TURN: TurnData;
+
   constructor(
     state: number,
     restrictions?: any[],
