@@ -1,16 +1,16 @@
 import { MultiAction, SetTurnAction } from '@/@waze/Waze/actions';
 import { Turn, TurnNodes } from '@/@waze/Waze/Model/turn';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
-import { RoundaboutInstructionMethod } from '../methods/roundabout-instruction-method-application';
+import { TurnInstructionMethod } from '../methods/turn-instruction-method';
 
 export class SetTurnsByInstructionMethodAction extends MultiAction {
   actionName = 'SET_TURNS_BY_INSTRUCTION_METHOD';
 
-  private readonly _turnInstructionMethod: RoundaboutInstructionMethod;
+  private readonly _turnInstructionMethod: TurnInstructionMethod;
   private readonly _turns: TurnNodes[];
 
   constructor(
-    turnInstructionMethod: RoundaboutInstructionMethod,
+    turnInstructionMethod: TurnInstructionMethod,
     turns: TurnNodes[],
   ) {
     super();

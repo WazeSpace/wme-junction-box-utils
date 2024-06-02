@@ -1,8 +1,8 @@
 import { Turn } from '@/@waze/Waze/Model/turn';
 import { TurnInstructionOpcode } from '@/@waze/Waze/Model/turn-instruction-opcode.enum';
-import { RoundaboutInstructionMethod } from '@/roundabout-instruction-engine/methods/roundabout-instruction-method-application';
+import { TurnInstructionMethod } from '@/roundabout-instruction-engine/methods/turn-instruction-method';
 
-const deNormalizationMethod: RoundaboutInstructionMethod = {
+const deNormalizationMethod: TurnInstructionMethod = {
   type: 'DE_NORMALIZATION',
   application: function (turns: Turn[]) {
     return turns.map((turn) =>

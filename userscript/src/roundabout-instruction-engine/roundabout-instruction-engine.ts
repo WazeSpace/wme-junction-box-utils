@@ -12,7 +12,7 @@ import { getRoundaboutExitsFrom } from '@/utils/wme-entities/roundabout/get-roun
 import { getBigJunctionFromSegmentAndDirection } from '@/utils/wme-entities/segment-big-junction';
 import { createAddBigJunctionAction } from '@/utils/wme-feature-creation';
 import transformScale from '@turf/transform-scale';
-import { RoundaboutInstructionMethod } from './methods/roundabout-instruction-method-application';
+import { TurnInstructionMethod } from './methods/turn-instruction-method';
 import normalizationMethod from './methods/normalization-method';
 import deNormalizationMethod from './methods/denormalization-method';
 import {
@@ -23,7 +23,7 @@ import {
 import { createVertexFromSegment } from '@/utils/wme-entities/segment-vertex';
 import { UnresolvableRoundaboutTurns } from './errors';
 
-const DEFAULT_INSTRUCTION_METHODS: ReadonlyArray<RoundaboutInstructionMethod> =
+const DEFAULT_INSTRUCTION_METHODS: ReadonlyArray<TurnInstructionMethod> =
   [normalizationMethod, deNormalizationMethod];
 
 export class RoundaboutInstructionEngine {
@@ -31,7 +31,7 @@ export class RoundaboutInstructionEngine {
   private _roundaboutJunction: JunctionDataModel;
   private _fromVertex: Vertex;
   private _dataModel: any;
-  private _availableInstructionMethods: ReadonlyArray<RoundaboutInstructionMethod> =
+  private _availableInstructionMethods: ReadonlyArray<TurnInstructionMethod> =
     [...DEFAULT_INSTRUCTION_METHODS];
 
   constructor(
@@ -85,10 +85,10 @@ export class RoundaboutInstructionEngine {
   }
   //#endregion
 
-  getAvailableInstructionMethods(): ReadonlyArray<RoundaboutInstructionMethod> {
+  getAvailableInstructionMethods(): ReadonlyArray<TurnInstructionMethod> {
     return this._availableInstructionMethods;
   }
-  getPopulatedInstructionMethods(): ReadonlyArray<RoundaboutInstructionMethod> {
+  getPopulatedInstructionMethods(): ReadonlyArray<TurnInstructionMethod> {
     return this.getAvailableInstructionMethods();
   }
 
@@ -137,7 +137,7 @@ export class RoundaboutInstructionEngine {
     return addBigJunctionAction;
   }
 
-  applyInstructionMethod(instructionMethod: RoundaboutInstructionMethod): void {
+  applyInstructionMethod(instructionMethod: TurnInstructionMethod): void {
     const addBigJunctionAction = this._createAddBigJunctionIfNotExistAction();
 
     const setTurnInstructionAction = new SetTurnsByInstructionMethodAction(

@@ -4,7 +4,7 @@ import {
   TurnInstructionOpcode,
 } from '@/@waze/Waze/Model/turn-instruction-opcode.enum';
 import { getAbsoluteTurnAngleInDegrees } from '@/utils/wme-entities/turn';
-import { RoundaboutInstructionMethod } from './roundabout-instruction-method-application';
+import { TurnInstructionMethod } from './turn-instruction-method';
 
 function getPreferredInstructionFromAngle(
   angle: number,
@@ -22,7 +22,7 @@ function getPreferredInstructionFromTurn(
   return getPreferredInstructionFromAngle(angle);
 }
 
-const normalizationMethod: RoundaboutInstructionMethod = {
+const normalizationMethod: TurnInstructionMethod = {
   type: 'NORMALIZATION',
   application: function (turns: Turn[]) {
     const opcodeHashMap = new Map<TurnInstructionOpcode, string>();

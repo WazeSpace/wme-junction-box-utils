@@ -1,7 +1,7 @@
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { gtag } from '@/google-analytics';
 import { useTranslate } from '@/hooks';
-import { RoundaboutInstructionMethod } from '@/roundabout-instruction-engine/methods/roundabout-instruction-method-application';
+import { TurnInstructionMethod } from '@/roundabout-instruction-engine/methods/turn-instruction-method';
 import { RoundaboutInstructionEngine } from '@/roundabout-instruction-engine/roundabout-instruction-engine';
 import styled from '@emotion/styled';
 import { WzButton } from '@wazespace/wme-react-components';
@@ -42,7 +42,7 @@ export function RoundaboutExitInstructionNormalizationButton(props: Props) {
     [turnArrowTooltips],
   );
   const createApplyInstructionMethodCallback = (
-    method: RoundaboutInstructionMethod,
+    method: TurnInstructionMethod,
     trackingSource: string,
   ) => {
     return () => {
