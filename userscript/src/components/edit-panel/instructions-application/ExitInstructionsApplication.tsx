@@ -81,6 +81,7 @@ export function ExitInstructionsApplication(
             engine={instructionEngine}
             method={method}
             node={node}
+            gtagProps={{ source: 'edit_panel' }}
           />
         ))}
       </SegmentActionsPortal>
@@ -96,6 +97,7 @@ export function ExitInstructionsApplication(
                   engine={instructionEngine}
                   method={method}
                   node={null}
+                  gtagProps={{ source: 'turn_tooltip' }}
                 />
               ))}
             </TurnArrowTooltipButtonsRoot>
