@@ -24,7 +24,7 @@ function getPreferredInstructionFromTurn(
 
 const normalizationMethod: TurnInstructionMethod = {
   type: 'NORMALIZATION',
-  application: function (turns: Turn[]) {
+  application: (turns: Turn[]) => {
     const opcodeHashMap = new Map<TurnInstructionOpcode, string>();
     const hashTurnMap = new Map<string, Turn>();
     turns.forEach((turn) => {

@@ -4,7 +4,7 @@ import { TurnInstructionMethod } from './turn-instruction-method';
 
 const deNormalizationMethod: TurnInstructionMethod = {
   type: 'DE_NORMALIZATION',
-  application: function (turns: Turn[]) {
+  application: (turns: Turn[]) => {
     return turns.map((turn) =>
       turn.withTurnData(
         turn
