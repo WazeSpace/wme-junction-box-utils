@@ -2,8 +2,8 @@ import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataMod
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { TurnNodes } from '@/@waze/Waze/Model/turn';
 import { Vertex } from '@/@waze/Waze/Vertex';
-import { SetTurnsByInstructionMethodAction } from '@/roundabout-instruction-engine/actions';
-import { TurnInstructionMethod } from '@/roundabout-instruction-engine/methods/turn-instruction-method';
+import { SetTurnsByInstructionMethodAction } from './actions';
+import { TurnInstructionMethod } from './methods/turn-instruction-method';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { isSegmentDirectionAllowed } from '@/utils/wme-entities/segment';
 import { createVertexFromSegment } from '@/utils/wme-entities/segment-vertex';
