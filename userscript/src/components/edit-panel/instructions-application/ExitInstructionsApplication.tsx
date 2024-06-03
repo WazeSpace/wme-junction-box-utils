@@ -1,7 +1,5 @@
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
-import {
-  useImmediateTurnTooltip
-} from '@/components/edit-panel/instructions-application/hooks';
+import { useImmediateTurnTooltip } from '@/components/edit-panel/instructions-application/hooks';
 import { useTranslate } from '@/hooks';
 import { isSegmentConnectsToBigJunction } from '@/utils/wme-entities/big-junction';
 import { isSegmentConnectsToRoundabout } from '@/utils/wme-entities/segment';
@@ -12,7 +10,7 @@ import { SegmentActionsPortal } from './portals';
 import {
   InstructionEngine,
   RoundaboutInstructionEngine,
-} from '@/roundabout-instruction-engine';
+} from '@/instruction-application-engine';
 import { useMemo } from 'react';
 
 function getNodeLabelByDirection(direction: 'forward' | 'reverse'): string {

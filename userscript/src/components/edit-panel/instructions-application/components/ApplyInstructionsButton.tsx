@@ -1,7 +1,7 @@
 import { gtag } from '@/google-analytics';
 import { useTranslate } from '@/hooks';
-import { InstructionEngine } from '@/roundabout-instruction-engine';
-import { TurnInstructionMethod } from '@/roundabout-instruction-engine/methods/turn-instruction-method';
+import { InstructionEngine } from '@/instruction-application-engine';
+import { TurnInstructionMethod } from '@/instruction-application-engine/methods/turn-instruction-method';
 import { WzButton } from '@wazespace/wme-react-components';
 
 interface ApplyInstructionsButtonProps {
