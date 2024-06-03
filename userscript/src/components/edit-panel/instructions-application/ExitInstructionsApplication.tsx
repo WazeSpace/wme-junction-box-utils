@@ -1,6 +1,7 @@
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { useImmediateTurnTooltip } from '@/components/edit-panel/instructions-application/hooks';
 import { useTranslate } from '@/hooks';
+import pullRoadshieldsMethod from '@/instruction-application-engine/methods/pull-roadshields-method';
 import { isSegmentConnectsToBigJunction } from '@/utils/wme-entities/big-junction';
 import { isSegmentConnectsToRoundabout } from '@/utils/wme-entities/segment';
 import styled from '@emotion/styled';
@@ -48,6 +49,7 @@ export function ExitInstructionsApplication(
         props.segment.model,
         props.segment,
         props.direction,
+        [pullRoadshieldsMethod],
       );
     }
 
@@ -64,7 +66,7 @@ export function ExitInstructionsApplication(
       props.segment.model,
       props.segment,
       props.direction,
-      [],
+      [pullRoadshieldsMethod],
     );
   }, [isInRoundabout, props.direction, props.segment]);
   if (!instructionEngine) return null;

@@ -37,7 +37,8 @@
           "NORMALIZATION": "Normalize (Node %{node})",
           "NORMALIZATION_SHORT": "Normalize",
           "DE_NORMALIZATION": "Denormalize (Node %{node})",
-          "DE_NORMALIZATION_SHORT": "Denormalize"
+          "DE_NORMALIZATION_SHORT": "Denormalize",
+          "PULL_ROADSHIELDS": "Pull Roadshields"
         }
       }
     },
@@ -84,7 +85,8 @@
             "general": "%{name} %{count} turns",
             "types": {
               "NORMALIZATION": "Normalized",
-              "DE_NORMALIZATION": "Denormalized"
+              "DE_NORMALIZATION": "Denormalized",
+              "PULL_ROADSHIELDS": "Pulled roadshields for"
             }
           }
         }
