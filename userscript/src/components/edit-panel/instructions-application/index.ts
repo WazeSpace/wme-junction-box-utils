@@ -1,0 +1,1 @@
+export { InstructionsApplicationTemplate } from './template';

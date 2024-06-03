@@ -53,8 +53,22 @@ export function isVertexConnectsToBigJunction(
   bigJunction?: BigJunctionDataModel,
 ): boolean {
   const segment = getSegmentByVertex(dataModel, vertex);
+  return isSegmentConnectsToBigJunction(
+    dataModel,
+    segment,
+    vertex.direction,
+    bigJunction,
+  );
+}
+
+export function isSegmentConnectsToBigJunction(
+  dataModel: any,
+  segment: SegmentDataModel,
+  direction: 'fwd' | 'rev',
+  bigJunction?: BigJunctionDataModel,
+) {
   const crossroads = segment.getAttribute(
-    vertex.direction === 'fwd' ? 'toCrossroads' : 'fromCrossroads',
+    direction === 'fwd' ? 'toCrossroads' : 'fromCrossroads',
   );
   if (!bigJunction) return crossroads.length > 0;
   return crossroads.includes(bigJunction.getAttribute('id'));

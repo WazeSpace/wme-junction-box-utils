@@ -2,7 +2,7 @@ import {
   BackgroundActions
 } from '@/components/background-actions/BackgroundActions';
 import { EditPanel } from '@/components/edit-panel/EditPanel';
-import { RoundaboutExitInstructionNormalizationTemplate } from '@/components/edit-panel/roundabout-exit-instruction-normalization/template';
+import { InstructionsApplicationTemplate } from '@/components/edit-panel/instructions-application';
 import { RoundaboutPerimeterPolygonTemplate } from '@/components/edit-panel/roundabout-perimeter-geometry/template';
 import { SelectedDataModelsContextProvider } from '@/contexts/SelectedDataModelsContext';
 import { Preferences } from './components/preferences/Preferences';
@@ -26,9 +26,9 @@ export function App(props: AppProps) {
         <>
           <EditPanel
             templates={[
-              RoundaboutExitInstructionNormalizationTemplate,
               RoundaboutPerimeterPolygonTemplate,
               BigJunctionBackupTemplate,
+              InstructionsApplicationTemplate,
             ]}
           />
           <BackgroundActions />

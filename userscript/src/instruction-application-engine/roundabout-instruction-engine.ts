@@ -3,7 +3,7 @@ import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataMod
 import { JunctionDataModel } from '@/@waze/Waze/DataModels/JunctionDataModel';
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { TurnNodes } from '@/@waze/Waze/Model/turn';
-import { InstructionEngine } from '@/roundabout-instruction-engine/instruction-engine';
+import { InstructionEngine } from './instruction-engine';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { extractRoundaboutPerimeterPolygon } from '@/utils/perimeter-geometry-extraction';
 import { getRoundaboutByNode } from '@/utils/wme-entities/roundabout';
@@ -34,9 +34,11 @@ export class RoundaboutInstructionEngine extends InstructionEngine {
     dataModel: any,
     fromSegment: SegmentDataModel,
     fromSegmentDirection: 'forward' | 'reverse',
+    additionalInstructionMethods: ReadonlyArray<TurnInstructionMethod> = [],
   ) {
     super(dataModel, fromSegment, fromSegmentDirection, [
       ...DEFAULT_INSTRUCTION_METHODS,
+      ...additionalInstructionMethods,
     ]);
     this._roundaboutJunction = getRoundaboutByNode(
       getJunctionNodeFromSegmentDirection(fromSegment, fromSegmentDirection),
@@ -54,10 +56,6 @@ export class RoundaboutInstructionEngine extends InstructionEngine {
     );
   }
   //#endregion
-
-  getPopulatedInstructionMethods(): ReadonlyArray<TurnInstructionMethod> {
-    return this.getAvailableInstructionMethods();
-  }
 
   //#region Calculation Methods
   getAvailableTurns(): TurnNodes[] {
