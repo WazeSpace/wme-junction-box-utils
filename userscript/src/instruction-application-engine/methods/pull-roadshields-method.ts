@@ -44,6 +44,7 @@ const pullRoadshieldsMethod: TurnInstructionMethod = {
           return turn.withTurnData(turnData);
         }
       }
+      return turn;
     });
   },
 };
