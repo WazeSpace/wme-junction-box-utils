@@ -14,13 +14,13 @@ export class UpdateBigJunctionGeometryToRoundaboutAction extends Action {
   shouldSerialize = false;
 
   private readonly _initialGeometry: Polygon;
-  private readonly _geometry: Polygon;
+  private _geometry: Polygon;
 
   constructor(
     public addBigJunctionAction: AddBigJunctionAction,
     public dataModel: any,
     public map: any,
-    sizeFactor = UpdateBigJunctionGeometryToRoundaboutAction.DefaultSizeFactor,
+    private _sizeFactor = UpdateBigJunctionGeometryToRoundaboutAction.DefaultSizeFactor,
     props?: unknown,
   ) {
     super(props);
@@ -29,10 +29,6 @@ export class UpdateBigJunctionGeometryToRoundaboutAction extends Action {
       getWazeMapEditorWindow().W.userscripts.toGeoJSONGeometry(
         addBigJunctionAction.initialGeometry,
       );
-    this._geometry = transformScale(
-      this._getRoundaboutPerimeterGeometry(),
-      sizeFactor,
-    );
   }
 
   private _getBigJunction(): BigJunctionDataModel {
@@ -97,6 +93,10 @@ export class UpdateBigJunctionGeometryToRoundaboutAction extends Action {
   }
 
   doAction(): boolean {
+    this._geometry = transformScale(
+      this._getRoundaboutPerimeterGeometry(),
+      this._sizeFactor,
+    );
     this._updateBigJunctionGeometry(this._geometry);
     return true;
   }
@@ -106,7 +106,7 @@ export class UpdateBigJunctionGeometryToRoundaboutAction extends Action {
   }
 
   redoAction() {
-    this.doAction();
+    this._updateBigJunctionGeometry(this._geometry);
   }
 
   generateDescription() {
