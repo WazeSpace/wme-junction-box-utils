@@ -19,7 +19,6 @@ export const RoundaboutPerimeterPolygonTemplate: EditPanelTemplateConstructor<Bi
   static isEnabledForElements(bigJunctions: BigJunctionDataModel[]): boolean {
     return (
       bigJunctions.length === 1 &&
-      bigJunctions[0].state === 'INSERT' &&
       bigJunctions[0]
         .getShortSegments()
         .every((segment) => segment.isInRoundabout())
