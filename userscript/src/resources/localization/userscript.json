@@ -38,7 +38,8 @@
           "NORMALIZATION_SHORT": "Normalize",
           "DE_NORMALIZATION": "Denormalize (Node %{node})",
           "DE_NORMALIZATION_SHORT": "Denormalize",
-          "PULL_ROADSHIELDS": "Pull Roadshields"
+          "PULL_ROADSHIELDS": "Pull Roadshields (Node %{node})",
+          "PULL_ROADSHIELDS_SHORT": "Pull Roadshields"
         }
       }
     },
