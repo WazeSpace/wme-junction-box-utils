@@ -28,7 +28,8 @@
             }
           }
         },
-        "auto_backup_on_delete": "Automatically backup junction boxes"
+        "auto_backup_on_delete": "Automatically backup junction boxes",
+        "infer_roundabout_lane_guidance_turn_arrows": "Infer turn arrows for roundabout"
       }
     },
     "segment": {
