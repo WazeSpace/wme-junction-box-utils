@@ -6,11 +6,11 @@ interface PortalProps {
   children: ReactNode;
   portalKey?: string;
 }
-export function createReactPortal(
-  getContainer: () => Element | DocumentFragment,
-): ComponentType<PortalProps> {
-  return ({ children, portalKey }: PortalProps) => {
-    const container = useMemo(() => getContainer(), []);
+export function createReactPortal<P extends object = Record<string, never>>(
+  getContainer: (props: P) => Element | DocumentFragment,
+): ComponentType<PortalProps & P> {
+  return ({ children, portalKey, ...rest }: PortalProps & P) => {
+    const container = useMemo(() => getContainer(rest as P), [rest]);
     if (!container) {
       Logger.error(
         '[createReactPortal] Unable to resolve to a container from a retriever function',
