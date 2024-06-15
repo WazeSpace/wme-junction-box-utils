@@ -40,3 +40,10 @@ export function createForwardVertexFromSegment(segment: SegmentDataModel) {
 export function createReverseVertexFromSegment(segment: SegmentDataModel) {
   return createVertexFromSegment(segment, 'reverse');
 }
+
+export function createVertexById(vertexId: string): Vertex {
+  const segmentId = parseInt(vertexId.substring(0, vertexId.length - 1));
+  const direction =
+    vertexId[vertexId.length - 1] === 'f' ? 'forward' : 'reverse';
+  return createVertex(segmentId, direction);
+}
