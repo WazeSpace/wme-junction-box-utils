@@ -4,7 +4,7 @@ import { WzCheckbox } from '@wazespace/wme-react-components';
 export function LaneGuidanceInferArrows() {
   const t = useTranslate('jb_utils.user.prefs');
   const [preference, setPreference] = usePreference(
-    'auto_set_roundabuot_lane_guidance_turn_arrows',
+    'auto_set_roundabout_lane_guidance_turn_arrows',
   );
   const isEnabled = preference === true;
 

@@ -15,7 +15,7 @@ export function SetTurnArrowsButton({
   onTurnArrowsSetAutomatically,
 }: SetTurnArrowsButtonProps) {
   const [autoSetTurnArrows] = usePreference(
-    'auto_set_roundabuot_lane_guidance_turn_arrows',
+    'auto_set_roundabout_lane_guidance_turn_arrows',
   );
   const laneGuidanceControl = useLaneGuidanceControl(lanesDirection);
   const controlLabel = useFarTurnsControlLabel(lanesDirection);
