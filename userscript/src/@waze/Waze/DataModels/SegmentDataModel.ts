@@ -67,4 +67,6 @@ export interface SegmentDataModel
   hasToBigJunction(): boolean;
   getRoundabout(): boolean;
   isInRoundabout(): boolean;
+  getFwdHeading(): number;
+  getRevHeading(): number;
 }
