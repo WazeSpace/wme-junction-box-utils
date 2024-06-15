@@ -11,6 +11,7 @@ export function useMutationObserver(
 
   const observeTarget = useCallback(() => {
     if (!observer.current) return;
+    if (!target) return;
     observer.current.observe(target, options);
   }, [options, target]);
   const disconnectTarget = useCallback(() => {
