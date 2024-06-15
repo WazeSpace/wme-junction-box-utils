@@ -111,3 +111,12 @@ export function getSegmentFromNodeInTravelDirection(
     getSegmentTravelDirection(segment) === 'forward' ? 'reverse' : 'forward',
   );
 }
+
+export function getSegmentHeadingByDirection(
+  segment: SegmentDataModel,
+  direction: 'fwd' | 'rev' | 'forward' | 'reverse',
+): number {
+  if (direction === 'fwd' || direction === 'forward')
+    return segment.getFwdHeading();
+  return segment.getRevHeading();
+}
