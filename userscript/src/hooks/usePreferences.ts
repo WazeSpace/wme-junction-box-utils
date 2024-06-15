@@ -56,3 +56,16 @@ export function usePreference<K extends FlattenKeys<Preferences>>(key: K) {
 
   return [preferenceValue, setPreferenceValue] as const;
 }
+
+export function useSetPreference<K extends FlattenKeys<Preferences>>(
+  key: K,
+  defaultValue: SetStateAction<GetNestedType<Preferences, K>>,
+) {
+  const [, dispatch] = usePreferences();
+  const setPreferenceValue = (
+    value?: SetStateAction<GetNestedType<Preferences, K>>,
+  ): void => {
+    return dispatch(createSetPreferenceAction(key, value || defaultValue));
+  };
+  return setPreferenceValue;
+}

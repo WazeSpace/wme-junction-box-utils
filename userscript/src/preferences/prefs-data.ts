@@ -8,8 +8,10 @@ export type Preferences = {
     };
   };
   auto_backup: boolean;
+  auto_set_roundabuot_lane_guidance_turn_arrows: boolean;
   feat_discovers: {
     auto_restore: boolean;
+    auto_roundabout_lane_guidance_turn_arrows: boolean;
   };
 };
 
@@ -23,8 +25,10 @@ export const defaultPreferences: Preferences = {
     },
   },
   auto_backup: true,
+  auto_set_roundabuot_lane_guidance_turn_arrows: true,
   feat_discovers: {
     auto_restore: false,
+    auto_roundabout_lane_guidance_turn_arrows: false,
   },
 };
 

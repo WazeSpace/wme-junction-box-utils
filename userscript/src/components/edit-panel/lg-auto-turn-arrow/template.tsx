@@ -2,15 +2,13 @@
 import { WazeMapEditorEntityType } from '@/@waze/Waze/consts';
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { EditPanelTemplate } from '@/components/edit-panel/edit-panel-template';
-import {
-  isSegmentConnectsToRoundabout,
-  isSegmentDirectionAllowed,
-} from '@/utils/wme-entities/segment';
+import { isSegmentConnectsToRoundabout } from '@/utils/wme-entities/segment';
 import { ReactElement } from 'react';
-import { SetTurnArrowsButton } from './components';
+import MainComponent from './main';
 
 export class LaneGuidanceAutoTurnArrow implements EditPanelTemplate {
   private readonly _segment: SegmentDataModel;
+  private static readonly _targetEl = document.createElement('div');
 
   constructor(segments: SegmentDataModel[]) {
     this._segment = segments[0];
@@ -21,31 +19,14 @@ export class LaneGuidanceAutoTurnArrow implements EditPanelTemplate {
   }
 
   getTargetElement(): HTMLElement {
-    return document.createElement('div');
+    return LaneGuidanceAutoTurnArrow._targetEl;
   }
 
   static isEnabledForElements(segments: SegmentDataModel[]): boolean {
     return segments.length === 1 && isSegmentConnectsToRoundabout(segments[0]);
   }
 
-  render(): ReactElement[] {
-    return [
-      this.renderForDirection('rev'), // Node A
-      this.renderForDirection('fwd'), // Node B
-    ];
-  }
-
-  renderForDirection(direction: 'fwd' | 'rev'): ReactElement {
-    const fullDirection = (
-      {
-        fwd: 'forward',
-        rev: 'reverse',
-      } as const
-    )[direction];
-
-    if (!isSegmentDirectionAllowed(this._segment, fullDirection)) return null;
-    if (!isSegmentConnectsToRoundabout(this._segment, fullDirection))
-      return null;
-    return <SetTurnArrowsButton lanesDirection={direction} />;
+  render(): ReactElement {
+    return <MainComponent segment={this._segment} />;
   }
 }
