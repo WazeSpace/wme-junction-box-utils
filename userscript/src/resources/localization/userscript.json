@@ -97,6 +97,14 @@
       "roundabout": {
         "title": "Roundabout"
       }
+    },
+    "lanes": {
+      "set_turn_arrows": "Set turn arrows",
+      "set_turn_arrows_fd": {
+        "title": "Auto Turn Arrows",
+        "body": "Junction Box Utils automatically infers turn arrows for roundabouts, saving you time.\nYou can disable this feature in settings.",
+        "button": "Got it"
+      }
     }
   },
   "save": {

@@ -10,6 +10,7 @@ import { useInjectTranslations, usePreference } from './hooks';
 import FallbackUserscriptTranslations from './resources/localization/userscript.json';
 import { LanguageTranslations } from './@waze/I18n';
 import { BigJunctionBackupTemplate } from './components/edit-panel/big-junction-backup';
+import { LaneGuidanceAutoTurnArrow } from './components/edit-panel/lg-auto-turn-arrow/template';
 
 interface AppProps {
   translations: LanguageTranslations;
@@ -29,6 +30,7 @@ export function App(props: AppProps) {
               RoundaboutPerimeterPolygonTemplate,
               BigJunctionBackupTemplate,
               InstructionsApplicationTemplate,
+              LaneGuidanceAutoTurnArrow,
             ]}
           />
           <BackgroundActions />
