@@ -6,7 +6,7 @@ interface PortalProps {
   children: ReactNode;
   portalKey?: string;
 }
-export function createReactPortal<P extends object = Record<string, never>>(
+export function createReactPortal<P extends object = object>(
   getContainer: (props: P) => Element | DocumentFragment,
 ): ComponentType<PortalProps & P> {
   return ({ children, portalKey, ...rest }: PortalProps & P) => {
