@@ -1,8 +1,8 @@
+import { EditPanelButton } from '@/components/edit-panel/EditPanelButton';
 import { gtag } from '@/google-analytics';
 import { useTranslate } from '@/hooks';
 import { InstructionEngine } from '@/instruction-application-engine';
 import { TurnInstructionMethod } from '@/instruction-application-engine/methods/turn-instruction-method';
-import { WzButton } from '@wazespace/wme-react-components';
 
 interface ApplyInstructionsButtonProps {
   engine: InstructionEngine;
@@ -27,8 +27,8 @@ export function ApplyInstructionsButton({
   };
 
   return (
-    <WzButton onClick={handleClick} size="sm" color="text">
+    <EditPanelButton onClick={handleClick} size="sm" color="text">
       {node !== null ? t(method.type, { node }) : t(`${method.type}_SHORT`)}
-    </WzButton>
+    </EditPanelButton>
   );
 }

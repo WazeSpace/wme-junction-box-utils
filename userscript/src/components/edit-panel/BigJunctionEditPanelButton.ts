@@ -1,6 +1,6 @@
+import { EditPanelButton } from '@/components/edit-panel/EditPanelButton';
 import { withDefaultProps } from '@/utils';
-import { WzButton } from '@wazespace/wme-react-components';
 
-export const BigJunctionEditPanelButton = withDefaultProps(WzButton, {
+export const BigJunctionEditPanelButton = withDefaultProps(EditPanelButton, {
   color: 'text',
 });
