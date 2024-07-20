@@ -63,7 +63,9 @@
         },
         "confirm_overwrite_backup": {
           "title": "Override backup?",
+          "title_oldest": "Override oldest backup?",
           "details": "You're about to override a Junction Box backup. This action is irreversible",
+          "details_oldest": "You're about to override the oldest Junction Box backup. This action is irreversible",
           "backup_btn": "Yes",
           "ignore_btn": "No"
         },

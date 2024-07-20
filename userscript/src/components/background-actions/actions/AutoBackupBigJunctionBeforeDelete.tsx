@@ -26,7 +26,7 @@ export function AutoBackupBigJunctionBeforeDelete() {
 
   const backupBigJunction = (bigJunction: BigJunctionDataModel) => {
     const backup = BigJunctionBackup.fromBigJunction(bigJunction);
-    BigJunctionBackupTemplate.backup = backup;
+    BigJunctionBackupTemplate.storeBackup(backup);
     Logger.info('Big Junction snapshot has been created and saved');
   };
 
@@ -37,14 +37,14 @@ export function AutoBackupBigJunctionBeforeDelete() {
 
       Logger.info('Automatic big junction backup script running...');
 
-      const storedSnapshot = BigJunctionBackupTemplate.backup;
-      const snapshotSignatureMatch =
-        storedSnapshot &&
-        storedSnapshot.getOriginalBigJunction()?.getAttribute('id') ===
-          action.bigJunction.getAttribute('id');
+      const snapshotSignatureMatch = BigJunctionBackupTemplate.backups.some(
+        (snapshot) =>
+          snapshot.getOriginalBigJunction()?.getAttribute('id') ===
+          action.bigJunction.getAttribute('id'),
+      );
 
-      if (!storedSnapshot) {
-        Logger.info('Has no snapshot stored, backing up...');
+      if (BigJunctionBackupTemplate.canStoreMoreBackups()) {
+        Logger.info('Has free snapshot slot, backing up...');
         gtag('event', 'auto_backup', { event_category: 'big_junction_backup' });
         backupBigJunction(action.bigJunction);
         addAction(action);
@@ -52,7 +52,7 @@ export function AutoBackupBigJunctionBeforeDelete() {
         Logger.info('Big Junction and Snapshot signatures matches, skipping');
         addAction(action);
       } else {
-        Logger.info('Asking the user to override the snapshot');
+        Logger.info('Asking the user to override the oldest snapshot');
         new Promise<void>((resolve, reject) => {
           setConfirmBalloonCallback({
             attributes: { bigJunction: action.bigJunction },
@@ -105,10 +105,10 @@ export function AutoBackupBigJunctionBeforeDelete() {
       disableDontShowAgainCheckbox
       mapEntity={confirmBalloonCallback.attributes.bigJunction}
       title={t(
-        'jb_utils.big_junction.backup_restore.confirm_overwrite_backup.title',
+        'jb_utils.big_junction.backup_restore.confirm_overwrite_backup.title_oldest',
       )}
       details={t(
-        'jb_utils.big_junction.backup_restore.confirm_overwrite_backup.details',
+        'jb_utils.big_junction.backup_restore.confirm_overwrite_backup.details_oldest',
       )}
       confirmButtonText={t(
         'jb_utils.big_junction.backup_restore.confirm_overwrite_backup.backup_btn',

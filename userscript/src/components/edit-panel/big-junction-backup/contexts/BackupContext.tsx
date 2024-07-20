@@ -1,9 +1,11 @@
+import { BigJunctionBackupTemplate } from '@/components/edit-panel/big-junction-backup';
 import { ReactNode, createContext, useState } from 'react';
 import { BigJunctionBackup } from '../models';
 import { createMandatoryUseContext } from '@/utils';
 
 interface BackupContextPayload {
   readonly isBackupAvailable: boolean;
+  canStoreMoreBackups(): boolean;
   backup: BigJunctionBackup;
   setBackup(newBackup: BigJunctionBackup): void;
 }
@@ -25,6 +27,9 @@ export function BackupContextProvider({
     <BackupContext.Provider
       value={{
         isBackupAvailable: !!backup,
+        canStoreMoreBackups() {
+          return BigJunctionBackupTemplate.canStoreMoreBackups();
+        },
         get backup() {
           return backup;
         },

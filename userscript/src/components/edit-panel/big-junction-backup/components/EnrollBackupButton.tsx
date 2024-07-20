@@ -11,7 +11,7 @@ import { gtag } from '@/google-analytics';
 
 export function EnrollBackupButton() {
   const buttonRef = useRef<HTMLButtonElement>();
-  const { isBackupAvailable, setBackup } = useBackupContext();
+  const { canStoreMoreBackups, setBackup } = useBackupContext();
   const [bigJunction] = useSelectedDataModelsContext<BigJunctionDataModel>();
   const [showOverrideConfirmation, setShowOverrideConfirmation] =
     useState(false);
@@ -26,7 +26,7 @@ export function EnrollBackupButton() {
   const handleButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.currentTarget.blur();
     gtag('event', 'backup_clicked', { event_category: 'big_junction_backup' });
-    if (isBackupAvailable) {
+    if (!canStoreMoreBackups()) {
       setShowOverrideConfirmation(true);
       return;
     }
@@ -50,10 +50,10 @@ export function EnrollBackupButton() {
           alarming
           disableDontShowAgainCheckbox
           title={t(
-            'jb_utils.big_junction.backup_restore.confirm_overwrite_backup.title',
+            'jb_utils.big_junction.backup_restore.confirm_overwrite_backup.title_oldest',
           )}
           details={t(
-            'jb_utils.big_junction.backup_restore.confirm_overwrite_backup.details',
+            'jb_utils.big_junction.backup_restore.confirm_overwrite_backup.details_oldest',
           )}
           onConfirmClick={() => {
             backupBigJunction();
