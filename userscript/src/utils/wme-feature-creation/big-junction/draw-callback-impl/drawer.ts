@@ -4,9 +4,9 @@ import { Fiber } from 'react-reconciler';
 
 function getDrawBigJunctionMenuItem(): Element {
   const element = document
-    .getElementById('create-panel')
+    .getElementById('drawer')
     .querySelector(
-      'div[class^=menu] wz-menu-item:has(i.w-icon.w-icon-intersection)',
+      '[class^=menu] wz-menu-item:has(i.w-icon.w-icon-intersection)',
     );
   if (!element) throw new Error('DrawBigJunction menu item is not found');
   return element;
