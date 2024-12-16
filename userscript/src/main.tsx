@@ -21,6 +21,7 @@ export default async function bootstrap() {
 
   addGoogleTagManagerToPage(process.env.G_MEASUREMENT_ID);
   migratePreferencesFromRoundaboutJB();
+
   ReactDOM.render(
     <App translations={{ [currentLocale]: mergedTranslations }} />,
     document.createElement('div'),

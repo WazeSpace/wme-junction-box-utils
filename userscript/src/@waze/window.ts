@@ -1,3 +1,5 @@
+import type { WebpackChunkEditor } from '@/webpack-injector';
+
 export type WazeMapEditorWindow = Window & {
   I18n: import('./I18n').default;
   W: import('./Waze').default;
@@ -47,6 +49,5 @@ export type WazeMapEditorWindow = Window & {
       | 'Waze/Modules/Closures/Models/ClosureActionBuilder'
       | 'Waze/Modules/Closures/Models/SharedClosure',
   ) => any;
-  React: typeof import('react');
-  ReactDOM: typeof import('react-dom');
+  webpackChunkeditor: WebpackChunkEditor;
 };
