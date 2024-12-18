@@ -36,6 +36,7 @@ export class WebpackInjector {
   private readonly chunkEditor: WebpackChunkEditor;
   private readonly loadedModulesProp: string | null = null;
   private readonly allModulesProp: string | null = null;
+  private readonly unloadedModules = new Set<string | number>();
   private mitmModule: InjectableModule;
 
   constructor(chunkEditor: WebpackChunkEditor, options: InjectorOptions) {
@@ -105,6 +106,7 @@ export class WebpackInjector {
       // if it gets loaded without the error thrown, then the module was preloaded
       // otherwise, it wasn't
       try {
+        if (this.unloadedModules.has(moduleId)) return false;
         require(moduleId);
         if (wasLoaded === null) return true; // null indicates the init wasn't called, thus it was loaded
         return wasLoaded;
