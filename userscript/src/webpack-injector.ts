@@ -81,7 +81,8 @@ export class WebpackInjector {
     // if the module is loaded, then it won't call the init function
     // in addition, the module init receives the module data, which includes a "loaded" prop
     // so, replace the init function with something that validates against this prop
-    // if our handler was called, then it wasn't loaded
+    // if our handler was called, then it wasn't loaded, in which case we want to not load the module
+    // so we replace the exports with a getter, which loads the module upon first call
     // if it wasn't, then it was loaded
     // anyway, in our handler, check the loaded prop
 
@@ -93,13 +94,36 @@ export class WebpackInjector {
       // store the original init
       const origInit: WebpackModuleInit =
         require[this.allModulesProp][moduleId];
-      let wasLoaded: boolean | null = null;
 
       // replace with a module init that raises an error
-      require[this.allModulesProp][moduleId] = function (self: WebpackModule) {
-        wasLoaded = self.loaded;
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const _this = this;
+      require[this.allModulesProp][moduleId] = function (
+        self: WebpackModule,
+        exports: any,
+        require: (moduleId: string) => WebpackModule['exports'],
+        ...otherArgs: any[]
+      ) {
         // eslint-disable-next-line prefer-rest-params
-        return origInit.apply(this, arguments);
+        if (!self.loaded) {
+          Object.defineProperty(self, 'exports', {
+            configurable: true,
+            get: () => {
+              delete self.exports;
+              self.exports = exports;
+              // eslint-disable-next-line prefer-rest-params
+              origInit.call(self, self, exports, require, ...otherArgs);
+              console.log(self);
+              self.loaded = true;
+              _this.unloadedModules.delete(moduleId);
+              return self.exports;
+            },
+          });
+          _this.unloadedModules.add(moduleId);
+          throw new Error('Not Loaded');
+        }
+
+        return self.exports;
       };
 
       // now, inside a try-catch block, try to load the module
@@ -108,8 +132,10 @@ export class WebpackInjector {
       try {
         if (this.unloadedModules.has(moduleId)) return false;
         require(moduleId);
-        if (wasLoaded === null) return true; // null indicates the init wasn't called, thus it was loaded
-        return wasLoaded;
+        return true; // null indicates the init wasn't called, thus it was loaded
+      } catch (e) {
+        if (e instanceof Error && e.message === 'Not Loaded') return false;
+        throw e;
       } finally {
         // always re-set the original init
         require[this.allModulesProp][moduleId] = origInit;
