@@ -147,7 +147,7 @@ export class WebpackInjector {
     return this.mitmModule.runAsModule((require) => require(id));
   }
 
-  getAllModules(loadedOnly = false): {
+  getAllModules(loadedOnly = true): {
     [moduleId: string]: WebpackModule['exports'];
   } {
     if (loadedOnly) {
@@ -173,7 +173,7 @@ export class WebpackInjector {
 
   findModules(
     precondition: (exports: WebpackModule['exports']) => boolean,
-    onlyInLoadedModules = false,
+    onlyInLoadedModules = true,
   ): { [moduleId: string]: WebpackModule['exports'] } {
     const modules = this.getAllModules(onlyInLoadedModules);
     const modulesAsEntries = Object.entries(modules);
@@ -185,7 +185,7 @@ export class WebpackInjector {
 
   findModulesByProperties(
     properties: string[],
-    onlyInLoadedModules = false,
+    onlyInLoadedModules = true,
   ): {
     [moduleId: string]: WebpackModule['exports'];
   } {
