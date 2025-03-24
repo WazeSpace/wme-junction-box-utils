@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import deepmerge from 'deepmerge';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import { migratePreferencesFromRoundaboutJB } from './legacy-migrator';
 import axios from 'axios';
@@ -22,8 +22,6 @@ export default async function bootstrap() {
   addGoogleTagManagerToPage(process.env.G_MEASUREMENT_ID);
   migratePreferencesFromRoundaboutJB();
 
-  ReactDOM.render(
-    <App translations={{ [currentLocale]: mergedTranslations }} />,
-    document.createElement('div'),
-  );
+  const root = createRoot(document.createElement('div'));
+  root.render(<App translations={{ [currentLocale]: mergedTranslations }} />);
 }

@@ -23,8 +23,8 @@
     "@types/backbone": "^1.4.19",
     "@types/jest": "^29.5.12",
     "@types/lodash": "^4.17.0",
-    "@types/react": "^17.0.76",
-    "@types/react-dom": "^17.0.25",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
     "@types/react-reconciler": "^0.28.8",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
@@ -57,10 +57,12 @@
     "clsx": "^2.1.0",
     "deepmerge": "^4.3.1",
     "nanoid": "^3.3.7",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-router-dom": "^6.22.3",
     "reflect-metadata": "^0.2.2",
     "tippy.js": "^6.3.7",
     "typescript-memoize": "^1.1.1",
-    "usehooks-ts": "^2.16.0"
+    "usehooks-ts": "^3.1.1"
   }
 }
