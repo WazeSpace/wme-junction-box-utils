@@ -14,7 +14,9 @@ declare type WzIntrinsicElements = {
 };
 
 declare global {
-  namespace JSX {
-    interface IntrinsicElements extends WzIntrinsicElements {}
+  namespace React {
+    namespace JSX {
+      interface IntrinsicElements extends WzIntrinsicElements {}
+    }
   }
 }
