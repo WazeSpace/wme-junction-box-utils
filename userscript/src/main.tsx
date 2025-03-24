@@ -9,9 +9,13 @@ import { getWazeMapEditorWindow } from './utils/get-wme-window';
 import CrowdinOtaClient from './localization/crowdin-ota/ota-client';
 import { addGoogleTagManagerToPage } from './google-analytics';
 import fallbackTranslations from './resources/localization/userscript.json';
+import { wmeSdk } from './utils/wme-sdk';
 
 export default async function bootstrap() {
   axios.defaults.adapter = axiosGmXhrAdapter;
+
+  // @ts-expect-error
+  await initWmeSdkPlus(wmeSdk);
 
   const currentLocale = getWazeMapEditorWindow().I18n.currentLocale();
   const translations = await new CrowdinOtaClient(

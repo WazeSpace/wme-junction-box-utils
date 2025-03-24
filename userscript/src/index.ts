@@ -1,4 +1,7 @@
+import type {} from 'wme-sdk-typings';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
+
+await getWazeMapEditorWindow().SDK_INITIALIZED;
 
 function waitForEvent<N extends Node>(
   node: N,

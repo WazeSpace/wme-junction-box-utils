@@ -2,7 +2,7 @@
   "name": "@wazespace/wme-junction-box-utils",
   "fullDisplayName": "WME Junction Box Utils",
   "displayName": "Junction Box Utils",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "description": "Formerly known as \"Roundabout JB\". An enhancement add-on for the WME with a wide variety of capabilities for controlling and managing Junction Boxes.",
   "main": "index.js",
   "scripts": {
@@ -42,7 +42,8 @@
     "typescript": "^5.4.2",
     "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4",
-    "webpack-userscript": "^3.2.2"
+    "webpack-userscript": "^3.2.2",
+    "wme-sdk-typings": "https://web-assets.waze.com/wme_sdk_docs/production/latest/wme-sdk-typings.tgz"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",

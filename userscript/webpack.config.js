@@ -62,6 +62,7 @@ module.exports = () => {
           require: [
             packageInfo.useWazeSpace &&
               'https://wazespace.github.io/userscripts-lib/index.js',
+            'https://cdn.jsdelivr.net/gh/WazeSpace/wme-sdk-plus@1/wme-sdk-plus.js',
           ].filter(Boolean),
         },
         metajs: true,
@@ -102,9 +103,5 @@ module.exports = () => {
       },
     },
     target: 'web',
-    externals: {
-      react: 'window.React || unsafeWindow.React',
-      'react-dom': 'window.ReactDOM || unsafeWindow.ReactDOM',
-    },
   };
 };
