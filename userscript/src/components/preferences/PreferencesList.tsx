@@ -9,7 +9,7 @@ const PreferencesPanel = styled('div')({
   left: 0,
   width: '100%',
   height: '100%',
-  backgroundColor: '#fff',
+  backgroundColor: 'var(--background_default, #fff)',
   zIndex: 999,
 });
 const PreferencesContentPanel = styled('div')({
