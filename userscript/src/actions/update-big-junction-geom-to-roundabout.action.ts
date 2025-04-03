@@ -26,17 +26,15 @@ export class UpdateBigJunctionGeometryToRoundaboutAction extends Action {
     super(props);
 
     this._initialGeometry =
-      getWazeMapEditorWindow().W.userscripts.toGeoJSONGeometry(
-        addBigJunctionAction.initialGeometry,
-      );
+      addBigJunctionAction.bigJunction.getAttribute('geoJSONGeometry');
   }
 
   private _getBigJunction(): BigJunctionDataModel {
     return this.addBigJunctionAction.bigJunction;
   }
 
-  private _getBigJunctionSegments(): SegmentDataModel[] {
-    return this._getBigJunction().getShortSegments();
+  private _getBigJunctionSegments(dataModel: any): SegmentDataModel[] {
+    return this._getBigJunction().getShortSegments(dataModel);
   }
 
   private _getJunctionById(id: number): JunctionDataModel {
@@ -44,8 +42,8 @@ export class UpdateBigJunctionGeometryToRoundaboutAction extends Action {
     return junctionRepository.getObjectById(id);
   }
 
-  private _getRoundaboutJunction(): JunctionDataModel {
-    const [checkSegment, ...segments] = this._getBigJunctionSegments();
+  private _getRoundaboutJunction(dataModel: any): JunctionDataModel {
+    const [checkSegment, ...segments] = this._getBigJunctionSegments(dataModel);
     const getSegmentJunctionId = (segment: SegmentDataModel) => {
       return segment.getAttribute('junctionID');
     };
@@ -58,8 +56,8 @@ export class UpdateBigJunctionGeometryToRoundaboutAction extends Action {
     return this._getJunctionById(junctionId);
   }
 
-  private _getRoundaboutPerimeterGeometry(): Polygon {
-    const junction = this._getRoundaboutJunction();
+  private _getRoundaboutPerimeterGeometry(dataModel: any): Polygon {
+    const junction = this._getRoundaboutJunction(dataModel);
     return extractRoundaboutPerimeterPolygon(junction);
   }
 
@@ -70,7 +68,6 @@ export class UpdateBigJunctionGeometryToRoundaboutAction extends Action {
 
     const olGeometry =
       getWazeMapEditorWindow().W.userscripts.toOLGeometry(newGeometry);
-    this.addBigJunctionAction.initialGeometry = olGeometry;
     this.addBigJunctionAction.bigJunction.attributes.geometry = olGeometry;
     this.addBigJunctionAction.bigJunction.attributes.geoJSONGeometry =
       newGeometry;
@@ -92,9 +89,9 @@ export class UpdateBigJunctionGeometryToRoundaboutAction extends Action {
     return [this._getBigJunction().getUniqueID()];
   }
 
-  doAction(): boolean {
+  doAction(dataModel: any): boolean {
     this._geometry = transformScale(
-      this._getRoundaboutPerimeterGeometry(),
+      this._getRoundaboutPerimeterGeometry(dataModel),
       this._sizeFactor,
     );
     this._updateBigJunctionGeometry(this._geometry);
