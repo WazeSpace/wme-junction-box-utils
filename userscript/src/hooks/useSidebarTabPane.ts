@@ -36,7 +36,7 @@ export function useSidebarTabPane(tabType: SidebarTabPaneType): Element | null {
     return () => {
       unsubscribe();
     }
-  }, [wmeSdk]);
+  }, [tabType]);
 
   return tabPane;
 }
