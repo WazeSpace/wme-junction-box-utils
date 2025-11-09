@@ -2,36 +2,38 @@ import { useEffect, useState } from 'react';
 import { PreferencesList } from './PreferencesList';
 import { PreferencesEntryCard } from './PreferencesEntryCard';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
-import { usePreference } from '@/hooks';
+import { usePreference, useSidebarTabPane } from '@/hooks';
 import { createPortal } from 'react-dom';
 import { PreferencesContent } from './PreferencesContent';
-
-function getEditorPrefsElement() {
-  return document.querySelector('#sidepanel-prefs.tab-pane .settings');
-}
 
 export function Preferences() {
   const [showPreferences, setShowPreferences] = useState(false);
   const [prefsLocation] = usePreference('prefs_location');
-  const [portal, setPortal] = useState<Element>(getEditorPrefsElement());
+  const prefsSidebarTabPane = useSidebarTabPane('settings');
+  const [scriptTabPane, setScriptTabPane] = useState<Element | null>(null);
 
   useEffect(() => {
-    if (prefsLocation === 'wme-prefs') {
-      setPortal(getEditorPrefsElement());
-      return () => {};
-    }
+    if (prefsLocation !== 'tab') return;
 
     const W = getWazeMapEditorWindow().W;
     const scriptTab = W.userscripts.registerSidebarTab(process.env.SCRIPT_ID);
     scriptTab.tabLabel.innerText = 'JBU';
-    setPortal(scriptTab.tabPane);
+    setScriptTabPane(scriptTab.tabPane);
 
     return () => {
       W.userscripts.removeSidebarTab(process.env.SCRIPT_ID);
+      setScriptTabPane(null);
     };
-  }, [prefsLocation]);
+  }, [prefsLocation])
 
-  return createPortal(
+  const targetElement = (() => {
+    switch (prefsLocation) {
+      case 'wme-prefs': return prefsSidebarTabPane;
+      case 'tab': return scriptTabPane;
+    }
+  })();
+
+  return targetElement ? createPortal(
     <>
       {prefsLocation === 'wme-prefs' && (
         <PreferencesEntryCard onClick={setShowPreferences.bind(null, true)} />
@@ -41,6 +43,6 @@ export function Preferences() {
       )}
       {prefsLocation === 'tab' && <PreferencesContent />}
     </>,
-    portal,
-  );
+    targetElement,
+  ) : null;
 }
