@@ -31,11 +31,10 @@ function setSaveLock() {
       code: 'jbu101',
     },
     () => {
-      const backup = BigJunctionBackupTemplate.backup;
-      return (
-        backup &&
-        !isBackupRestored(backup) &&
-        isBackupBigJunctionDeleted(backup)
+      return BigJunctionBackupTemplate.backups.some(
+        (backup) =>
+          !isBackupRestored(backup) &&
+          isBackupBigJunctionDeleted(backup),
       );
     },
   );
