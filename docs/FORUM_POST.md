@@ -10,14 +10,13 @@ A script manager (for example, [Tampermonkey](https://www.tampermonkey.net/)) is
 ## Streamlined Roundabout Geometry
 Say goodbye to unsightly Junction Boxes misaligned with roundabouts. With Junction Box Utils, recreating the precise roundabout shape and seamlessly applying it to the Junction Box is effortless.
 ![](https://i.ibb.co/02tzYk4/image.png)
-**Usage:**Simply create a new junction box over a roundabout (JuBra) and select "Roundaboutize" from the properties panel.
+**Usage:** Simply create a new junction box over a roundabout (JuBra) and select "Roundaboutize" from the properties panel.
  
 ## Effortless Backup and Restore
 No more manually recreating junction boxes and risking data loss. Junction Box Utils simplifies the process with its intuitive backup and restore feature. Select the junction box to delete, hit "Backup properties", proceed with deletion, then effortlessly restore all settings — including name, address, turn restrictions, guidance, and lanes — when recreating the junction box. Plus, Backup/Restore isn't limited to roundabouts — it's a versatile tool for any junction box.
 **Usage:** Select a junction box to backup its properties via a designated button in the edit panel. Recreate the junction box and use the appropriate button to restore its properties.
 **Limitations**
-
-1. Only available if the topology (the segments constructing the junction box) hasn’t been changed. This means you can do whatever you want, except including/excluding segments. Changing the ID (merging/splitting) of those segments will affect the topology as well.
+- Only available if the topology (the segments constructing the junction box) hasn’t been changed. This means you can do whatever you want, except including/excluding segments. Changing the ID (merging/splitting) of those segments will affect the topology as well.
 
 
 
