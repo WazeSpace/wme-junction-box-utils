@@ -12,6 +12,7 @@ import {
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { getAllTurnsOfBigJunctionFromSegment } from '../big-junction-turns';
 import { getSegmentByVertex } from '@/utils/location';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
 interface RoundaboutExitPath {
   fromVertex: Vertex;
@@ -43,7 +44,7 @@ export function getRoundaboutExitsFrom(
   // get all inner segments of a roundabout
   const roundaboutSegIDs = roundabout.getSegmentsIds();
   const roundaboutSegments: SegmentDataModel[] =
-    roundabout.model.segments.getByIds(roundaboutSegIDs);
+    getWazeMapEditorWindow().W.model.segments.getByIds(roundaboutSegIDs);
 
   const paths: RoundaboutExitPath[] = [];
   for (const roundaboutSegment of roundaboutSegments) {
@@ -53,7 +54,7 @@ export function getRoundaboutExitsFrom(
 
     const nodeSegIDs = node.getSegmentIds();
     const nodeSegments: SegmentDataModel[] =
-      node.model.segments.getByIds(nodeSegIDs);
+      getWazeMapEditorWindow().W.model.segments.getByIds(nodeSegIDs);
 
     for (const segment of nodeSegments) {
       // if the segment is inside the roundabout, then skip to the next one

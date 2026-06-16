@@ -13,6 +13,7 @@ import {
   RoundaboutInstructionEngine,
 } from '@/instruction-application-engine';
 import { useMemo } from 'react';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
 function getNodeLabelByDirection(direction: 'forward' | 'reverse'): string {
   switch (direction) {
@@ -44,9 +45,10 @@ export function ExitInstructionsApplication(
   );
   const immediateTurnTooltip = useImmediateTurnTooltip();
   const instructionEngine = useMemo(() => {
+    const model = getWazeMapEditorWindow().W.model;
     if (isInRoundabout) {
       return new RoundaboutInstructionEngine(
-        props.segment.model,
+        model,
         props.segment,
         props.direction,
         [pullRoadshieldsMethod],
@@ -55,7 +57,7 @@ export function ExitInstructionsApplication(
 
     if (
       !isSegmentConnectsToBigJunction(
-        props.segment.model,
+        model,
         props.segment,
         props.direction === 'forward' ? 'fwd' : 'rev',
       )
@@ -63,7 +65,7 @@ export function ExitInstructionsApplication(
       return null;
 
     return new InstructionEngine(
-      props.segment.model,
+      model,
       props.segment,
       props.direction,
       [pullRoadshieldsMethod],

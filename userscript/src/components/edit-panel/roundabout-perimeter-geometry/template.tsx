@@ -5,6 +5,7 @@ import {
   EditPanelTemplateConstructor,
 } from '@/components/edit-panel/edit-panel-template';
 import { CloneRoundaboutGeometryToBigJunctionButton } from '@/components/edit-panel/roundabout-perimeter-geometry/CloneRoundaboutGeometryToBigJunctionButton';
+import { isBigJunctionOnRoundabout } from '@/utils/wme-entities/big-junction';
 import React from 'react';
 
 export const RoundaboutPerimeterPolygonTemplate: EditPanelTemplateConstructor<BigJunctionDataModel> = class
@@ -19,9 +20,7 @@ export const RoundaboutPerimeterPolygonTemplate: EditPanelTemplateConstructor<Bi
   static isEnabledForElements(bigJunctions: BigJunctionDataModel[]): boolean {
     return (
       bigJunctions.length === 1 &&
-      bigJunctions[0]
-        .getShortSegments()
-        .every((segment) => segment.isInRoundabout())
+      isBigJunctionOnRoundabout(bigJunctions[0])
     );
   }
 

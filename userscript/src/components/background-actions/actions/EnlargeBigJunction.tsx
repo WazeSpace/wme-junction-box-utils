@@ -45,7 +45,7 @@ export function EnlargeBigJunction() {
         deprecatedBigJunction,
       );
 
-      action.generateDescription(action.bigJunction.model);
+      action.generateDescription(getWazeMapEditorWindow().W.model);
       doAsyncMultipleActions(wmeSdk, async () => {
         // Delete old big junction
         getWazeMapEditorWindow().W.model.actionManager.add(

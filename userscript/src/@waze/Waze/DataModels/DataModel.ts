@@ -15,7 +15,6 @@ export interface DataModel<
 > {
   attributes: A;
   type: string;
-  model: any;
   state: null | 'INSERT' | 'DELETE' | 'UPDATE';
   permissionFlags: Record<PK, number>;
 

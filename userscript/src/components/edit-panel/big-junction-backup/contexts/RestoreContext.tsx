@@ -73,7 +73,7 @@ export function RestoreContextProvider(props: RestoreContextProps) {
 
   const restoreCurrentBackup = async () => {
     const segmentChangedIds = createChangedIds(
-      targetBigJunction.model.segments.getObjectArray() as SegmentDataModel[],
+      getWazeMapEditorWindow().W.model.segments.getObjectArray() as SegmentDataModel[],
       (segment) => segment.getAttribute('id'),
       (segment) => segment.getAttribute('origIDs'),
       (ids) => ids.join(','),

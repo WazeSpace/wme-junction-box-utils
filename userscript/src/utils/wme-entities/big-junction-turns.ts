@@ -7,6 +7,7 @@ import {
   isVertexConnectsToBigJunction,
 } from './big-junction';
 import { Vertex } from '@/@waze/Waze/Vertex';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
 export function getAllTurnsOfBigJunctionFromSegment(
   segment: SegmentDataModel,
@@ -19,7 +20,7 @@ export function getAllTurnsOfBigJunctionFromSegment(
   if (!bigJunction) return null;
 
   const segmentVertex = createVertexFromSegment(segment, direction);
-  return bigJunction.getTurnsFrom(segmentVertex);
+  return bigJunction.getTurnsFrom(getWazeMapEditorWindow().W.model, segmentVertex);
 }
 
 export function getBigJunctionTurns(bigJunction: BigJunctionDataModel) {
@@ -30,7 +31,7 @@ export function getBigJunctionTurns(bigJunction: BigJunctionDataModel) {
     const isFwdEntersBigJunction = toCrossroads.includes(bigJunctionId);
     const entranceDirection = isFwdEntersBigJunction ? 'forward' : 'reverse';
     const entranceVertex = createVertexFromSegment(segment, entranceDirection);
-    return bigJunction.getTurnsFrom(bigJunction.model, entranceVertex);
+    return bigJunction.getTurnsFrom(getWazeMapEditorWindow().W.model, entranceVertex);
   });
 }
 
@@ -39,7 +40,7 @@ export function hasBigJunctionTurn(
   fromVertex: Vertex,
   toVertex: Vertex,
 ): boolean {
-  const dataModel = bigJunction.model;
+  const dataModel = getWazeMapEditorWindow().W.model;
 
   if (!isVertexConnectsToBigJunction(dataModel, fromVertex, bigJunction))
     return false;

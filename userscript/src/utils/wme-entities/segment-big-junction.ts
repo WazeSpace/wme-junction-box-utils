@@ -4,6 +4,7 @@ import {
   SegmentDataModel,
   SegmentDataModelAttributes,
 } from '@/@waze/Waze/DataModels/SegmentDataModel';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
 function getBigJunctionFromSegment(
   segment: SegmentDataModel,
@@ -21,7 +22,7 @@ function getBigJunctionFromSegment(
   const bigJunctionId = bigJunctions[0];
   if (typeof bigJunctionId !== 'number') return null;
 
-  const bigJunctionRepo = segment.model.getRepository(
+  const bigJunctionRepo = getWazeMapEditorWindow().W.model.getRepository(
     WazeMapEditorEntityType.BigJunction,
   );
   return bigJunctionRepo.getObjectById(bigJunctionId);

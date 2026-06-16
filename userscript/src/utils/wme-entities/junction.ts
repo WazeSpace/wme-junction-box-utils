@@ -3,11 +3,12 @@ import { JunctionNodeDataModel } from '@/@waze/Waze/DataModels/JunctionNodeDataM
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { distinctArray } from '@/utils/array-utils';
 import { getAllJunctionNodesForSegment } from '@/utils/wme-entities/segment';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
 export function getAllJunctionSegments(
   junction: JunctionDataModel,
 ): SegmentDataModel[] {
-  const segmentRepository = junction.model.getRepository('segment');
+  const segmentRepository = getWazeMapEditorWindow().W.model.getRepository('segment');
   const allLoadedSegments: SegmentDataModel[] =
     segmentRepository.getObjectArray();
   return allLoadedSegments.filter(

@@ -47,7 +47,7 @@ export async function restoreBigJunctionBackup(
     }
 
     // 3. Update Turns
-    const dataModel = targetBigJunction.model;
+    const dataModel = getWazeMapEditorWindow().W.model;
     const turns = omitUnexistingBigJunctionTurns(
       targetBigJunction,
       reconcileTurnsWithPossibleExtension(

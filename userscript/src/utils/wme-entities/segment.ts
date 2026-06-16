@@ -2,6 +2,7 @@ import { WazeMapEditorEntityType } from '@/@waze/Waze/consts';
 import { JunctionNodeDataModel } from '@/@waze/Waze/DataModels/JunctionNodeDataModel';
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { isJunctionNodePartOfRoundabout } from '@/utils/wme-entities/junction-node';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
 export function getJunctionNodeFromSegmentDirection(
   segment: SegmentDataModel,
@@ -10,7 +11,7 @@ export function getJunctionNodeFromSegmentDirection(
   const nodeId = segment.getAttribute(
     direction === 'forward' ? 'toNodeID' : 'fromNodeID',
   );
-  const nodeRepository = segment.model.getRepository(
+  const nodeRepository = getWazeMapEditorWindow().W.model.getRepository(
     WazeMapEditorEntityType.Node,
   );
   return nodeRepository.getObjectById(nodeId);

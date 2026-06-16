@@ -4,16 +4,17 @@ import { Turn } from '@/@waze/Waze/Model/turn';
 import { uniqBy } from '../uniq-by';
 import { Vertex } from '@/@waze/Waze/Vertex';
 import { getSegmentByVertex } from '../location';
+import { getWazeMapEditorWindow } from '../get-wme-window';
 
 function getTurnSegmentsByBigJunction(
   bigJunction: BigJunctionDataModel,
   turnToSegmentIdMapper: (turn: Turn) => number,
 ): SegmentDataModel[] {
-  const turns = bigJunction.getShortestTurns(bigJunction.model);
+  const model = getWazeMapEditorWindow().W.model;
+  const turns = bigJunction.getShortestTurns(model);
   const uniqueTurns = uniqBy(turns, turnToSegmentIdMapper);
   const segmentIds = uniqueTurns.map(turnToSegmentIdMapper);
-  const segments: SegmentDataModel[] =
-    bigJunction.model.segments.getByIds(segmentIds);
+  const segments: SegmentDataModel[] = model.segments.getByIds(segmentIds);
   if (segments.length < segmentIds.length) {
     throw new Error("One or more turn segments don't exist");
   }
@@ -38,7 +39,7 @@ export function getExitSegmentsByBigJunction(
 }
 
 export function isBigJunctionOnRoundabout(bigJunction: BigJunctionDataModel) {
-  const segments = bigJunction.getShortSegments(bigJunction);
+  const segments = bigJunction.getShortSegments(getWazeMapEditorWindow().W.model);
   // check if we have segments, because it is possible to have a big junction with no segments at all
   if (!segments.length) return false;
 

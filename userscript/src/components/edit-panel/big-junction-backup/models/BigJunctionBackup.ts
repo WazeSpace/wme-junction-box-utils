@@ -4,6 +4,7 @@ import { uniqBy } from '@/utils';
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { getBigJunctionTurns } from '@/utils/wme-entities/big-junction-turns';
 import { convertWMEAddressToBigJunctionAddress } from '../utils';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
 export class BigJunctionBackup {
   private _name: string;
@@ -15,7 +16,7 @@ export class BigJunctionBackup {
     const backup = new BigJunctionBackup();
     backup._originalBigJunction = bigJunction;
     backup._name = bigJunction.getAttribute('name');
-    const rawAddress = bigJunction.getAddress(bigJunction.model);
+    const rawAddress = bigJunction.getAddress(getWazeMapEditorWindow().W.model);
     backup._address = convertWMEAddressToBigJunctionAddress(rawAddress);
     backup._turns = getBigJunctionTurns(bigJunction);
     return backup;

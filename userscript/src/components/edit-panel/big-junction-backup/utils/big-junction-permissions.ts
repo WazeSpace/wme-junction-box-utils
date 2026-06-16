@@ -31,6 +31,6 @@ export function isAllowedToEditBigJunctionTurnGuidance(
 ): boolean {
   const turns = getBigJunctionTurns(bigJunction);
   return turns.every((turn) =>
-    canUserEditTurnGuidanceForTurn(bigJunction.model, user, turn),
+    canUserEditTurnGuidanceForTurn(getWazeMapEditorWindow().W.model, user, turn),
   );
 }

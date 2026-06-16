@@ -7,6 +7,7 @@ import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { gtag } from '@/google-analytics';
 import { createChangedIds } from '@/utils';
 import { AUTOMATICALLY_RESTORED_SYMBOL } from '@/components/edit-panel/big-junction-backup/constants/meta-symbols';
+import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
 export function AutoRestoreBigJunction() {
   const [isEnabled] = usePreference('auto_backup');
@@ -27,7 +28,7 @@ export function AutoRestoreBigJunction() {
       if (!compareJunctionToBackup(action.bigJunction, backup)) return;
 
       const segmentChangedIds = createChangedIds(
-        action.bigJunction.model.segments.getObjectArray() as SegmentDataModel[],
+        getWazeMapEditorWindow().W.model.segments.getObjectArray() as SegmentDataModel[],
         (segment) => segment.getAttribute('id'),
         (segment) => segment.getAttribute('origIDs'),
         (ids) => ids.join(','),
