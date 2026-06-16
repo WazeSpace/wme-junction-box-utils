@@ -31,12 +31,10 @@ export async function restoreBigJunctionBackup(
 
   doAsyncMultipleActions(wmeSdk, async () => {
     // 1. Update Name
-    if (backup.getName()) {
-      (wmeSdk.DataModel.BigJunctions as any).updateBigJunction({
-        bigJunctionId,
-        name: backup.getName(),
-      });
-    }
+    (wmeSdk.DataModel.BigJunctions as any).updateBigJunction({
+      bigJunctionId,
+      name: backup.getName(),
+    });
 
     // 2. Update Address
     if (address.cityId) {
