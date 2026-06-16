@@ -2,6 +2,18 @@ import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { Vertex } from '@/@waze/Waze/Vertex';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
+export interface SimpleVertex {
+  segmentId: number;
+  direction: 'fwd' | 'rev';
+}
+
+export function parseVertexId(vertexId: string): SimpleVertex {
+  const segmentId = parseInt(vertexId.substring(0, vertexId.length - 1));
+  const direction =
+    vertexId[vertexId.length - 1] === 'f' ? 'fwd' : 'rev';
+  return { segmentId, direction };
+}
+
 function getVertexDirectionFromNormalDirection(
   direction: 'forward' | 'reverse',
 ) {
@@ -42,8 +54,7 @@ export function createReverseVertexFromSegment(segment: SegmentDataModel) {
 }
 
 export function createVertexById(vertexId: string): Vertex {
-  const segmentId = parseInt(vertexId.substring(0, vertexId.length - 1));
-  const direction =
-    vertexId[vertexId.length - 1] === 'f' ? 'forward' : 'reverse';
-  return createVertex(segmentId, direction);
+  const parsed = parseVertexId(vertexId);
+  const direction = parsed.direction === 'fwd' ? 'forward' : 'reverse';
+  return createVertex(parsed.segmentId, direction);
 }

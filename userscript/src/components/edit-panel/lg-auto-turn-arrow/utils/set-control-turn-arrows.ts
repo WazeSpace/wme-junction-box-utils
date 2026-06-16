@@ -4,9 +4,8 @@ import {
   LaneGuidanceControlTurnModel,
 } from '@/components/edit-panel/lg-auto-turn-arrow/models';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
-import { getSegmentByVertex } from '@/utils/location';
+import { parseVertexId } from '@/utils/wme-entities/segment-vertex';
 import { getSegmentHeadingByDirection } from '@/utils/wme-entities/segment';
-import { createVertexById } from '@/utils/wme-entities/segment-vertex';
 
 const arrowStyleStopPoints = [
   { styleAngle: 135, stopPoint: 67.5 },
@@ -19,13 +18,17 @@ const arrowStyleStopPoints = [
 ];
 
 function isUTurn(turnModel: LaneGuidanceControlTurnModel): boolean {
-  const fromVertex = createVertexById(turnModel.get('fromVertexID'));
-  const toVertex = createVertexById(turnModel.get('toVertexID'));
-  if (fromVertex.getOpposite().equals(toVertex)) return true;
+  const fromVertex = parseVertexId(turnModel.get('fromVertexID'));
+  const toVertex = parseVertexId(turnModel.get('toVertexID'));
+  const oppositeDirection = fromVertex.direction === 'fwd' ? 'rev' : 'fwd';
+
+  if (fromVertex.segmentId === toVertex.segmentId && oppositeDirection === toVertex.direction) {
+    return true;
+  }
 
   const dataModel = getWazeMapEditorWindow().W.model;
-  const fromSegment = getSegmentByVertex(dataModel, fromVertex);
-  const toSegment = getSegmentByVertex(dataModel, toVertex);
+  const fromSegment = dataModel.segments.getObjectById(fromVertex.segmentId);
+  const toSegment = dataModel.segments.getObjectById(toVertex.segmentId);
   const fromSegmentAddress = fromSegment.getAddress().format();
   const toSegmentAddress = toSegment.getAddress().format();
   const isAddressEquals = fromSegmentAddress === toSegmentAddress;
@@ -37,7 +40,7 @@ function isUTurn(turnModel: LaneGuidanceControlTurnModel): boolean {
       (isAddressEquals || fromSegmentRoadType === toSegmentRoadType) &&
       getSegmentHeadingByDirection(
         fromSegment,
-        fromVertex.getOpposite().direction,
+        oppositeDirection,
       ) === getSegmentHeadingByDirection(toSegment, toVertex.direction)
     ) {
       return true;
