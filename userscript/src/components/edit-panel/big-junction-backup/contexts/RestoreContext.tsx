@@ -1,11 +1,10 @@
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { ReactNode, createContext, useMemo, useState } from 'react';
 import { useBackupContext } from './BackupContext';
-import { compareJunctionToBackup } from '../utils';
+import { compareJunctionToBackup, restoreBigJunctionBackup } from '../utils';
 import { createChangedIds, createMandatoryUseContext } from '@/utils';
 import { useSelectedDataModelsContext } from '@/contexts/SelectedDataModelsContext';
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
-import { RestoreBigJunctionBackupAction } from '../actions';
 import { getBigJunctionTurns } from '@/utils/wme-entities/big-junction-turns';
 import { Turn } from '@/@waze/Waze/Model/turn';
 import { UNVERIFIED_TURN_METADATA_SYMBOL } from '../constants/meta-symbols';
@@ -37,22 +36,26 @@ export function RestoreContextProvider(props: RestoreContextProps) {
     backup &&
     backup.getTurns().length < getBigJunctionTurns(targetBigJunction).length;
 
-  const restoreCurrentBackup = () => {
+  const restoreCurrentBackup = async () => {
     const segmentChangedIds = createChangedIds(
       targetBigJunction.model.segments.getObjectArray() as SegmentDataModel[],
       (segment) => segment.getAttribute('id'),
       (segment) => segment.getAttribute('origIDs'),
       (ids) => ids.join(','),
     );
-    targetBigJunction.model.actionManager.add(
-      new RestoreBigJunctionBackupAction(
+
+    try {
+      await restoreBigJunctionBackup(
         targetBigJunction,
         backup,
         segmentChangedIds,
-      ),
-    );
-    setIsBackupRestored(true);
-    gtag('event', 'backup_restored', { event_category: 'big_junction_backup' });
+      );
+      gtag('event', 'backup_restored', {
+        event_category: 'big_junction_backup',
+      });
+    } catch (error) {
+      console.error('Failed to restore backup:', error);
+    }
   };
 
   return (

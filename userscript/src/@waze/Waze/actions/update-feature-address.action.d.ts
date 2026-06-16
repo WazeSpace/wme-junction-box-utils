@@ -22,7 +22,9 @@ export interface UpdateFeatureAddressOptions {
   updateStreet: boolean;
 }
 
-export class UpdateFeatureAddressAction<DM extends DataModel> extends Action {
+export abstract class UpdateFeatureAddressAction<
+  DM extends DataModel,
+> extends Action {
   actionName: 'UPDATE_FEATURE_ADDRESS';
   constructor(
     dataModel: DM,

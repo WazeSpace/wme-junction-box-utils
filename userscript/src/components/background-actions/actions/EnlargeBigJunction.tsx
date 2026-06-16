@@ -1,17 +1,18 @@
 import {
   Action,
   isAddBigJunctionAction,
-  MultiAction,
 } from '@/@waze/Waze/actions';
 import { BigJunctionDataModel } from '@/@waze/Waze/DataModels/BigJunctionDataModel';
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
 import { BigJunctionBackup } from '@/components/edit-panel/big-junction-backup';
-import { RestoreBigJunctionBackupAction } from '@/components/edit-panel/big-junction-backup/actions';
+import { restoreBigJunctionBackup } from '@/components/edit-panel/big-junction-backup/utils';
 import { ManualMethodInvocationInterceptor } from '@/method-interceptor';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { createDeleteBigJunctionAction } from '@/utils/wme-feature-destroyer';
 import { useEffect, useMemo } from 'react';
 import { useEventCallback } from 'usehooks-ts';
+import { wmeSdk } from '@/utils/wme-sdk';
+import { doAsyncMultipleActions } from '@/components/edit-panel/big-junction-backup/utils/do-async-multiple-functions';
 
 function getAllBigJunctions(): BigJunctionDataModel[] {
   return getWazeMapEditorWindow().W.model.bigJunctions.getObjectArray();
@@ -44,23 +45,23 @@ export function EnlargeBigJunction() {
         deprecatedBigJunction,
       );
 
-      const newBigJunctionRestoreAction = new RestoreBigJunctionBackupAction(
-        action.bigJunction,
-        bigJunctionSnapshot,
-        [],
-      );
+      action.generateDescription(action.bigJunction.model);
+      doAsyncMultipleActions(wmeSdk, async () => {
+        // Delete old big junction
+        getWazeMapEditorWindow().W.model.actionManager.add(
+          deleteBigJunctionAction,
+        );
 
-      const multiWrapper = new MultiAction([
-        deleteBigJunctionAction,
-        action,
-        newBigJunctionRestoreAction,
-      ]);
-      multiWrapper.generateDescription = (model) => {
-        action.generateDescription(model);
-        (multiWrapper as any)._description = (action as any)._description;
-      };
+        // Add the new big junction
+        getWazeMapEditorWindow().W.model.actionManager.add(action);
 
-      addAction(multiWrapper);
+        // Restore properties on the new big junction
+        await restoreBigJunctionBackup(
+          (action as any).bigJunction,
+          bigJunctionSnapshot,
+          [],
+        );
+      }, (action as any)._description);
     },
   );
 

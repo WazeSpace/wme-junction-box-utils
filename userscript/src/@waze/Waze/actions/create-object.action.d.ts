@@ -1,7 +1,7 @@
 import { Action } from '@/@waze/Waze/actions/action';
 import { DataModel } from '@/@waze/Waze/DataModels/DataModel';
 
-export class CreateObjectAction<
+export abstract class CreateObjectAction<
   DM extends DataModel = DataModel,
 > extends Action {
   actionName: 'CREATE_OBJECT';

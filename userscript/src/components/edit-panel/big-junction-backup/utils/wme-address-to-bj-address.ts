@@ -11,11 +11,13 @@ function createAddress(
   cityName: string,
   stateName: string,
   countryName: string,
+  cityId?: number | null,
 ): BigJunctionAddress {
   return {
     cityName,
     stateName,
     countryName,
+    cityId,
   };
 }
 
@@ -23,8 +25,10 @@ export function convertWMEAddressToBigJunctionAddress(
   address: AddressDataModel,
 ): BigJunctionAddress {
   if (!address || address.isEmpty()) return createEmptyAddress();
-  const city = address.getCity()?.getName?.();
+  const cityObj = address.getCity();
+  const city = cityObj?.getName?.();
+  const cityId = cityObj?.getCityID?.();
   const state = address.getState()?.getName?.();
   const country = address.getCountry()?.getName?.();
-  return createAddress(city, state, country);
+  return createAddress(city, state, country, cityId);
 }

@@ -7,3 +7,4 @@ export { omitUnexistingBigJunctionTurns } from './omit-unexisting-big-junction-t
 export { reconcileTurnsWithPossibleExtension } from './reconcile-extended-turns';
 export { reconcileTurnSegments } from './turn-segments-reconciler';
 export { convertWMEAddressToBigJunctionAddress } from './wme-address-to-bj-address';
+export { restoreBigJunctionBackup } from './restore-backup';

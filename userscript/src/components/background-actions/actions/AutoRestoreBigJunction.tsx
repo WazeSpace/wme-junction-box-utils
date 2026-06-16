@@ -2,9 +2,8 @@ import { usePreference } from '@/hooks';
 import { useNewActionHandler } from '../hooks';
 import { isAddBigJunctionAction } from '@/@waze/Waze/actions';
 import { BigJunctionBackupTemplate } from '@/components/edit-panel/big-junction-backup';
-import { compareJunctionToBackup } from '@/components/edit-panel/big-junction-backup/utils';
+import { compareJunctionToBackup, restoreBigJunctionBackup } from '@/components/edit-panel/big-junction-backup/utils';
 import { SegmentDataModel } from '@/@waze/Waze/DataModels/SegmentDataModel';
-import { RestoreBigJunctionBackupAction } from '@/components/edit-panel/big-junction-backup/actions';
 import { gtag } from '@/google-analytics';
 import { createChangedIds } from '@/utils';
 import { AUTOMATICALLY_RESTORED_SYMBOL } from '@/components/edit-panel/big-junction-backup/constants/meta-symbols';
@@ -33,22 +32,27 @@ export function AutoRestoreBigJunction() {
         (segment) => segment.getAttribute('origIDs'),
         (ids) => ids.join(','),
       );
-      action.bigJunction.model.actionManager.add(
-        new RestoreBigJunctionBackupAction(
-          action.bigJunction,
-          backup,
-          segmentChangedIds,
-        ),
-      );
-      Reflect.defineMetadata(
-        AUTOMATICALLY_RESTORED_SYMBOL,
-        true,
-        action.bigJunction,
-      );
-      gtag('event', 'backup_restored', {
-        event_category: 'big_junction_backup',
-        automatic: true,
-      });
+
+      (async () => {
+        try {
+          await restoreBigJunctionBackup(
+            action.bigJunction,
+            backup,
+            segmentChangedIds,
+          );
+          Reflect.defineMetadata(
+            AUTOMATICALLY_RESTORED_SYMBOL,
+            true,
+            action.bigJunction,
+          );
+          gtag('event', 'backup_restored', {
+            event_category: 'big_junction_backup',
+            automatic: true,
+          });
+        } catch (error) {
+          console.error('Failed to auto-restore big junction:', error);
+        }
+      })();
     },
     [isEnabled],
   );
