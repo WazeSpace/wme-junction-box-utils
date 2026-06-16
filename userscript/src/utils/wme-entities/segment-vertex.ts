@@ -16,7 +16,7 @@ export function parseVertexId(vertexId: string): SimpleVertex {
 
 function getVertexDirectionFromNormalDirection(
   direction: 'forward' | 'reverse',
-) {
+): 'fwd' | 'rev' {
   switch (direction) {
     case 'forward':
       return 'fwd';
@@ -41,15 +41,15 @@ export function createVertex(
 export function createVertexFromSegment(
   segment: SegmentDataModel,
   direction: 'forward' | 'reverse',
-) {
+): Vertex {
   return createVertex(segment.getAttribute('id'), direction);
 }
 
-export function createForwardVertexFromSegment(segment: SegmentDataModel) {
+export function createForwardVertexFromSegment(segment: SegmentDataModel): Vertex {
   return createVertexFromSegment(segment, 'forward');
 }
 
-export function createReverseVertexFromSegment(segment: SegmentDataModel) {
+export function createReverseVertexFromSegment(segment: SegmentDataModel): Vertex {
   return createVertexFromSegment(segment, 'reverse');
 }
 
