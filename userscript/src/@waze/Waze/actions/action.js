@@ -1,5 +1,5 @@
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 
 export const Action = getWazeMapEditorWindow().require(
-  'Waze/Action/UpdateObject',
-).__proto__;
+  'Waze/Action/MultiAction',
+).__proto__.__proto__;
