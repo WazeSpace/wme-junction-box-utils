@@ -57,7 +57,7 @@ export interface SegmentDataModelAttributes extends DataModelAttributes {
 }
 export interface SegmentDataModel
   extends DataModel<SegmentDataModelAttributes> {
-  getAddress(): AddressDataModel;
+  getAddress(dataModel: any): AddressDataModel;
   isLockedByHigherRank(): boolean;
   isWalkingRoadType(): boolean;
   isRoutable(): boolean;

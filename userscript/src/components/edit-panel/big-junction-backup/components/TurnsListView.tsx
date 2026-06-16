@@ -20,7 +20,7 @@ function getSegmentByVertex(segmentVertex: Vertex): SegmentDataModel {
 }
 
 function getStreetNameBySegment(segment: SegmentDataModel): string {
-  const address = segment.getAddress();
+  const address = segment.getAddress(getWazeMapEditorWindow().W.model);
   if (!address) return '';
   return address.getStreetName();
 }
