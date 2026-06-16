@@ -27,11 +27,37 @@ function getVertexDirectionFromNormalDirection(
   }
 }
 
+let VertexConstructor: any = null;
+
+function getVertexConstructor() {
+  if (VertexConstructor) return VertexConstructor;
+
+  function getConstructorFromTurnGraph() {
+    const window = getWazeMapEditorWindow();
+    const turnGraph = window.W?.model?.turnGraph;
+    if (!turnGraph) return null;
+
+    const turns = turnGraph.getAllTurns();
+    if (!turns) return null;
+
+    const turnWithVertex = turns.find((t: any) => t && (t.fromVertex || t.toVertex));
+    if (!turnWithVertex) return null;
+
+    const vertex = turnWithVertex.fromVertex || turnWithVertex.toVertex;
+    if (!vertex || !vertex.constructor) return null;
+
+    return vertex.constructor;
+  }
+
+  VertexConstructor = getConstructorFromTurnGraph() || window.require('Waze/Model/Graph/Vertex');
+  return VertexConstructor;
+}
+
 export function createVertex(
   segmentId: number,
   direction: 'forward' | 'reverse',
 ): Vertex {
-  const Vertex = getWazeMapEditorWindow().require('Waze/Model/Graph/Vertex');
+  const Vertex = getVertexConstructor();
   return new Vertex(
     segmentId,
     getVertexDirectionFromNormalDirection(direction),
