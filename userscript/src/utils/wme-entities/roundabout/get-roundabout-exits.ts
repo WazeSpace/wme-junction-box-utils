@@ -29,7 +29,7 @@ export function getRoundaboutExitsFrom(
     vertex.direction === 'fwd' ? 'forward' : 'reverse',
   );
 
-  if (node.isConnectedToBigJunction()) {
+  if (node.isConnectedToBigJunction(dataModel)) {
     return getAllTurnsOfBigJunctionFromSegment(
       getSegmentByVertex(dataModel, vertex),
       vertex.direction === 'fwd' ? 'forward' : 'reverse',

@@ -30,9 +30,9 @@ export interface JunctionNodeDataModel
     segmentB: SegmentDataModel,
   ): boolean;
   getSegmentIds(): number[];
-  isConnectedToBigJunction(): boolean;
+  isConnectedToBigJunction(dataModel: any): boolean;
   isConnectedToSegment(segment: SegmentDataModel): boolean;
   isDisconnected(): boolean;
   isPartial(): boolean;
-  isVirtual(): boolean;
+  isVirtual(dataModel: any): boolean;
 }
