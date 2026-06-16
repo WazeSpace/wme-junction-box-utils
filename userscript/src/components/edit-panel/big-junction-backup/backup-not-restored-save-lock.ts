@@ -7,7 +7,7 @@ import { BigJunctionBackupTemplate } from './template';
 let isSaveLockSet: boolean = false;
 
 function isBackupRestored(backup: BigJunctionBackup): boolean {
-  return Reflect.getMetadata(WAS_RESTORED_METADATA_SYMBOL, backup);
+  return !!Reflect.getMetadata(WAS_RESTORED_METADATA_SYMBOL, backup);
 }
 
 function isBackupBigJunctionDeleted(backup: BigJunctionBackup): boolean {
@@ -19,7 +19,7 @@ function isBackupBigJunctionDeleted(backup: BigJunctionBackup): boolean {
 
   return (
     originalBigJunction.state === 'DELETE' &&
-    activeDataModel.bigJunctions.getObjectById(originalBigJunctionId)
+    !!activeDataModel.bigJunctions.getObjectById(originalBigJunctionId)
   );
 }
 
