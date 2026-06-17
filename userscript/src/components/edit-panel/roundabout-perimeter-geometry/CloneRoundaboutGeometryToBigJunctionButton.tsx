@@ -57,6 +57,7 @@ export function CloneRoundaboutGeometryToBigJunctionButton({
         newBigJunctionAction.bigJunction,
         backup,
         [],
+        false,
       );
     }, description);
   };

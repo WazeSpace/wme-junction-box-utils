@@ -52,6 +52,7 @@ export function EnlargeBigJunction() {
           (action as any).bigJunction,
           bigJunctionSnapshot,
           [],
+          false,
         );
       }, (action as any)._description);
     },
