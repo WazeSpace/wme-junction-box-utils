@@ -8,10 +8,9 @@ import { BigJunctionBackup } from '@/components/edit-panel/big-junction-backup';
 import { restoreBigJunctionBackup } from '@/components/edit-panel/big-junction-backup/utils';
 import { ManualMethodInvocationInterceptor } from '@/method-interceptor';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
-import { createDeleteBigJunctionAction } from '@/utils/wme-feature-destroyer';
+import { wmeSdk } from '@/utils/wme-sdk';
 import { useEffect, useMemo } from 'react';
 import { useEventCallback } from 'usehooks-ts';
-import { wmeSdk } from '@/utils/wme-sdk';
 import { doAsyncMultipleActions } from '@/components/edit-panel/big-junction-backup/utils/do-async-multiple-functions';
 
 function getAllBigJunctions(): BigJunctionDataModel[] {
@@ -38,28 +37,22 @@ export function EnlargeBigJunction() {
       if (!deprecatedBigJunction || deprecatedBigJunction.state === 'DELETE')
         return addAction(action);
 
-      const deleteBigJunctionAction = createDeleteBigJunctionAction(
-        deprecatedBigJunction,
-      );
       const bigJunctionSnapshot = BigJunctionBackup.fromBigJunction(
         deprecatedBigJunction,
       );
 
       action.generateDescription(getWazeMapEditorWindow().W.model);
+
       doAsyncMultipleActions(wmeSdk, async () => {
-        // Delete old big junction
-        getWazeMapEditorWindow().W.model.actionManager.add(
-          deleteBigJunctionAction,
-        );
-
-        // Add the new big junction
-        getWazeMapEditorWindow().W.model.actionManager.add(action);
-
-        // Restore properties on the new big junction
+        (wmeSdk.DataModel.BigJunctions as any).deleteBigJunction({
+          bigJunctionId: deprecatedBigJunction.getAttribute('id'),
+        });
+        addAction(action);
         await restoreBigJunctionBackup(
           (action as any).bigJunction,
           bigJunctionSnapshot,
           [],
+          false,
         );
       }, (action as any)._description);
     },

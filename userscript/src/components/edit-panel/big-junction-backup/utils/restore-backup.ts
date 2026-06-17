@@ -20,6 +20,7 @@ export async function restoreBigJunctionBackup(
   targetBigJunction: BigJunctionDataModel,
   backup: BigJunctionBackup,
   segmentChangedIds: ChangedIdMapping[],
+  wrapInMultiAtion: boolean = true,
 ) {
   const bigJunctionId = targetBigJunction.getAttribute('id');
   const address = backup.getAddress();
@@ -29,7 +30,7 @@ export async function restoreBigJunctionBackup(
     'jb_utils.save.changes_log.actions.UpdateBigJunction',
   );
 
-  doAsyncMultipleActions(wmeSdk, async () => {
+  const performActions = async () => {
     // 1. Update Name
     (wmeSdk.DataModel.BigJunctions as any).updateBigJunction({
       bigJunctionId,
@@ -100,5 +101,11 @@ export async function restoreBigJunctionBackup(
         },
       });
     }
-  }, localizedDescription);
+  };
+
+  if (wrapInMultiAtion) {
+    await doAsyncMultipleActions(wmeSdk, performActions, localizedDescription);
+  } else {
+    await performActions();
+  }
 }
