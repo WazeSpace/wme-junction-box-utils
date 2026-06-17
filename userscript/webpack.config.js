@@ -62,7 +62,7 @@ module.exports = () => {
           require: [
             packageInfo.useWazeSpace &&
               'https://wazespace.github.io/userscripts-lib/index.js',
-            'https://cdn.jsdelivr.net/gh/WazeSpace/wme-sdk-plus@v1.4/wme-sdk-plus.js',
+            'https://github.com/TheEditorX/wme-sdk-plus/releases/download/v1.4.1/wme-sdk-plus.js',
           ].filter(Boolean),
         },
         metajs: true,
