@@ -34,6 +34,15 @@ export function CloneRoundaboutGeometryToBigJunctionButton({
   };
 
   const recreateBigJunction = () => {
+    const newBigJunctionAction = createAddBigJunctionAction(
+      bigJunction.getAttribute('geoJSONGeometry'),
+    );
+    newBigJunctionAction.__jbuSkipAutoRoundaboutize = true;
+
+    const updateBigJunctionGeomAction = getUpdateBigJunctionGeometryAction(newBigJunctionAction);
+    updateBigJunctionGeomAction.generateDescription();
+    const description = (updateBigJunctionGeomAction as any)._description;
+
     doAsyncMultipleActions(wmeSdk, async () => {
       const backup = BigJunctionBackup.fromBigJunction(bigJunction);
 
@@ -41,22 +50,15 @@ export function CloneRoundaboutGeometryToBigJunctionButton({
         bigJunctionId: bigJunction.getAttribute('id'),
       });
 
-      const newBigJunctionAction = createAddBigJunctionAction(
-        bigJunction.getAttribute('geoJSONGeometry'),
-      );
-      newBigJunctionAction.__jbuSkipAutoRoundaboutize = true;
-
-      const updateBigJunctionGeomAction = getUpdateBigJunctionGeometryAction(newBigJunctionAction);
-
       const actionManager = getWazeMapEditorWindow().W.model.actionManager;
       actionManager.add(newBigJunctionAction);
       actionManager.add(updateBigJunctionGeomAction);
       await restoreBigJunctionBackup(
         newBigJunctionAction.bigJunction,
         backup,
-        []
+        [],
       );
-    }, 'Roundaboutize big junction');
+    }, description);
   };
 
   const handleButtonClick = () => {
