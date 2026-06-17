@@ -60,6 +60,12 @@ export function CloneRoundaboutGeometryToBigJunctionButton({
         false,
       );
     }, description);
+    wmeSdk.Editing.setSelection({
+      selection: {
+        objectType: 'bigJunction',
+        ids: [newBigJunctionAction.bigJunction.getAttribute('id')],
+      },
+    });
   };
 
   const handleButtonClick = () => {
