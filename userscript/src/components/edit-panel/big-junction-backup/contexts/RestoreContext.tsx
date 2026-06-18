@@ -101,24 +101,12 @@ export function RestoreContextProvider(props: RestoreContextProps) {
         isBackupRestored,
         hasJunctionNewTurns,
         unverifiedTurns: getBigJunctionTurns(targetBigJunction).filter(
-          (turn) => {
-            if (!turn.isFarTurn()) return false;
-            if (
-              Reflect.getMetadata(
-                UNVERIFIED_TURN_METADATA_SYMBOL,
-                turn.getTurnData(),
-              ) === true
-            ) {
-              return true;
-            }
-            if (isBackupRestored && backup) {
-              const turnExistsInBackup = backup
-                .getTurns()
-                .some((t) => t.getID() === turn.getID());
-              return !turnExistsInBackup;
-            }
-            return false;
-          },
+          (turn) =>
+            turn.isFarTurn() &&
+            Reflect.getMetadata(
+              UNVERIFIED_TURN_METADATA_SYMBOL,
+              turn.getTurnData(),
+            ) === true,
         ),
         restore: restoreCurrentBackup,
       }}
