@@ -11,7 +11,7 @@ import { getRoundaboutExitsFrom } from '@/utils/wme-entities/roundabout/get-roun
 import { getBigJunctionFromSegmentAndDirection } from '@/utils/wme-entities/segment-big-junction';
 import { createAddBigJunctionAction } from '@/utils/wme-feature-creation';
 import { Polygon } from '@turf/helpers';
-import transformScale from '@turf/transform-scale';
+import buffer from '@turf/buffer';
 import { TurnInstructionMethod } from './methods/turn-instruction-method';
 import normalizationMethod from './methods/normalization-method';
 import deNormalizationMethod from './methods/denormalization-method';
@@ -80,10 +80,11 @@ export class RoundaboutInstructionEngine extends InstructionEngine {
   //#endregion
 
   private _getGeometryForBigJunction(): Polygon {
-    return transformScale(
+    return buffer(
       extractRoundaboutPerimeterPolygon(this._roundaboutJunction),
-      1.2,
-    );
+      2,
+      { units: 'meters' }
+    ).geometry as Polygon;
   }
 
   private _getAddBigJunctionAction(): AddBigJunctionAction {
