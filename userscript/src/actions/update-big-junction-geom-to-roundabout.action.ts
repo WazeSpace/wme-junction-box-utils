@@ -7,10 +7,10 @@ import { JunctionDataModel } from '@/@waze/Waze/DataModels/JunctionDataModel';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { extractRoundaboutPerimeterPolygon } from '@/utils/perimeter-geometry-extraction';
 import { Polygon } from '@turf/helpers';
-import transformScale from '@turf/transform-scale';
+import buffer from '@turf/buffer';
 
 export class UpdateBigJunctionGeometryToRoundaboutAction extends Action {
-  static DefaultSizeFactor = 1.2;
+  static DefaultBufferDistance = 2;
   shouldSerialize = false;
 
   private readonly _initialGeometry: Polygon;
@@ -20,7 +20,7 @@ export class UpdateBigJunctionGeometryToRoundaboutAction extends Action {
     public addBigJunctionAction: AddBigJunctionAction,
     public dataModel: any,
     public map: any,
-    private _sizeFactor = UpdateBigJunctionGeometryToRoundaboutAction.DefaultSizeFactor,
+    private _bufferDistance = UpdateBigJunctionGeometryToRoundaboutAction.DefaultBufferDistance,
     props?: unknown,
   ) {
     super(props);
@@ -90,10 +90,11 @@ export class UpdateBigJunctionGeometryToRoundaboutAction extends Action {
   }
 
   doAction(dataModel: any): boolean {
-    this._geometry = transformScale(
+    this._geometry = buffer(
       this._getRoundaboutPerimeterGeometry(dataModel),
-      this._sizeFactor,
-    );
+      this._bufferDistance,
+      { units: 'meters' }
+    ).geometry as Polygon;
     this._updateBigJunctionGeometry(this._geometry);
     return true;
   }
