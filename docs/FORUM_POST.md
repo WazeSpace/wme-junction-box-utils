@@ -1,33 +1,34 @@
 # Introducing Junction Box Utils!
 ---
+
 Attention all Waze Map Editors!
 I am thrilled to announce the arrival of Junction Box Utils, a powerful new script designed to enhance your experience with Junction Boxes in the Waze Map Editor.
 Whether you're familiar with its predecessor, "Roundabout JB", or encountering it for the first time, Junction Box Utils offers a host of features to optimize your editing workflow.
 
 ## Installation
 A script manager (for example, [Tampermonkey](https://www.tampermonkey.net/)) is required to install this script. After installing the script manager of your choice, use this [link](https://davidsl4.github.io/WMEScripts/wme-junction-box-utils.user.js) to add the script to it.
+
 ---
 ## Streamlined Roundabout Geometry
 Say goodbye to unsightly Junction Boxes misaligned with roundabouts. With Junction Box Utils, recreating the precise roundabout shape and seamlessly applying it to the Junction Box is effortless.
 ![](https://i.ibb.co/02tzYk4/image.png)
 **Usage:** Simply create a new junction box over a roundabout (JuBra) and select "Roundaboutize" from the properties panel.
- 
+ 
 ## Effortless Backup and Restore
 No more manually recreating junction boxes and risking data loss. Junction Box Utils simplifies the process with its intuitive backup and restore feature. Select the junction box to delete, hit "Backup properties", proceed with deletion, then effortlessly restore all settings — including name, address, turn restrictions, guidance, and lanes — when recreating the junction box. Plus, Backup/Restore isn't limited to roundabouts — it's a versatile tool for any junction box.
-**Usage:** Select a junction box to backup its properties via a designated button in the edit panel. Recreate the junction box and use the appropriate button to restore its properties.
+**Usage:** Select a junction box to backup its properties via a designated button in the edit panel. Recreate the junction box and use the appropriate button to restore its properties.
 **Limitations**
-- Only available if the topology (the segments constructing the junction box) hasn’t been changed. This means you can do whatever you want, except including/excluding segments. Changing the ID (merging/splitting) of those segments will affect the topology as well.
-
-
+- Only available if the topology (the segments constructing the junction box) hasn’t been changed. This means you can do whatever you want, except including/excluding segments. Changing the ID (merging/splitting) of those segments will affect the topology as well.
 
 ## Simplified Roundabout Normalization
 Tired of manually adjusting voice prompts for every entry segment? Junction Box Utils streamlines the process into a few-click solution, making normalization or denormalization of roundabouts a breeze.
+
 **Usage:** Create a Junction Box over Roundabout (JuBRA), select an entry segment, and use the appropriate button from the edit panel to apply the desired action (Normalize/Denormalize). All exits for the selected entry segment will be affected.
 <small>Normalize - Apply turn right/left, continue straight, and make U-turn instructions to a roundabout.
 Denormalize - Apply “count exits” instructions on a roundabout.</small>
 
 ---
- 
+ 
 # Contribute to Junction Box Utils!
 Junction Box Utils is a collaborative effort, and contributions from the Waze Map Editor (WME) community are welcomed.
 Here's how you can get involved:
