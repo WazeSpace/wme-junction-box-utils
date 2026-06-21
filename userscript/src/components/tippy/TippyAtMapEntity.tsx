@@ -13,7 +13,6 @@ interface TippyAtMapEntityProps
   extends Omit<ComponentProps<typeof TippyAtPoint>, 'point'> {
   entity: DataModel<DataModelAttributes & { geoJSONGeometry: Geometry }>;
   centerType?: 'normal' | 'mass';
-  map?: any;
 }
 
 export function TippyAtMapEntity(props: TippyAtMapEntityProps) {

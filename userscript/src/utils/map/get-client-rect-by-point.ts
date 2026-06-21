@@ -1,11 +1,17 @@
 import { Point } from '@turf/helpers';
-import { getWazeMapEditorWindow } from '../get-wme-window';
+import { WmeSDK } from 'wme-sdk-typings';
+import { wmeSdk } from '../wme-sdk';
 
 export function getClientRectByPoint(
   coords: Point,
-  map = getWazeMapEditorWindow().W.map,
+  sdk: WmeSDK = wmeSdk,
 ): DOMRect {
   const [lon, lat] = coords.coordinates;
-  const pixel = map.getPixelFromLonLat({ lon, lat });
+  const pixel = sdk.Map.getPixelFromLonLat({
+    lonLat: {
+      lat,
+      lon,
+    },
+  });
   return new DOMRect(pixel.x, pixel.y, 1, 1);
 }
