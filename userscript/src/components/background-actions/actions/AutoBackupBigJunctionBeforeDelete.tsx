@@ -70,7 +70,6 @@ export function AutoBackupBigJunctionBeforeDelete() {
             Logger.info('User rejected, adding action w/o backup');
             gtag('event', 'reject_backup_override', {
               event_category: 'big_junction_backup',
-              user_confirmed: true,
             });
           })
           .finally(() => {
