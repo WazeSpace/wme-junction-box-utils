@@ -46,9 +46,9 @@ export function AutoRestoreBigJunction() {
             true,
             action.bigJunction,
           );
-          gtag('event', 'backup_restored', {
+          gtag('event', 'restore_backup', {
             event_category: 'big_junction_backup',
-            automatic: true,
+            method: 'auto',
           });
         } catch (error) {
           console.error('Failed to auto-restore big junction:', error);

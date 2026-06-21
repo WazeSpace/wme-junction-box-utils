@@ -75,7 +75,7 @@ export function CloneRoundaboutGeometryToBigJunctionButton({
     } else {
       recreateBigJunction();
     }
-    gtag('event', 'roundaboutize_big_junction');
+    gtag('event', 'apply_roundabout_geometry', { event_category: 'big_junction_geometry', method: 'manual' });
   };
 
   const buttonContent = (

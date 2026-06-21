@@ -69,7 +69,7 @@ export function RestoreBackupButton() {
   }
 
   const handleButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    gtag('event', 'restore_clicked', { event_category: 'big_junction_backup' });
+    gtag('event', 'click_restore_backup', { event_category: 'big_junction_backup' });
     e.currentTarget.blur();
     restoreContext.restore();
   };

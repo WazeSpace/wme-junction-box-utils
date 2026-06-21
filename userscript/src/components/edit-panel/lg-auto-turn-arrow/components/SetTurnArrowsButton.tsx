@@ -1,3 +1,4 @@
+import { gtag } from '@/google-analytics';
 import { usePreference, useTranslate } from '@/hooks';
 import { Logger } from '@/logger';
 import { WzButton } from '@wazespace/wme-react-components';
@@ -28,7 +29,10 @@ export function SetTurnArrowsButton({
           associatedButton: button,
         });
         onTurnArrowsSetAutomatically?.(event);
-        if (!event.defaultPrevented) setControlTurnArrows(laneGuidanceControl);
+        if (!event.defaultPrevented) {
+          setControlTurnArrows(laneGuidanceControl);
+          gtag('event', 'set_turn_arrows', { event_category: 'lane_guidance', method: 'auto' });
+        }
       }
     },
     [autoSetTurnArrows, laneGuidanceControl, onTurnArrowsSetAutomatically],
@@ -37,6 +41,7 @@ export function SetTurnArrowsButton({
 
   const setTurnArrows = (e: SyntheticEvent) => {
     setControlTurnArrows(laneGuidanceControl);
+    gtag('event', 'set_turn_arrows', { event_category: 'lane_guidance', method: 'manual' });
     if (e.currentTarget instanceof HTMLElement) e.currentTarget.blur();
   };
 

@@ -1,3 +1,4 @@
+import { gtag } from '@/google-analytics';
 import { useTranslate, usePreference } from '@/hooks';
 import { WzCheckbox } from '@wazespace/wme-react-components';
 
@@ -10,7 +11,15 @@ export function AutoBackupToggle() {
     <div className="form-group">
       <WzCheckbox
         checked={isEnabled}
-        onChange={(e) => setPreference((e.target as HTMLInputElement).checked)}
+        onChange={(e) => {
+          const newValue = (e.target as HTMLInputElement).checked;
+          setPreference(newValue);
+          gtag('event', 'change_preference', {
+            event_category: 'preferences',
+            preference_id: 'auto_backup',
+            new_value: newValue
+          });
+        }}
       >
         {t('jb_utils.user.prefs.auto_backup_on_delete')}
       </WzCheckbox>

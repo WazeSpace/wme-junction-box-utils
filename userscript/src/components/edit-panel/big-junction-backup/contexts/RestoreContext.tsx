@@ -85,8 +85,9 @@ export function RestoreContextProvider(props: RestoreContextProps) {
         backup,
         segmentChangedIds,
       );
-      gtag('event', 'backup_restored', {
+      gtag('event', 'restore_backup', {
         event_category: 'big_junction_backup',
+        method: 'manual',
       });
     } catch (error) {
       console.error('Failed to restore backup:', error);
