@@ -1,3 +1,4 @@
+import { gtag } from '@/google-analytics';
 import { Preferences } from '@/preferences';
 import styled from '@emotion/styled';
 import {
@@ -33,7 +34,13 @@ export function AppliedInstructionBadgeTypePreference() {
       return;
     }
 
-    setSelectedBadgeType(event.detail.value as typeof selectedBadgeType);
+    const newValue = event.detail.value as typeof selectedBadgeType;
+    setSelectedBadgeType(newValue);
+    gtag('event', 'change_preference', {
+      event_category: 'preferences',
+      preference_id: 'roundabout.instruction_normalization.applied_instruction_badge_type',
+      new_value: newValue
+    });
   };
 
   return (

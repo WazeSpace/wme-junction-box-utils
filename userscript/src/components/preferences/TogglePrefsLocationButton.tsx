@@ -23,10 +23,10 @@ export function TogglePrefsLocationButton() {
 
   const togglePrefsLocation = () => {
     setPrefsLocation(moveToLocation);
-    gtag('event', 'move_prefs_tab', {
-      event_category: 'general',
-      from: prefsLocation,
-      to: moveToLocation,
+    gtag('event', 'change_preference', {
+      event_category: 'preferences',
+      preference_id: 'prefs_location',
+      new_value: moveToLocation,
     });
   };
 

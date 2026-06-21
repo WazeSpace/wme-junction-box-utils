@@ -20,12 +20,12 @@ export function EnrollBackupButton() {
   const backupBigJunction = () => {
     const backup = BigJunctionBackup.fromBigJunction(bigJunction);
     setBackup(backup);
-    gtag('event', 'backup_set', { event_category: 'big_junction_backup' });
+    gtag('event', 'create_backup', { event_category: 'big_junction_backup' , method: 'manual'});
   };
 
   const handleButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.currentTarget.blur();
-    gtag('event', 'backup_clicked', { event_category: 'big_junction_backup' });
+    gtag('event', 'click_create_backup', { event_category: 'big_junction_backup' });
     if (!canStoreMoreBackups()) {
       setShowOverrideConfirmation(true);
       return;

@@ -45,7 +45,7 @@ export function AutoBackupBigJunctionBeforeDelete() {
 
       if (BigJunctionBackupTemplate.canStoreMoreBackups()) {
         Logger.info('Has free snapshot slot, backing up...');
-        gtag('event', 'auto_backup', { event_category: 'big_junction_backup' });
+        gtag('event', 'create_backup', { event_category: 'big_junction_backup', method: 'auto' });
         backupBigJunction(action.bigJunction);
         addAction(action);
       } else if (snapshotSignatureMatch) {
@@ -53,6 +53,7 @@ export function AutoBackupBigJunctionBeforeDelete() {
         addAction(action);
       } else {
         Logger.info('Asking the user to override the oldest snapshot');
+        gtag('event', 'show_backup_override_prompt', { event_category: 'big_junction_backup' });
         new Promise<void>((resolve, reject) => {
           setConfirmBalloonCallback({
             attributes: { bigJunction: action.bigJunction },
@@ -63,16 +64,12 @@ export function AutoBackupBigJunctionBeforeDelete() {
           .then(() => {
             Logger.info('User confirmed, overriding');
             backupBigJunction(action.bigJunction);
-            gtag('event', 'auto_backup', {
-              event_category: 'big_junction_backup',
-              user_confirmed: true,
-            });
+            gtag('event', 'create_backup', { event_category: 'big_junction_backup', method: 'auto', user_confirmed: true });
           })
           .catch(() => {
             Logger.info('User rejected, adding action w/o backup');
-            gtag('event', 'auto_backup_rejected', {
+            gtag('event', 'reject_backup_override', {
               event_category: 'big_junction_backup',
-              user_confirmed: true,
             });
           })
           .finally(() => {

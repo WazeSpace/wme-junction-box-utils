@@ -14,7 +14,7 @@ import { gtag } from '@/google-analytics';
 function roundaboutizeBigJunctionByAction(action: AddBigJunctionAction) {
   const dataModel = getWazeMapEditorWindow().W.model;
   const map = getWazeMapEditorWindow().W.map;
-  gtag('event', 'roundaboutize_big_junction', { background_action: true });
+  gtag('event', 'apply_roundabout_geometry', { event_category: 'big_junction_geometry', method: 'auto' });
   dataModel.actionManager.add(
     new UpdateBigJunctionGeometryToRoundaboutAction(action, dataModel, map),
   );

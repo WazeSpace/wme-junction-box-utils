@@ -20,7 +20,8 @@ export function ApplyInstructionsButton({
 
   const handleClick = () => {
     engine.applyInstructionMethod(method);
-    gtag('event', 'apply_instructions', {
+    gtag('event', 'apply_instruction', {
+      event_category: 'instructions',
       method: method.type,
       ...gtagProps,
     });

@@ -1,3 +1,4 @@
+import { gtag } from '@/google-analytics';
 import { useTranslate, usePreference } from '@/hooks';
 import { WzCheckbox, WzTooltip } from '@wazespace/wme-react-components';
 import React from 'react';
@@ -15,7 +16,15 @@ export function CloneGeometryToggle() {
       <WzCheckbox
         checked={isEnabled && isDetermined}
         indeterminate={!isDetermined}
-        onChange={(e) => setPreference((e.target as HTMLInputElement).checked)}
+        onChange={(e) => {
+          const newValue = (e.target as HTMLInputElement).checked;
+          setPreference(newValue);
+          gtag('event', 'change_preference', {
+            event_category: 'preferences',
+            preference_id: 'roundabout.clone_geometry',
+            new_value: newValue
+          });
+        }}
         style={{
           display: 'inline-block',
           marginInlineEnd: '4px',
