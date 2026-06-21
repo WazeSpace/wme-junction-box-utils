@@ -1,0 +1,170 @@
+THE WAZE COMMUNITY SOURCE LICENSE
+
+A NOTE ON COLLABORATION & LICENSING
+I poured a massive amount of time, research, and unique logic into this 
+software to help the Waze editing community. I actively welcome and encourage 
+contributions, feature requests, and community support! 
+
+- Want to add a feature? Please submit a Pull Request! I'd love to merge your 
+  great ideas into the main script so everyone benefits.
+- Want to build an extension? Go for it, but please consider contributing your 
+  hooks upstream.
+- Want to clone this, change the UI colors, and release it as your own? 
+  Please don't. 
+
+By using, modifying, or distributing this software, you agree to the following 
+terms.
+
+1. DEFINITIONS
+"Original Software" refers to the source code, logic, design, and file 
+structures authored by the Original Author, regardless of the platform or 
+channel from which it was acquired, in whole or in part, including specific 
+algorithms and logic routines.
+
+"Original Author" refers to David Slutsky (known as r0den within the Waze
+community).
+
+"Modification" refers to any alteration, addition, deletion, or partial 
+extraction applied to the Original Software.
+
+"Significant Change" refers to the addition of substantial, novel, 
+human-authored logic, features, or bug fixes that directly impact the core 
+Waze Map Editor functionality. Cosmetic alterations (e.g., UI color changes, 
+renaming variables, code refactoring), bundling the Original Software with 
+third-party code, or adding supplementary non-functional features (e.g., 
+telemetry, logging, visual themes) do not constitute a Significant Change.
+
+"Extension" refers to a separate script or program that relies on, but does 
+not duplicate the core logic of, the Original Software, provided that it does 
+not obscure, suppress, or maliciously intercept the user interface, core 
+functionality, or attribution elements of the Original Software.
+
+2. PERMISSIONS GRANTED
+You are granted the non-exclusive, free-of-charge right to:
+2.1. Use: Download, install, and execute the Original Software for the 
+     explicit purpose of editing and improving the Waze map.
+2.2. Modify: Alter the code for your own private, non-distributed use.
+2.3. Fork: Create and maintain a public or private fork of the repository 
+     utilizing standard platform features (e.g., GitHub's Fork button) in 
+     compliance with the host platform's Terms of Service.
+
+3. RESTRICTIONS ON USE & MONETIZATION
+The following restrictions apply universally to all users of the Original 
+Software, Modifications, and Extensions, regardless of whether the software is 
+publicly distributed or kept private:
+3.1. Scope of Use: You may freely use the software for the explicit purpose of 
+     editing and improving the Waze map. Indirect commercial benefits derived 
+     from utilizing the improved map data are permitted. You may not use the 
+     Original Software or its underlying logic for any purpose outside of this 
+     specific scope (e.g., building standalone commercial routing tools, data 
+     scraping).
+3.2. Strict Non-Commercialization: You may not extract, distribute, monetize, 
+     or leverage the software's codebase, Modifications, or Extensions for any 
+     direct or indirect commercial advantage. This strictly prohibits 
+     monetizing the software through any means whatsoever, including but not 
+     limited to: selling licenses, paywalls, subscriptions, advertising, 
+     sponsored links, or data selling. 
+3.3. No Solicitation: You may not solicit voluntary donations, tips, or 
+     sponsorships (e.g., Patreon, "Buy Me a Coffee") within the software's 
+     user interface, source code comments, primary distribution pages, or on 
+     any secondary pages, documentation sites, support channels, or 
+     promotional materials connected to the software, Modification, or 
+     Extension. General, project-agnostic donation links located on a 
+     developer's global user profile (e.g., a standard GitHub Sponsors button) 
+     are permitted, provided those links are not actively solicited, directed 
+     to, or explicitly connected to the distribution or support of this 
+     software. The software itself must remain completely financially untethered.
+
+4. RESTRICTIONS ON DISTRIBUTION
+Unmodified Redistribution: You may not re-upload, host, or distribute exact, 
+unmodified copies of the Original Software on any external public platform, 
+directory, or repository (e.g., GreasyFork). Platform-native forks (e.g., on 
+GitHub) are permitted under Clause 2.3, but may not be actively distributed or 
+promoted as standalone releases.
+
+Modified & Extension Distribution: You may not distribute, publish, or share 
+Modified versions or Extensions of the Original Software unless ALL of the 
+following conditions are met:
+4.1. Significant Changes Required: Your Modification must contain Significant 
+     Changes. You may not distribute slightly modified clones, partial 
+     extractions, or cosmetic tweaks of the Original Software. Furthermore, 
+     the inclusion of a Significant Change does not legitimize or grant 
+     permission to bundle the Original Software with plagiarized or 
+     unauthorized third-party code. 
+4.2. AI and Automated Derivatives: Utilizing Artificial Intelligence, Large 
+     Language Models (LLMs), or other automated tools to refactor, translate, 
+     or modify the Original Software does not break the chain of copyright or 
+     grant original authorship over the resulting code. Under the terms of 
+     this license, any output generated by processing the Original Software 
+     through such tools shall be treated as a Modification and remains fully 
+     bound by all restrictions herein.
+
+5. ATTRIBUTION & ENDORSEMENT REQUIREMENTS
+If you distribute a permitted Modification or Extension, you must comply with 
+the following: 
+5.1. Publication Channels: If the software is published on a public forum, 
+     platform, or directory (e.g., Waze Discuss, GreasyFork, GitHub), the 
+     publication description must explicitly name the Original Author (r0den
+     for Waze-related platforms, or David Slutsky elsewhere) and include a
+     direct hyperlink to the Original Software's repository.
+5.2. In-Script Attribution: The script's user interface or metadata block must 
+     retain a visible credit acknowledging the Original Author of the core 
+     logic. 
+5.3. Modification Notice & No Endorsement: You must prominently state within 
+     the software and its distribution page that the software has been 
+     modified from the original. You may not imply or state that the Original 
+     Author endorses, maintains, or is in any way responsible for your 
+     modified version or any map damages it may cause.
+
+6. UPSTREAM CONTRIBUTIONS & COPYRIGHT ASSIGNMENT
+The Original Author welcomes community contributions. By initiating a Pull 
+Request, pushing code to any branch on the Original Software's upstream 
+repository, or otherwise submitting code for inclusion in the Original 
+Software, you warrant that you are the original author of the submitted code 
+or possess the necessary legal rights to contribute it. 
+
+Furthermore, you grant the Original Author an explicit, non-revocable, 
+worldwide, royalty-free, and non-exclusive license (with the right to sub-
+license) to use, modify, distribute, and re-license your contributed code 
+without limitation. You explicitly waive all "Moral Rights" to your 
+contributed code, acknowledging the Original Author's absolute right to edit, 
+alter, rewrite, copy, and distribute your contribution as deemed necessary. 
+You retain the economic copyright to your original lines of code, but you 
+cannot revoke the Original Author's right to utilize them.
+
+7. RESERVATION OF ORIGINAL AUTHOR RIGHTS
+This license dictates the terms under which third parties may use the Original 
+Software. As the sole copyright holder, the Original Author is not bound or 
+restricted by any terms of this license. The Original Author explicitly 
+reserves all exclusive rights to the software, including but not limited to 
+the right to:
+7.1. Monetize, commercialize, or distribute the Original Software under 
+     different models.
+7.2. Grant alternate, custom, or commercial licenses to any individual or 
+     entity under any terms deemed appropriate.
+7.3. Sell, transfer, or assign the copyright of the Original Software.
+7.4. Alter, amend, or update the terms of this license for any future 
+     versions, updates, or releases of the Original Software without prior 
+     notice. (Copies already obtained under this specific license version 
+     remain governed by these terms).
+
+8. NO WARRANTY & LIMITATION OF LIABILITY
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, ACCOUNT BANS, 
+MAP CORRUPTION, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE 
+OR OTHER DEALINGS IN THE SOFTWARE. 
+
+This software is a community-driven project and is not officially affiliated 
+with, endorsed by, or supported by Waze Mobile Ltd., Google LLC, or any of 
+their affiliates.
+
+9. GOVERNING LAW AND JURISDICTION
+This license and any disputes arising from the use, modification, or 
+distribution of the Original Software shall be governed by and construed in 
+accordance with the laws of the State of Israel, without regard to conflict of 
+law principles. Any legal action or proceeding related to this license shall 
+be brought exclusively in the competent courts of Jerusalem, Israel, and all 
+parties consent to the personal jurisdiction thereof.
