@@ -6,3 +6,4 @@ export * from './useInjectTranslations';
 export * from './useMutationObserver';
 export { useVersionDependantConfig } from './useVersionDependantConfig';
 export { useOnRemove } from './useOnRemove';
+export * from './useHighlightLayerController';

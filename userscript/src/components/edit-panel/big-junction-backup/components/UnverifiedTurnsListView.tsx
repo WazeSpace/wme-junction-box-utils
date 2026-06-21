@@ -3,7 +3,7 @@ import { TurnsListView } from './TurnsListView';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { useMemo } from 'react';
 import { TurnsRenderer } from '@/classes';
-import { useTranslate } from '@/hooks';
+import { useTranslate, useHighlightLayerController } from '@/hooks';
 
 export function UnverifiedTurnsListView() {
   const t = useTranslate(
@@ -17,6 +17,8 @@ export function UnverifiedTurnsListView() {
     return new TurnsRenderer(dataModel, map, turnsHighlightLayer);
   }, [dataModel, map, turnsHighlightLayer]);
 
+  const { elevate, restore } = useHighlightLayerController(turnsHighlightLayer);
+
   if (!unverifiedTurns.length) return null;
 
   return (
@@ -26,6 +28,8 @@ export function UnverifiedTurnsListView() {
       turns={unverifiedTurns}
       showFromStreet
       turnsHighlightRenderer={turnsHighlightRenderer}
+      onHighlightActive={elevate}
+      onHighlightInactive={restore}
     />
   );
 }

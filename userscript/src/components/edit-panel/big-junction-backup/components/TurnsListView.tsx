@@ -36,6 +36,8 @@ interface TurnsListViewProps {
   turns: Turn[];
   showFromStreet?: boolean;
   turnsHighlightRenderer: TurnsRenderer;
+  onHighlightActive?: () => void;
+  onHighlightInactive?: () => void;
 }
 export function TurnsListView({
   title,
@@ -43,12 +45,16 @@ export function TurnsListView({
   turns,
   showFromStreet = false,
   turnsHighlightRenderer,
+  onHighlightActive,
+  onHighlightInactive,
 }: TurnsListViewProps) {
   const onEntryMouseOver = (turn: Turn) => {
+    onHighlightActive?.();
     turnsHighlightRenderer.highlightTurn(turn);
   };
   const onEntryMouseOut = () => {
     turnsHighlightRenderer.clearHighlightedTurns();
+    onHighlightInactive?.();
   };
 
   return (
