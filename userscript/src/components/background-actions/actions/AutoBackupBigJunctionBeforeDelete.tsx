@@ -53,6 +53,7 @@ export function AutoBackupBigJunctionBeforeDelete() {
         addAction(action);
       } else {
         Logger.info('Asking the user to override the oldest snapshot');
+        gtag('event', 'show_backup_override_prompt', { event_category: 'big_junction_backup' });
         new Promise<void>((resolve, reject) => {
           setConfirmBalloonCallback({
             attributes: { bigJunction: action.bigJunction },
