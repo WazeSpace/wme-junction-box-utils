@@ -1,6 +1,6 @@
 import { TurnInstructionMethod } from '@/instruction-application-engine/methods/turn-instruction-method';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
-import { getSegmentByVertex } from '@/utils/location';
+import { getSegmentByVertex, getStreetBySegment } from '@/utils/location';
 import { createTurnGuidance } from '@/utils/wme-entities/turn-guidance';
 
 const prefixes = ['$RS$', 'To $RS$', 'ל$RS$', 'ל-$RS$', 'ל- $RS$', 'ל $RS$'];
@@ -18,16 +18,19 @@ const pullRoadshieldsMethod: TurnInstructionMethod = {
       if (turn.getTurnData().hasTurnGuidance()) return turn;
 
       const toSegment = getSegmentByVertex(dataModel, turn.getToVertex());
-      const toSegmentAddress = toSegment.getAddress();
-      const toSegmentStreet = toSegmentAddress.getStreet();
+      const toSegmentStreet = getStreetBySegment(dataModel, toSegment);
+      if (!toSegmentStreet) return turn;
+
       const roadshieldText = toSegmentStreet.getAttribute('signText');
       if (!roadshieldText) return turn;
+
+      const streetName = toSegmentStreet.getName();
+      if (!streetName) return turn;
+
       const potentialPrefixes = buildPrefixesWithRoadshield(roadshieldText);
       for (const potentialPrefix of potentialPrefixes) {
-        if (toSegmentStreet.getName().startsWith(potentialPrefix)) {
-          const trimSegmentName = toSegmentStreet
-            .getName()
-            .substring(potentialPrefix.length);
+        if (streetName.startsWith(potentialPrefix)) {
+          const trimSegmentName = streetName.substring(potentialPrefix.length);
 
           const turnData = turn.getTurnData().withTurnGuidance(
             createTurnGuidance({
