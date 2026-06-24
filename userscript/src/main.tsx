@@ -10,6 +10,7 @@ import CrowdinOtaClient from './localization/crowdin-ota/ota-client';
 import { addGoogleTagManagerToPage } from './google-analytics';
 import fallbackTranslations from './resources/localization/userscript.json';
 import { wmeSdk } from './utils/wme-sdk';
+import { Logger } from '@/logger';
 
 export default async function bootstrap() {
   axios.defaults.adapter = axiosGmXhrAdapter;
@@ -25,6 +26,8 @@ export default async function bootstrap() {
 
   addGoogleTagManagerToPage(process.env.G_MEASUREMENT_ID);
   migratePreferencesFromRoundaboutJB();
+
+  Logger.info('WME Junction Box Utils initialized successfully.');
 
   const root = createRoot(document.createElement('div'));
   root.render(<App translations={{ [currentLocale]: mergedTranslations }} />);

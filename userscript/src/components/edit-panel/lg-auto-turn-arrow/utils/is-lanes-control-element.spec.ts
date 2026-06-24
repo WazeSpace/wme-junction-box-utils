@@ -35,7 +35,6 @@ const validLanesControlDomNode = fromHTML(
 
 describe('isLanesControlElement', () => {
   it("should return true for an element with class 'lanes-control'", () => {
-    console.log(validLanesControlDomNode.className);
     expect(isLanesControlElement(validLanesControlDomNode)).toBe(true);
   });
 

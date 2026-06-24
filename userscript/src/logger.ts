@@ -1,41 +1,33 @@
+import { LogStream } from '@editor-x/wme-logstream';
+
 // noinspection JSUnusedGlobalSymbols
+
+const logStreamInstance = LogStream.create({
+  minLogLevel: 'DEBUG',
+  persist: true,
+  dbPrefix: 'WMEJBU_DB',
+  scriptVersion: process.env.VERSION || '2.4.0',
+  wmeSDK: (window as any).SDK_INITIALIZED ? (window as any).WazeMapEditorSDK : undefined,
+  brand: {
+    prefix: process.env.SCRIPT_NAME || 'JBU',
+    color: '#00E676',
+  },
+});
+
 export class Logger {
-  private static get displayName() {
-    return process.env.SCRIPT_NAME;
+  static logStream = logStreamInstance;
+
+  static log = (...data: any[]) => logStreamInstance.info(...data);
+  static warn = (...data: any[]) => logStreamInstance.warn(...data);
+  static error = (...data: any[]) => logStreamInstance.error(...data);
+  static info = (...data: any[]) => logStreamInstance.info(...data);
+  static debug = (...data: any[]) => logStreamInstance.debug(...data);
+
+  static scope(scopeName: string) {
+    return logStreamInstance.scope(scopeName);
   }
 
-  private static addDisplayNameToDataComponent(message: string | null) {
-    const prefix = `[${Logger.displayName}]`;
-    if (!message) return prefix;
-    return `${prefix} ${message}`;
+  static downloadLogs(filename?: string) {
+    return logStreamInstance.downloadLogs(filename || 'wme-jbu-logs.zip');
   }
-
-  private static formatData(...args: any[]): [string, ...any] {
-    if (args.length === 0) return null;
-    if (typeof args[0] === 'string') {
-      const [textArgument, ...rest] = args;
-      return [this.addDisplayNameToDataComponent(textArgument), ...rest];
-    }
-
-    return [this.addDisplayNameToDataComponent(null), ...args];
-  }
-
-  private static logLevel(level: string, ...data: any[]) {
-    if (typeof console[level] !== 'function') {
-      throw new Error(`Logging level "${level}" is not supported`);
-    }
-
-    const formattedData = Logger.formatData(...data);
-    return console[level](...formattedData);
-  }
-
-  private static bindLogLevel(level: string) {
-    return (...data: any[]) => this.logLevel(level, ...data);
-  }
-
-  static log = Logger.bindLogLevel('log');
-  static warn = Logger.bindLogLevel('warn');
-  static error = Logger.bindLogLevel('error');
-  static info = Logger.bindLogLevel('info');
-  static debug = Logger.bindLogLevel('debug');
 }

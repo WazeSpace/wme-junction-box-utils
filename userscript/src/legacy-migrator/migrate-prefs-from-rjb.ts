@@ -16,16 +16,27 @@ function transformLegacyPrefsToCurrent(legacyPrefs: any): Preferences {
   };
 }
 
+import { Logger } from '@/logger';
+
 export function migratePreferencesFromRoundaboutJB() {
   const legacyPrefs = localStorage.getItem(LEGACY_PREFS_LS_KEY);
-  if (!legacyPrefs) return;
+  if (!legacyPrefs) {
+    Logger.debug('No legacy roundabout-jb preferences found');
+    return;
+  }
 
-  debugger;
-  const currentPrefs = transformLegacyPrefsToCurrent(JSON.parse(legacyPrefs));
-  localStorage.setItem(
-    'r0den.userscripts.jbu.prefs',
-    JSON.stringify(currentPrefs),
-  );
+  Logger.info('Found legacy roundabout-jb preferences, starting migration');
 
-  localStorage.removeItem(LEGACY_PREFS_LS_KEY);
+  try {
+    const currentPrefs = transformLegacyPrefsToCurrent(JSON.parse(legacyPrefs));
+    localStorage.setItem(
+      'r0den.userscripts.jbu.prefs',
+      JSON.stringify(currentPrefs),
+    );
+
+    localStorage.removeItem(LEGACY_PREFS_LS_KEY);
+    Logger.info('Legacy roundabout-jb preferences migrated and removed');
+  } catch (err) {
+    Logger.error('Failed to migrate legacy roundabout-jb preferences', err);
+  }
 }
