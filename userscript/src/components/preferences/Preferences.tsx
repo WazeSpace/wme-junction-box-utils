@@ -20,7 +20,36 @@ export function Preferences() {
     scriptTab.tabLabel.innerText = 'JBU';
     setScriptTabPane(scriptTab.tabPane);
 
+    let clickCount = 0;
+    let clickTimeout: ReturnType<typeof setTimeout>;
+
+    const handleTabClick = async (e: MouseEvent) => {
+      clickCount++;
+      if (clickCount >= 5) {
+        const { getOrCreateDebugMenu } = await import('./debug-menu');
+        const menu = getOrCreateDebugMenu() as any;
+
+        import('@/logger').then(({ Logger }) => {
+          Logger.info('Log download menu triggered by 5 clicks on script tab');
+        });
+
+        // showMenu expects a native MouseEvent which e provides since it's an addeventlistener callback
+        menu.showMenu(e);
+
+        clickCount = 0;
+        clearTimeout(clickTimeout);
+      } else {
+        clearTimeout(clickTimeout);
+        clickTimeout = setTimeout(() => {
+          clickCount = 0;
+        }, 500);
+      }
+    };
+
+    scriptTab.tabLabel.addEventListener('click', handleTabClick);
+
     return () => {
+      scriptTab.tabLabel.removeEventListener('click', handleTabClick);
       W.userscripts.removeSidebarTab(process.env.SCRIPT_ID);
       setScriptTabPane(null);
     };

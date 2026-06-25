@@ -13,6 +13,7 @@ import {
 } from '../constants/meta-symbols';
 import { gtag } from '@/google-analytics';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
+import { Logger } from '@/logger';
 
 interface RestoreContextPayload {
   readonly targetBigJunction: BigJunctionDataModel;
@@ -90,7 +91,7 @@ export function RestoreContextProvider(props: RestoreContextProps) {
         method: 'manual',
       });
     } catch (error) {
-      console.error('Failed to restore backup:', error);
+      Logger.error('Failed to restore backup:', error);
     }
   };
 

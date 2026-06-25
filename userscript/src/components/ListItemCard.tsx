@@ -11,16 +11,18 @@ interface ListItemCardProps
   rightIcon?: string;
   rightIconStyle?: CSSProperties;
   children: ReactNode;
+  onContextMenu?: React.MouseEventHandler;
 }
 export function ListItemCard({
   leftIcon,
   rightIcon,
   rightIconStyle,
   children,
+  onContextMenu,
   ...rest
 }: ListItemCardProps) {
   return (
-    <WzCard elevationOnHover={4} className="list-item-card" {...rest}>
+    <WzCard elevationOnHover={4} className="list-item-card" onContextMenu={onContextMenu} {...rest}>
       <div className="list-item-card-layout">
         {getIconElement(leftIcon)}
         <div className="list-item-card-info">{children}</div>

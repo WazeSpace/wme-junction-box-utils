@@ -8,6 +8,7 @@ import { gtag } from '@/google-analytics';
 import { createChangedIds } from '@/utils';
 import { AUTOMATICALLY_RESTORED_SYMBOL } from '@/components/edit-panel/big-junction-backup/constants/meta-symbols';
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
+import { Logger } from '@/logger';
 
 export function AutoRestoreBigJunction() {
   const [isEnabled] = usePreference('auto_backup');
@@ -51,7 +52,7 @@ export function AutoRestoreBigJunction() {
             method: 'auto',
           });
         } catch (error) {
-          console.error('Failed to auto-restore big junction:', error);
+          Logger.error('Failed to auto-restore big junction:', error);
         }
       })();
     },
