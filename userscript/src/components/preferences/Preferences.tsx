@@ -84,45 +84,18 @@ export function Preferences() {
         reference={virtualReference as any}
         getReferenceClientRect={() => virtualReference.getBoundingClientRect()}
         content={
-          <div
-            className="wme-closures-context-menu"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              backgroundColor: 'var(--background_default, #fff)',
-              borderRadius: '8px',
-              boxShadow: '0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08)',
-              padding: '4px',
-              minWidth: '150px',
-              border: '1px solid var(--border_subtle, #e8eaed)'
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '8px 12px',
-                cursor: 'pointer',
-                borderRadius: '4px',
-                color: 'var(--content_default, #202124)',
-                fontSize: '14px',
-                transition: 'background-color 0.2s'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--background_hover, #f1f3f4)'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-              onClick={() => {
+          <wz-menu>
+            <wz-menu-item onClick={() => {
                 import('@/logger').then(({ Logger }) => {
                   Logger.info('Log download triggered by 5 clicks on script tab');
                   Logger.downloadLogs();
                 });
                 setContextMenuVisible(false);
-              }}
-            >
-              <i className="w-icon w-icon-download" style={{ fontSize: '16px' }} />
-              <span>Download Logs</span>
-            </div>
-          </div>
+              }}>
+              <i slot="icon" className="w-icon w-icon-download" />
+              Download Logs
+            </wz-menu-item>
+          </wz-menu>
         }
       />
       {prefsLocation === 'wme-prefs' && (
