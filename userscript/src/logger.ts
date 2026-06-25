@@ -7,10 +7,8 @@ const logStreamInstance = LogStream.create({
   persist: true,
   dbPrefix: 'WMEJBU_DB',
   scriptVersion: process.env.VERSION || '2.4.0',
-  wmeSDK: (window as any).SDK_INITIALIZED ? (window as any).WazeMapEditorSDK : undefined,
   brand: {
-    prefix: process.env.SCRIPT_NAME || 'JBU',
-    color: '#00E676',
+    prefix: process.env.DISPLAY_NAME || 'JBU',
   },
 });
 
@@ -28,6 +26,6 @@ export class Logger {
   }
 
   static downloadLogs(filename?: string) {
-    return logStreamInstance.downloadLogs(filename || 'wme-jbu-logs.zip');
+    return logStreamInstance.downloadLogs(filename || 'wme-jbu-logs.xlog');
   }
 }
