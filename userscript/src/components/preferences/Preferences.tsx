@@ -5,18 +5,12 @@ import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import { usePreference, useSidebarTabPane } from '@/hooks';
 import { createPortal } from 'react-dom';
 import { PreferencesContent } from './PreferencesContent';
-import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css';
-import 'tippy.js/animations/scale.css';
-import { useMemo } from 'react';
 
 export function Preferences() {
   const [showPreferences, setShowPreferences] = useState(false);
   const [prefsLocation] = usePreference('prefs_location');
   const prefsSidebarTabPane = useSidebarTabPane('settings');
   const [scriptTabPane, setScriptTabPane] = useState<Element | null>(null);
-  const [contextMenuVisible, setContextMenuVisible] = useState(false);
-  const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     if (prefsLocation !== 'tab') return;
@@ -29,11 +23,19 @@ export function Preferences() {
     let clickCount = 0;
     let clickTimeout: ReturnType<typeof setTimeout>;
 
-    const handleTabClick = (e: MouseEvent) => {
+    const handleTabClick = async (e: MouseEvent) => {
       clickCount++;
       if (clickCount >= 5) {
-        setContextMenuPosition({ x: e.clientX, y: e.clientY });
-        setContextMenuVisible(true);
+        const { getOrCreateDebugMenu } = await import('./debug-menu');
+        const menu = getOrCreateDebugMenu() as any;
+
+        import('@/logger').then(({ Logger }) => {
+          Logger.info('Log download menu triggered by 5 clicks on script tab');
+        });
+
+        // showMenu expects a native MouseEvent which e provides since it's an addeventlistener callback
+        menu.showMenu(e);
+
         clickCount = 0;
         clearTimeout(clickTimeout);
       } else {
@@ -60,44 +62,8 @@ export function Preferences() {
     }
   })();
 
-  const virtualReference = useMemo(() => ({
-    getBoundingClientRect() {
-      return {
-        top: contextMenuPosition.y,
-        left: contextMenuPosition.x,
-        bottom: contextMenuPosition.y,
-        right: contextMenuPosition.x,
-        width: 0,
-        height: 0,
-      };
-    },
-  }), [contextMenuPosition]);
-
   return targetElement ? createPortal(
     <>
-      <Tippy
-        visible={contextMenuVisible}
-        onClickOutside={() => setContextMenuVisible(false)}
-        interactive
-        animation="scale"
-        placement="bottom-start"
-        reference={virtualReference as any}
-        getReferenceClientRect={() => virtualReference.getBoundingClientRect()}
-        content={
-          <wz-menu>
-            <wz-menu-item onClick={() => {
-                import('@/logger').then(({ Logger }) => {
-                  Logger.info('Log download triggered by 5 clicks on script tab');
-                  Logger.downloadLogs();
-                });
-                setContextMenuVisible(false);
-              }}>
-              <i slot="icon" className="w-icon w-icon-download" />
-              Download Logs
-            </wz-menu-item>
-          </wz-menu>
-        }
-      />
       {prefsLocation === 'wme-prefs' && (
         <PreferencesEntryCard onClick={setShowPreferences.bind(null, true)} />
       )}
