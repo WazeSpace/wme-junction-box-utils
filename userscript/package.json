@@ -46,6 +46,8 @@
     "wme-sdk-typings": "https://www.waze.com/editor/sdk/wme-sdk-typings.tgz"
   },
   "dependencies": {
+    "@editor-x/wme-logstream": "^0.1.0-alpha.1",
+    "@TheEditorX/wme-logstream": "npm:@editor-x/wme-logstream@^0.1.0-alpha.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@tippyjs/react": "^4.2.6",

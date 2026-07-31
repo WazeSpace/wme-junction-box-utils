@@ -1,41 +1,75 @@
+import { LogStream } from '@TheEditorX/wme-logstream';
+
+export const logStream = LogStream.create({
+  minLogLevel: 'DEBUG',
+  brand: {
+    scriptPrefix: process.env.SCRIPT_NAME ?? 'Junction Box Utils',
+  },
+});
+
+function formatLogStreamArgs(args: any[]): { message: string; data?: any } {
+  if (args.length === 0) {
+    return { message: '' };
+  }
+  if (typeof args[0] === 'string') {
+    const message = args[0];
+    if (args.length === 2) {
+      return { message, data: args[1] };
+    } else if (args.length > 2) {
+      return { message, data: args.slice(1) };
+    }
+    return { message };
+  }
+  if (args.length === 1) {
+    return { message: '', data: args[0] };
+  }
+  return { message: '', data: args };
+}
+
+/**
+ * @deprecated Use `logStream` from `@/logger` (or `@TheEditorX/wme-logstream`) instead.
+ */
 // noinspection JSUnusedGlobalSymbols
 export class Logger {
-  private static get displayName() {
-    return process.env.SCRIPT_NAME;
+  /**
+   * @deprecated Use `logStream.info()` instead.
+   */
+  static log(...args: any[]) {
+    const { message, data } = formatLogStreamArgs(args);
+    logStream.info(message, data);
   }
 
-  private static addDisplayNameToDataComponent(message: string | null) {
-    const prefix = `[${Logger.displayName}]`;
-    if (!message) return prefix;
-    return `${prefix} ${message}`;
+  /**
+   * @deprecated Use `logStream.info()` instead.
+   */
+  static info(...args: any[]) {
+    const { message, data } = formatLogStreamArgs(args);
+    logStream.info(message, data);
   }
 
-  private static formatData(...args: any[]): [string, ...any] {
-    if (args.length === 0) return null;
-    if (typeof args[0] === 'string') {
-      const [textArgument, ...rest] = args;
-      return [this.addDisplayNameToDataComponent(textArgument), ...rest];
-    }
-
-    return [this.addDisplayNameToDataComponent(null), ...args];
+  /**
+   * @deprecated Use `logStream.warn()` instead.
+   */
+  static warn(...args: any[]) {
+    const { message, data } = formatLogStreamArgs(args);
+    logStream.warn(message, data);
   }
 
-  private static logLevel(level: string, ...data: any[]) {
-    if (typeof console[level] !== 'function') {
-      throw new Error(`Logging level "${level}" is not supported`);
-    }
-
-    const formattedData = Logger.formatData(...data);
-    return console[level](...formattedData);
+  /**
+   * @deprecated Use `logStream.error()` instead.
+   */
+  static error(...args: any[]) {
+    const { message, data } = formatLogStreamArgs(args);
+    logStream.error(message, data);
   }
 
-  private static bindLogLevel(level: string) {
-    return (...data: any[]) => this.logLevel(level, ...data);
+  /**
+   * @deprecated Use `logStream.debug()` instead.
+   */
+  static debug(...args: any[]) {
+    const { message, data } = formatLogStreamArgs(args);
+    logStream.debug(message, data);
   }
-
-  static log = Logger.bindLogLevel('log');
-  static warn = Logger.bindLogLevel('warn');
-  static error = Logger.bindLogLevel('error');
-  static info = Logger.bindLogLevel('info');
-  static debug = Logger.bindLogLevel('debug');
 }
+
+export { LogStream };
