@@ -4,7 +4,11 @@ import { compareJunctionToBackup } from '@/components/edit-panel/big-junction-ba
 import { EditPanelTemplate } from '@/components/edit-panel/edit-panel-template';
 import { ReactNode } from 'react';
 import { BackupContextProvider, RestoreContextProvider } from './contexts';
-import { EnrollBackupButton, RestoreBackupButton } from './components';
+import {
+  ConvertToPathsButton,
+  EnrollBackupButton,
+  RestoreBackupButton,
+} from './components';
 import {
   BigJunctionActionsPortal,
   NewBigJunctionFormGroupPortal,
@@ -70,6 +74,7 @@ export const BigJunctionBackupTemplate = class implements EditPanelTemplate {
           <BigJunctionActionsPortal>
             <EnrollBackupButton />
             <RestoreBackupButton />
+            <ConvertToPathsButton />
           </BigJunctionActionsPortal>
         </RestoreContextProvider>
       </BackupContextProvider>

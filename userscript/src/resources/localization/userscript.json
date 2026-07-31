@@ -48,8 +48,10 @@
       "actions": {
         "clone_roundabout_geom": "Roundaboutize",
         "backup_props": "Backup properties",
-        "restore_props": "Restore properties"
+        "restore_props": "Restore properties",
+        "convert_to_paths": "Convert to paths"
       },
+      "convert_to_paths_disabled_reason": "Contains incompatible turns or unique restrictions that cannot be converted to paths",
       "auto_clone_roundabout_geom_confirm": {
         "title": "Roundaboutize Junction Boxes?",
         "details": "Do you want to use the geometry of the roundabout for this Junction Box?"
@@ -85,6 +87,7 @@
         "actions": {
           "UpdateBigJunctionGeometryToRoundabout": "Roundabout geometry applied",
           "UpdateBigJunction": "Update Junction Box",
+          "ConvertBigJunctionToPaths": "Convert Junction Box to paths",
           "SetTurnsByInstructionMethod": {
             "general": "%{name} %{count} turns",
             "types": {
