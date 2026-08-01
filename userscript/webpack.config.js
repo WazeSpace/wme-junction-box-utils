@@ -5,7 +5,6 @@ const { DefinePlugin } = require('webpack');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackUserscriptPlugin = require('webpack-userscript').default;
-const { nanoid } = require('nanoid');
 
 function getPurePackageName() {
   const { name } = packageInfo;
@@ -31,7 +30,9 @@ module.exports = () => {
     plugins: [
       new DefinePlugin({
         'process.env.VERSION': JSON.stringify(packageInfo.version),
-        'process.env.SCRIPT_ID': JSON.stringify(nanoid()),
+        'process.env.SCRIPT_ID': JSON.stringify(
+          `${packageInfo.author}/${getPurePackageName()}`,
+        ),
         'process.env.SCRIPT_FULL_NAME': JSON.stringify(
           packageInfo.fullDisplayName,
         ),

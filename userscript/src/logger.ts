@@ -2,6 +2,9 @@ import { LogStream } from '@TheEditorX/wme-logstream';
 
 export const logStream = LogStream.create({
   minLogLevel: 'DEBUG',
+  persist: true,
+  dbPrefix: process.env.SCRIPT_ID.replace('/', '-'),
+  scriptVersion: process.env.VERSION,
   brand: {
     scriptPrefix: process.env.SCRIPT_NAME ?? 'Junction Box Utils',
   },
