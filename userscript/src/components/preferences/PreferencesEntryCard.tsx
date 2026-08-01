@@ -5,8 +5,12 @@ import { ListItemCard } from '../ListItemCard';
 
 interface PreferencesEntryCardProps {
   onClick?: MouseEventHandler;
+  onContextMenu?: MouseEventHandler;
 }
-export function PreferencesEntryCard({ onClick }: PreferencesEntryCardProps) {
+export function PreferencesEntryCard({
+  onClick,
+  onContextMenu,
+}: PreferencesEntryCardProps) {
   const t = useTranslate();
 
   return (
@@ -20,6 +24,7 @@ export function PreferencesEntryCard({ onClick }: PreferencesEntryCardProps) {
         justifySelf: 'end',
       }}
       onClick={onClick}
+      onContextMenu={onContextMenu}
     >
       <div className="list-item-card-title">{process.env.SCRIPT_NAME}</div>
       <WzCaption>{t('jb_utils.user.prefs.card_helper_text')}</WzCaption>

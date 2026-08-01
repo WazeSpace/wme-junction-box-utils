@@ -48,6 +48,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
+    "@TheEditorX/wme-logstream": "npm:@editor-x/wme-logstream@^0.1.0-alpha.1",
     "@tippyjs/react": "^4.2.6",
     "@turf/buffer": "^7.3.5",
     "@turf/center": "^6.5.0",
@@ -57,7 +58,6 @@
     "axios": "^1.6.8",
     "clsx": "^2.1.0",
     "deepmerge": "^4.3.1",
-    "nanoid": "^3.3.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^6.22.3",
